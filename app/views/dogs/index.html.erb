@@ -1,0 +1,15 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Dogs</h1>
+
+<div id="dogs">
+  <% @dogs.each do |dog| %>
+    <%= render dog %>
+    <p>
+      <%= link_to "Show this dog", dog %>
+      <%= link_to "Delete entry", dog, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this dog?"} %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New dog", new_dog_path %>
