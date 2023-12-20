@@ -6,6 +6,32 @@ class DogsController < ApplicationController
     @dogs = Dog.all
   end
 
+  def flickr
+    flickr = Flickr.new(ENV['FLICKR_API_KEY'], ENV['FLICKR_SHARED_SECRET'])
+    @photos = []
+  
+    if params[:flickr_user_id].present?
+      begin
+        @photos = flickr.people.getPhotos(user_id: params[:flickr_user_id])
+      rescue Flickr::FailedResponse => e
+        # Log the error or print it to the console
+        Rails.logger.error("Flickr API Error: #{e.message}")
+  
+        # Optionally, you can set a flash message to inform the user about the error
+        flash[:alert] = "Failed to fetch photos from Flickr. Please try again later."
+  
+        # Redirect to a specific page or render an error view
+        redirect_to root_path
+      end
+    end
+    
+    @photo_urls = []
+    @photos.each do |photo|
+      p photo
+      @photo_urls << "https://live.staticflickr.com/#{photo["server"]}/#{photo["id"]}_#{photo["secret"]}.jpg"
+    end
+  end
+
   # GET /dogs/1 or /dogs/1.json
   def show
     respond_to do |format|

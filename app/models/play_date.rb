@@ -1,0 +1,9 @@
+class PlayDate < ApplicationRecord
+  belongs_to :dog_park
+  belongs_to :user
+  has_and_belongs_to_many :attendees, class_name: 'Dog', join_table: 'play_dates_dogs'
+  has_many :comments, as: :commentable
+  has_many :barks, as: :barkable
+
+  scope :upcoming, -> { where('date >= ?', DateTime.now).order(date: :asc) }
+end

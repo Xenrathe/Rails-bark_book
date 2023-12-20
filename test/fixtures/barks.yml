@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  num: 
+  user: one
+  barkable: one
+  barkable_type: Barkable
+
+two:
+  num: 
+  user: two
+  barkable: two
+  barkable_type: Barkable
