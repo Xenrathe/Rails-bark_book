@@ -1,8 +1,14 @@
 class Dog < ApplicationRecord
   belongs_to :user
-  has_and_belongs_to_many :contents, polymorphic: true
-  has_one_attached :avatar
-  has_and_belongs_to_many :play_dates, class_name: 'PlayDate', join_table: 'play_dates_dogs'
+
+  has_many :dog_contents, dependent: :destroy
+  has_many :contents, through: :dog_contents, source: :content, source_type: 'Content'
+
+  has_one_attached :avatar do |attachable|
+    attachable.variant :thumb, resize_to_limit: [200, 200]
+  end
+  
+  has_and_belongs_to_many :play_dates, class_name: 'PlayDate', join_table: 'dogs_play_dates'
   has_many :barks, as: :barkable
 
   scope :small, -> { where('weight <= ?', 25) }

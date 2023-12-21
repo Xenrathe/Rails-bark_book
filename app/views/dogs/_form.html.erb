@@ -12,8 +12,13 @@
   <% end %>
 
   <div>
-    <%= form.label :age, style: "display: block" %>
-    <%= form.number_field :age %>
+    <%= form.label :avatar, style: "display: block" %>
+    <%= form.file_field :avatar %>
+  </div>
+
+  <div>
+    <%= form.label :birthdate, style: "display: block" %>
+    <%= form.date_field :birthdate %>
   </div>
 
   <div>

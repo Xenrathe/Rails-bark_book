@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_20_221230) do
+ActiveRecord::Schema[7.0].define(version: 2023_12_21_181658) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -79,13 +79,13 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_20_221230) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "dog_contents", id: false, force: :cascade do |t|
-    t.bigint "dog_id"
-    t.string "content_type"
-    t.bigint "content_id"
+  create_table "dog_contents", force: :cascade do |t|
+    t.bigint "dog_id", null: false
+    t.string "content_type", null: false
+    t.bigint "content_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["content_type", "content_id"], name: "index_dog_contents_on_content_type_and_content_id"
+    t.index ["content_type", "content_id"], name: "index_dog_contents_on_content"
     t.index ["dog_id"], name: "index_dog_contents_on_dog_id"
   end
 

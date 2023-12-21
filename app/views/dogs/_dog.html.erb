@@ -1,22 +1,6 @@
-<div id="<%= dom_id dog %>">
-  <p>
-    <strong>Age:</strong>
-    <%= dog.age %>
-  </p>
-
-  <p>
-    <strong>Breed:</strong>
-    <%= dog.breed %>
-  </p>
-
-  <p>
-    <strong>Name:</strong>
-    <%= dog.name %>
-  </p>
-
-  <p>
-    <strong>Weight:</strong>
-    <%= dog.weight %>
-  </p>
-
+<div class="dog partial-dog">
+  <% if dog.avatar.attached? %>
+    <%= image_tag dog.avatar.variant(:thumb) %><br>
+  <% end %>
+  <strong>Name:</strong> <%= dog.name %>, a <%= (Time.zone.now.to_date - dog.birthdate).to_i / 365 %> year old <%= dog.breed %> weighing <%= dog.weight %> lbs.
 </div>
