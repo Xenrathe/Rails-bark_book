@@ -1,0 +1,16 @@
+<h2>Followed dogs:</h2>
+
+<div id="dogs">
+  <%= turbo_frame_tag "followed-dogs" do %>
+    <% @followed_dogs.each do |dog| %>
+      <%= render dog %>
+      <% if current_user.id == @user.id %>
+        <p>
+          <%= link_to 'Unfollow', unfollow_dog_path(dog), method: :delete, data: {turbo_method: :delete} %>
+        </p>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>
+  
+</div>

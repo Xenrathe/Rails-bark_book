@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_12_21_181658) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_02_151745) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -114,6 +114,15 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_21_181658) do
     t.index ["play_date_id", "dog_id"], name: "index_dogs_play_dates_on_play_date_id_and_dog_id"
   end
 
+  create_table "followings", force: :cascade do |t|
+    t.bigint "user_id"
+    t.bigint "dog_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dog_id"], name: "index_followings_on_dog_id"
+    t.index ["user_id"], name: "index_followings_on_user_id"
+  end
+
   create_table "images", force: :cascade do |t|
     t.string "title"
     t.text "caption"
@@ -172,6 +181,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_12_21_181658) do
   add_foreign_key "comments", "users"
   add_foreign_key "dog_contents", "dogs"
   add_foreign_key "dogs", "users"
+  add_foreign_key "followings", "dogs"
+  add_foreign_key "followings", "users"
   add_foreign_key "images", "users"
   add_foreign_key "play_dates", "dog_parks"
   add_foreign_key "play_dates", "users"

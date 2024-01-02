@@ -1,3 +1,7 @@
+<% if current_user %>
+  <%= link_to 'Profile', user_path(current_user) %>
+<% end %>
+
 <p style="color: green"><%= notice %></p>
 
 <h1>Dogs</h1>
@@ -8,6 +12,15 @@
     <p>
       <%= link_to "Show this dog", dog %>
       <%= link_to "Delete entry", dog, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this dog?"} %>
+      <% if current_user %>
+        <%= turbo_frame_tag "follow-actions-#{dog.id}" do %>
+          <% if current_user.following?(dog) %>
+            <%= link_to 'Unfollow', unfollow_dog_path(dog), method: :delete, data: {turbo_method: :delete} %>
+          <% else %>
+            <%= link_to 'Follow', follow_dog_path(dog), method: :post, data: {turbo_method: :post} %>
+          <% end %>
+        <% end %>
+      <% end %>
     </p>
   <% end %>
 </div>

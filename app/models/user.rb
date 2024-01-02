@@ -12,4 +12,19 @@ class User < ApplicationRecord
   has_many :play_dates
   has_many :comments
   has_many :barks
+
+  has_many :followings, dependent: :destroy
+  has_many :followed_dogs, through: :followings, source: :dog
+
+  def follow(dog)
+    followed_dogs << dog unless following?(dog)
+  end
+
+  def unfollow(dog)
+    followed_dogs.delete(dog)
+  end
+
+  def following?(dog)
+    followed_dogs.include?(dog)
+  end
 end

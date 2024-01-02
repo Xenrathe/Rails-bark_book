@@ -3,7 +3,12 @@ Rails.application.routes.draw do
 
   resources :users, except: [:index]
 
-  resources :dogs
+  resources :dogs do
+    member do
+      post 'follow', to: 'dogs#follow'
+      delete 'unfollow', to: 'dogs#unfollow'
+    end
+  end
 
   resources :posts
   resources :videos
