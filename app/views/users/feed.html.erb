@@ -1,0 +1,8 @@
+<h1>Feed</h1>
+
+<% @feed_content.each do |dog_content| %>
+  <div>
+    <% content_type = dog_content.content_type.downcase %>
+    <%= render "shared/contentshow", content: dog_content.content, type: content_type, comments: dog_content.content.comments %>
+  </div>
+<% end %>

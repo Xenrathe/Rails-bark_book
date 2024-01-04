@@ -1,0 +1,16 @@
+<h2> <%= content.title %> </h2>
+<% if type == 'video' %>
+  <%= video_tag rails_blob_path(content.attached_video, only_path: true), :controls => true %>
+<% elsif type == 'image' %>
+  <% content.attached_images.each do |attached_image| %>
+    <%= image_tag attached_image.variant(:midsize) %><br>
+  <% end %>
+<% end %>
+<p> 
+  <% if type == 'post' %>
+    <%= content.body %>
+  <% else %>
+    <%= content.caption %>
+  <% end %>
+</p>
+<%= render "shared/comments", comments: comments %>

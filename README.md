@@ -3,12 +3,16 @@
 ## BarkBook, a social media app just for dogs
 
 ## In-Development To-do List:
-* Dog basic functionality
-* User basic functionality
-* Image/Video/Post basic functionality
-* Play_date basic functionality 
+* Tagging your owned dogs (via clicking thumbnail) for post / image / video
+* 'Feed' showing user's own posts + followed dog posts
 * Comment basic functionality
-* Bark basic fuctionality
+* Bark basic fuctionality (bark limit 50 max)
+* Play_date basic functionality
+* Channel / websocket for feed and comments
+
+* Connect to google maps API for dog park / dog event
+* Implement a real mailer
+* Add cloud storage via google/amazon/microsoft
 
 ### Primary:
 

@@ -1,0 +1,63 @@
+<%= form_with(model: content) do |form| %>
+  <% if content.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(content.errors.count, "error") %> prohibited this <%= type %> post from being saved:</h2>
+
+      <ul>
+        <% content.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :title, style: "display: block" %>
+    <%= form.text_field :title %>
+  </div>
+
+  <div>
+    <% if type == 'image'%>
+      <% if content.attached_images.attached? %>
+        <% content.attached_images.each do |attached_image| %>
+          <%= image_tag attached_image.variant(:thumb) %>
+        <% end %>
+      <% else %>
+        <%= form.label :attached_images, style: "display: block" %>
+      <% end %>
+      <%= form.file_field :attached_images, multiple: true %>
+    <% elsif type == 'video' %>
+      <% if content.attached_video.attached? %>
+        <%= video_tag content.attached_video %>
+      <% else %>
+        <%= form.label :attached_video, style: "display: block" %>
+      <% end %>
+      <%= form.file_field :attached_video %>
+    <% else %>
+    <% end %>
+  </div>
+
+  <div>
+    <% if type == 'post'%>
+      <%= form.label :body, style: "display: block" %>
+      <%= form.text_area :body %>
+    <% else %>
+      <%= form.label :caption, style: "display: block" %>
+      <%= form.text_field :caption %>
+    <% end %>
+  </div>
+
+  <div class="dog-tag">
+    <h3>Select Dogs:</h3>
+    <% current_user.dogs.each do |dog| %>
+      <label>
+        <%= check_box_tag 'content[dog_ids][]', dog.id, content.dogs.include?(dog) %>
+        <%= dog.name %>
+      </label>
+    <% end %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
