@@ -6,9 +6,7 @@ class User < ApplicationRecord
 
   has_many :addresses, as: :addressable
   has_many :dogs
-  has_many :posts
-  has_many :images
-  has_many :videos
+  has_many :contents
   has_many :play_dates
   has_many :comments
   has_many :barks

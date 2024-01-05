@@ -1,0 +1,5 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render "shared/contentshow", content: @content, type: @content.content_type, comments: @comments %>
+
+<%= render "shared/contentactions", content: @content, type: @content.content_type %>

@@ -58,6 +58,10 @@
   </div>
 
   <div>
+    <%= form.hidden_field :content_type, value: @content.content_type %>
     <%= form.submit %>
   </div>
+
+  <p style="color: green"><%= notice %></p>
+  <p style="color: red"><%= flash[:alert] %></p>
 <% end %>

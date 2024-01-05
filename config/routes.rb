@@ -11,9 +11,13 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :posts, except: [:index]
-  resources :videos, except: [:index]
-  resources :images, except: [:index]
+  resources :contents, except: [:index] do
+    collection do
+      get 'new_post', to: 'contents#new_post'
+      get 'new_video', to: 'contents#new_video'
+      get 'new_image', to: 'contents#new_image'
+    end
+  end
   resources :play_dates
 
   resources :comments, except: [:index, :show]

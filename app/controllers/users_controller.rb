@@ -9,15 +9,14 @@ class UsersController < ApplicationController
 
   def feed
     dogs = current_user.followed_dogs + current_user.dogs
-    @feed_content = []
-
+    @feed_content = Set.new
+  
     dogs.each do |dog|
-      content_for_dog = dog.dog_contents
-      @feed_content << content_for_dog
+      content_for_dog = dog.contents
+      @feed_content.merge(content_for_dog)
     end
-
-    @feed_content = @feed_content.flatten
-    p @feed_content
-    @feed_content.sort_by! { |dog_content| dog_content.content.created_at }.reverse!
+  
+    @feed_content = @feed_content.to_a
+    @feed_content.sort_by! { |dog_content| dog_content.created_at }.reverse!
   end
 end

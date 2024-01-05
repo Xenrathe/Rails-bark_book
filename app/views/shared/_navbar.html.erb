@@ -3,15 +3,13 @@
   -
   <%= link_to 'Feed', feed_path %>
   -
-  <%= link_to 'New Post', new_post_path %>
+  <%= link_to 'New Post', new_post_contents_path %>
   -
-  <%= link_to 'New Image', new_image_path %>
+  <%= link_to 'New Image', new_image_contents_path %>
   -
-  <%= link_to 'New Video', new_video_path %>
+  <%= link_to 'New Video', new_video_contents_path %>
   -
   <%= link_to 'New Playdate', new_play_date_path %>
 <% else %>
   <%= link_to 'Login/signup', new_user_session_path %>
 <% end %>
-
-<p style="color: green"><%= notice %></p>

@@ -1,10 +1,8 @@
 class Dog < ApplicationRecord
   belongs_to :user
 
-  has_many :dog_contents, dependent: :destroy
-  has_many :videos, through: :dog_contents, source: :content, source_type: 'Video'
-  has_many :posts, through: :dog_contents, source: :content, source_type: 'Post'
-  has_many :images, through: :dog_contents, source: :content, source_type: 'Image'
+  #has_many :dog_contents, dependent: :destroy
+  has_and_belongs_to_many :contents, dependent: :destroy
 
   has_many :followings, dependent: :destroy
   has_many :followers, through: :followings, source: :user

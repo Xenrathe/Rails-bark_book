@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_02_151745) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_05_214928) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -79,14 +79,23 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_02_151745) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
-  create_table "dog_contents", force: :cascade do |t|
-    t.bigint "dog_id", null: false
+  create_table "contents", force: :cascade do |t|
     t.string "content_type", null: false
+    t.string "title"
+    t.text "body"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_contents_on_user_id"
+  end
+
+  create_table "contents_dogs", force: :cascade do |t|
+    t.bigint "dog_id", null: false
     t.bigint "content_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["content_type", "content_id"], name: "index_dog_contents_on_content"
-    t.index ["dog_id"], name: "index_dog_contents_on_dog_id"
+    t.index ["content_id"], name: "index_contents_dogs_on_content_id"
+    t.index ["dog_id"], name: "index_contents_dogs_on_dog_id"
   end
 
   create_table "dog_parks", force: :cascade do |t|
@@ -123,15 +132,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_02_151745) do
     t.index ["user_id"], name: "index_followings_on_user_id"
   end
 
-  create_table "images", force: :cascade do |t|
-    t.string "title"
-    t.text "caption"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_images_on_user_id"
-  end
-
   create_table "play_dates", force: :cascade do |t|
     t.datetime "date", null: false
     t.text "description"
@@ -142,15 +142,6 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_02_151745) do
     t.datetime "updated_at", null: false
     t.index ["dog_park_id"], name: "index_play_dates_on_dog_park_id"
     t.index ["user_id"], name: "index_play_dates_on_user_id"
-  end
-
-  create_table "posts", force: :cascade do |t|
-    t.string "title", null: false
-    t.text "body", null: false
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_posts_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -166,26 +157,16 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_02_151745) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
-  create_table "videos", force: :cascade do |t|
-    t.string "title"
-    t.text "caption"
-    t.bigint "user_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_videos_on_user_id"
-  end
-
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "barks", "users"
   add_foreign_key "comments", "users"
-  add_foreign_key "dog_contents", "dogs"
+  add_foreign_key "contents", "users"
+  add_foreign_key "contents_dogs", "contents"
+  add_foreign_key "contents_dogs", "dogs"
   add_foreign_key "dogs", "users"
   add_foreign_key "followings", "dogs"
   add_foreign_key "followings", "users"
-  add_foreign_key "images", "users"
   add_foreign_key "play_dates", "dog_parks"
   add_foreign_key "play_dates", "users"
-  add_foreign_key "posts", "users"
-  add_foreign_key "videos", "users"
 end

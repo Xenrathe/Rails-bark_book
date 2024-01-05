@@ -1,0 +1,9 @@
+<h1>Edit <%= @content.content_type %></h1>
+
+<%= render "shared/contentform", content: @content, type: @content.content_type %>
+
+<br>
+
+<div>
+  <%= link_to "Back to dogs", dogs_path %>
+</div>

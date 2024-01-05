@@ -7,10 +7,6 @@
   <% end %>
 <% end %>
 <p> 
-  <% if type == 'post' %>
-    <%= content.body %>
-  <% else %>
-    <%= content.caption %>
-  <% end %>
+  <%= content.body %>
 </p>
 <%= render "shared/comments", comments: comments %>
