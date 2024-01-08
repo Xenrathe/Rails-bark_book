@@ -1,20 +1,26 @@
-<h3> Comments: </h3>
-<%= turbo_frame_tag "comments_#{commentable.class.name}_#{commentable.id}" do %>
-  <div class="comments">
-    <ul>
-    <% comments.each do |comment| %>
-      <li><%= comment.user.email %>: <%= comment.body %></li>
-    <% end %>
-    </ul>
+<% if comments_mode == 'short' %> <!-- This shortened version appears in the feed or index -->
+  <div class='comments-num-link'>
+    <%= link_to "#{comments.count} comments", polymorphic_path(commentable) %>
   </div>
-  <% if current_user %>
-    <div class="add-comment-form">
-      <%= form_with(model: Comment, id: "new_comment_form_#{commentable.class.name}_#{commentable.id}", remote: true) do |form| %>
-        <%= form.text_area :body, placeholder: "Add a comment...", rows: 2 %>
-        <%= form.hidden_field :commentable_type, value: commentable.class.name.downcase %>
-        <%= form.hidden_field :commentable_id, value: commentable.id %>
-        <%= form.submit "Post Comment", class: "btn btn-primary" %>
+<% else %> <!-- This longer version appears in the full SHOW view -->
+  <h3> Comments: </h3>
+  <%= turbo_frame_tag "comments_#{commentable.class.name}_#{commentable.id}" do %>
+    <div class="comments-full">
+      <ul>
+      <% comments.each do |comment| %>
+        <li><%= comment.user.email %>: <%= comment.body %></li>
       <% end %>
+      </ul>
     </div>
+    <% if current_user %>
+      <div class="add-comment-form">
+        <%= form_with(model: Comment, id: "new_comment_form_#{commentable.class.name}_#{commentable.id}", remote: true) do |form| %>
+          <%= form.text_area :body, placeholder: "Add a comment...", rows: 2 %>
+          <%= form.hidden_field :commentable_type, value: commentable.class.name.downcase %>
+          <%= form.hidden_field :commentable_id, value: commentable.id %>
+          <%= form.submit "Post Comment", class: "btn btn-primary" %>
+        <% end %>
+      </div>
+    <% end %>
   <% end %>
 <% end %>
