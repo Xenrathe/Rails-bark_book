@@ -1,5 +1,5 @@
 <% if current_user %>
-  <%= link_to 'Profile', user_path(current_user) %>
+  <%= link_to 'All dogs', dogs_path %>
   -
   <%= link_to 'Feed', feed_path %>
   -
@@ -10,6 +10,10 @@
   <%= link_to 'New Video', new_video_contents_path %>
   -
   <%= link_to 'New Playdate', new_play_date_path %>
+  -
+  <%= link_to 'Profile', user_path(current_user) %>
+  -
+  <%= link_to 'Logout', destroy_user_session_path, method: :delete, data: { turbo_method: :delete } %>
 <% else %>
   <%= link_to 'Login/signup', new_user_session_path %>
 <% end %>
