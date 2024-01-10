@@ -5,6 +5,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @followed_dogs = @user.followed_dogs
     @owned_dogs = @user.dogs
+    @followed_dog_parks = @user.followed_dog_parks
   end
 
   def feed

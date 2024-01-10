@@ -9,4 +9,5 @@
 <p> 
   <%= content.body %>
 </p>
+<%= render "shared/barks", barks: barks, barkable: content %>
 <%= render "shared/comments", commentable: content, comments: comments, comments_mode: comments_mode %>

@@ -4,6 +4,7 @@ class ContentsController < ApplicationController
 
   def show
     @comments = @content.comments
+    @barks = @content.barks
   end
 
   def new

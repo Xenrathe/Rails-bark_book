@@ -1,0 +1,12 @@
+<div class="barks">
+  <%= turbo_frame_tag "barks_#{barkable.class.name}_#{barkable.id}" do %>
+    <%= barks.sum(:num) %> barks from <%= barks.select(:user_id).distinct.count %> users
+    <% if current_user && current_user.id != barkable.user_id %>
+      <%= form_with(model: Bark, id: "new_bark_form_#{barkable.class.name}_#{barkable.id}", remote: true) do |form| %>
+        <%= form.hidden_field :barkable_type, value: barkable.class.name.downcase %>
+        <%= form.hidden_field :barkable_id, value: barkable.id %>
+        <%= form.submit "Bark!", class: "btn btn-primary" %>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

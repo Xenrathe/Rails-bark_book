@@ -18,10 +18,17 @@ Rails.application.routes.draw do
       get 'new_image', to: 'contents#new_image'
     end
   end
+
   resources :play_dates
+  resources :dog_parks do
+    member do
+      post 'follow', to: 'dog_parks#follow'
+      delete 'unfollow', to: 'dog_parks#unfollow'
+    end
+  end
 
   resources :comments, except: [:index, :show]
-  resources :barks, except: [:index, :show]
+  resources :barks, only: [:new, :create]
 
   # Defines the root path route ("/")
   root "dogs#index"

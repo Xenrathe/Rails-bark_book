@@ -2,6 +2,6 @@
 
 <% @feed_content.each do |dog_content| %>
   <div>
-    <%= render "shared/contentshow", content: dog_content, type: dog_content.content_type, comments: dog_content.comments, comments_mode: 'short' %>
+    <%= render "shared/contentshow", content: dog_content, type: dog_content.content_type, comments: dog_content.comments, comments_mode: 'short', barks: dog_content.barks %>
   </div>
 <% end %>

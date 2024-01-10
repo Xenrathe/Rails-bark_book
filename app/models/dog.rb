@@ -1,7 +1,6 @@
 class Dog < ApplicationRecord
   belongs_to :user
 
-  #has_many :dog_contents, dependent: :destroy
   has_and_belongs_to_many :contents, dependent: :destroy
 
   has_many :followings, dependent: :destroy

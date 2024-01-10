@@ -3,13 +3,20 @@
 ## BarkBook, a social media app just for dogs
 
 ## In-Development To-do List:
-* Tagging your owned dogs (via clicking thumbnail) for post / image / video
-* 'Feed' showing user's own posts + followed dog posts
-* Comment basic functionality
-* Bark basic fuctionality (bark limit 50 max)
+* DogPark basic functionality
+* DogSize enum
 * Play_date basic functionality
-* Channel / websocket for feed and comments
+* Validations on all models
 
+* Navigation 'test' and connectivity
+
+* Pressing bark plays a sound
+* Several default bark sounds / bark selection on user profile
+* Ability to upload custom bark sound
+* User can add / delete / edit addresses on profile
+* User can change name on user profile
+* Timezone selection on user profile
+* Channel / websocket for feed and comments
 * Connect to google maps API for dog park / dog event
 * Implement a real mailer
 * Add cloud storage via google/amazon/microsoft

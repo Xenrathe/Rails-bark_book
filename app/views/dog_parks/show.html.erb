@@ -1,0 +1,13 @@
+<%= render @dog_park, dog_park: @dog_park %>
+
+<p>
+  <%= turbo_frame_tag "follow-unfollow-dog_park" %>
+    <% if current_user && current_user.following?(@dog_park) %>
+      <%= link_to 'Unfollow', unfollow_dog_park_path(@dog_park), method: :delete, data: {turbo_method: :delete} %> | 
+    <% else %>
+      <%= link_to 'Follow', follow_dog_park_path(@dog_park), method: :post, data: {turbo_method: :post} %> | 
+  <% end %>
+  <%= link_to 'Edit', edit_dog_park_path(@dog_park) %> |
+  <%= link_to 'Delete', dog_park_path(@dog_park), method: :delete, data: {turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this park?'} %>
+
+</p>

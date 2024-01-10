@@ -1,0 +1,19 @@
+<h1>Dog Parks</h1>
+
+<% @dog_parks.each do |dog_park| %>
+  <div class="dog-park">
+    <h3>
+      <%= dog_park.name %> 
+      (<%= link_to 'view', dog_park %>) 
+      (<%= turbo_frame_tag "follow-actions-#{dog_park.id}" do %>
+          <% if current_user.following?(dog_park) %>
+            <%= link_to 'Unfollow', unfollow_dog_park_path(dog_park), method: :delete, data: {turbo_method: :delete} %>
+          <% else %>
+            <%= link_to 'Follow', follow_dog_park_path(dog_park), method: :post, data: {turbo_method: :post} %>
+          <% end %>
+        <% end %>)
+    </h3>  
+  </div>
+<% end %>
+
+<%= link_to "New dog park", new_dog_park_path %>

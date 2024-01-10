@@ -14,15 +14,26 @@ class User < ApplicationRecord
   has_many :followings, dependent: :destroy
   has_many :followed_dogs, through: :followings, source: :dog
 
-  def follow(dog)
-    followed_dogs << dog unless following?(dog)
+  has_many :dog_park_followings, dependent: :destroy
+  has_many :followed_dog_parks, through: :dog_park_followings, source: :dog_park
+
+  def follow(object)
+    if object.class.name.downcase == 'dog'
+      followed_dogs << object unless following?(object)
+    elsif object.class.name.downcase == 'dogpark'
+      followed_dog_parks << object unless following?(object)
+    end
   end
 
-  def unfollow(dog)
-    followed_dogs.delete(dog)
+  def unfollow(object)
+    if object.class.name.downcase == 'dog'
+      followed_dogs.delete(object)
+    elsif object.class.name.downcase == 'dogpark'
+      followed_dog_parks.delete(object)
+    end
   end
 
-  def following?(dog)
-    followed_dogs.include?(dog)
+  def following?(object)
+    followed_dogs.include?(object) || followed_dog_parks.include?(object)
   end
 end

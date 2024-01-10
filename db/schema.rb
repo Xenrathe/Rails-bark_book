@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_05_214928) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_10_161457) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -58,7 +58,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_214928) do
   end
 
   create_table "barks", force: :cascade do |t|
-    t.bigint "num", default: 0
+    t.bigint "num", default: 1
     t.bigint "user_id", null: false
     t.string "barkable_type", null: false
     t.bigint "barkable_id", null: false
@@ -96,6 +96,15 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_214928) do
     t.datetime "updated_at", null: false
     t.index ["content_id"], name: "index_contents_dogs_on_content_id"
     t.index ["dog_id"], name: "index_contents_dogs_on_dog_id"
+  end
+
+  create_table "dog_park_followings", force: :cascade do |t|
+    t.bigint "dog_park_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["dog_park_id"], name: "index_dog_park_followings_on_dog_park_id"
+    t.index ["user_id"], name: "index_dog_park_followings_on_user_id"
   end
 
   create_table "dog_parks", force: :cascade do |t|
@@ -164,6 +173,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_05_214928) do
   add_foreign_key "contents", "users"
   add_foreign_key "contents_dogs", "contents"
   add_foreign_key "contents_dogs", "dogs"
+  add_foreign_key "dog_park_followings", "dog_parks"
+  add_foreign_key "dog_park_followings", "users"
   add_foreign_key "dogs", "users"
   add_foreign_key "followings", "dogs"
   add_foreign_key "followings", "users"
