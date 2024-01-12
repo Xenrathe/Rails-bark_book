@@ -5,9 +5,9 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :addresses, as: :addressable
-  has_many :dogs
-  has_many :contents
-  has_many :play_dates
+  has_many :dogs, dependent: :destroy
+  has_many :contents, dependent: :destroy
+  has_many :play_dates, dependent: :destroy
   has_many :comments
   has_many :barks
 

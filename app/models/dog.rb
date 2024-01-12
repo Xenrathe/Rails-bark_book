@@ -8,6 +8,7 @@ class Dog < ApplicationRecord
 
   has_one_attached :avatar do |attachable|
     attachable.variant :thumb, resize_to_limit: [200, 200]
+    attachable.variant :attendee, resize_to_limit: [100, 100]
   end
 
   has_and_belongs_to_many :play_dates, class_name: 'PlayDate', join_table: 'dogs_play_dates'

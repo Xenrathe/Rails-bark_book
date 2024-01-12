@@ -4,7 +4,7 @@
   <% end %>
   <% years_old = (Time.zone.now.to_date - dog.birthdate).to_i / 365 %>
   <% months_old = (Time.zone.now.to_date - dog.birthdate).to_i / 30 %>
-  <strong>Name:</strong> <%= dog.name %>, a 
+  <%= dog.name %>, a 
   <% if years_old == 0 %> 
     <%= months_old %> months old 
   <% else %>

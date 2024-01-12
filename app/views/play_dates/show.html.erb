@@ -1,0 +1,8 @@
+<%= render 'play_date', play_date: @play_date, comments_mode: 'full' %>
+
+<p><br>
+  <% if current_user && current_user.id == @play_date.user_id %>
+    <%= link_to 'Edit', edit_play_date_path(@play_date) %> |
+    <%= link_to 'Delete', play_date_path(@play_date), method: :delete, data: {turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this play date?'} %>
+  <% end %>
+</p>

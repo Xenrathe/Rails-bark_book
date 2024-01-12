@@ -15,15 +15,7 @@ class DogParksController < ApplicationController
   end
 
   def create
-    existing_address = Address.find_by(
-      'lower(address_one) = ? AND lower(city) = ? AND
-       lower(state) = ? AND lower(country) = ? AND lower(postal_code) = ?',
-      params[:dog_park][:address_attributes][:address_one].downcase,
-      params[:dog_park][:address_attributes][:city].downcase,
-      params[:dog_park][:address_attributes][:state].downcase,
-      params[:dog_park][:address_attributes][:country].downcase,
-      params[:dog_park][:address_attributes][:postal_code].downcase
-    )
+    existing_address = Address.find_existing(params[:dog_park][:address_attributes])
 
     if existing_address
       flash[:alert] = 'This dog park already exists.'
@@ -71,6 +63,6 @@ class DogParksController < ApplicationController
 
   def dog_park_params
     params.require(:dog_park).permit(:name, :dog_size, address_attributes:
-      %i[id address_one address_two city state postal_code country])
+      %i[address_one address_two city state postal_code country])
   end
 end

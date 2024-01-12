@@ -1,49 +1,6 @@
 <%= form_with(model: dog_park, url: dog_parks_path, local: true) do |form| %>
-  <div>
-    <%= form.label :name %>
-    <%= form.text_field :name %>
-  </div>
-
-  <div>
-    <%= form.label :dog_size %>
-    <%= form.radio_button :dog_size, :small %> Small
-    <%= form.radio_button :dog_size, :large %> Large
-    <%= form.radio_button :dog_size, :both %> Both
-  </div>
-
-  <h2>Address</h2>
-
-  <%= form.fields_for :address do |address_form| %>
-    <div>
-      <%= address_form.label :address_one %>
-      <%= address_form.text_field :address_one %>
-    </div>
-
-    <div>
-      <%= address_form.label :address_two %>
-      <%= address_form.text_field :address_two %>
-    </div>
-
-    <div>
-      <%= address_form.label :city %>
-      <%= address_form.text_field :city %>
-    </div>
-
-    <div>
-      <%= address_form.label :state %>
-      <%= address_form.text_field :state %>
-    </div>
-
-    <div>
-      <%= address_form.label :country %>
-      <%= address_form.text_field :country %>
-    </div>
-
-    <div>
-      <%= address_form.label :postal_code %>
-      <%= address_form.text_field :postal_code %>
-    </div>
-  <% end %>
+  
+  <%= render 'shared/dogparkform', form: form %>
 
   <div>
     <%= form.submit %>

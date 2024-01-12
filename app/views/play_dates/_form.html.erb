@@ -1,0 +1,79 @@
+<%= form_with(model: @play_date, local: true) do |form| %>
+  <div>
+    <%= form.label :date, 'Date and Time' %>
+    <%= form.datetime_local_field :date %>
+  </div>
+
+  <div>
+    <%= form.label :description %>
+    <%= form.text_area :description %>
+  </div>
+
+  <div>
+    <%= form.label :dog_size %>
+    <%= form.radio_button :dog_size, :small %> Small
+    <%= form.radio_button :dog_size, :large %> Large
+    <%= form.radio_button :dog_size, :both %> Both
+  </div>
+
+  <div>
+    <h4>Which dogs will attend?</h4>
+    <% current_user.dogs.each do |dog| %>
+      <label>
+        <%= form.check_box :dog_attendee_ids, { multiple: true }, dog.id, nil %>
+        <%= dog.name %>
+      </label><br>
+    <% end %>
+  </div>
+
+  <div>
+    <h4>Select Dog Park:</h4>
+    <% current_user.dog_park_followings.each do |dog_park_following| %>
+      <label>
+        <%= form.radio_button :dog_park_id, dog_park_following.dog_park.id, class: 'dog-park-radio' %>
+        <%= dog_park_following.dog_park.name %>
+      </label><br>
+    <% end %>
+    
+    <label>
+      <%= form.radio_button :dog_park_id, 'new', class: 'dog-park-radio' %>
+      New Dog Park
+    </label>
+
+    <div id="new_dog_park_form" style="display: none;">
+      <%= render 'shared/dogparkform', form: form %>
+    </div>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+
+  <% if @play_date.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(@play_date.errors.count, "error") %> prohibited this Play Date from being saved:</h2>
+
+      <ul>
+        <% @play_date.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+<% end %>
+
+<script>
+  document.addEventListener('DOMContentLoaded', addNewAddressEvent);
+  document.addEventListener('turbo:render', addNewAddressEvent);
+
+  function addNewAddressEvent() {
+    const dogParkRadioBtns = document.querySelectorAll('.dog-park-radio');
+    const newDogParkForm = document.getElementById('new_dog_park_form');
+
+    dogParkRadioBtns.forEach(radio => {
+      radio.addEventListener('change', function() {
+        newDogParkForm.style.display = this.value === 'new' ? 'block' : 'none';
+      });
+    });
+  }
+</script>

@@ -19,7 +19,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :play_dates
+  resources :play_dates do
+    member do
+      post 'attend', to: 'play_dates#attend'
+    end
+  end
   resources :dog_parks do
     member do
       post 'follow', to: 'dog_parks#follow'

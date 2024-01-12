@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_10_161457) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_10_230846) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -59,7 +59,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_10_161457) do
 
   create_table "barks", force: :cascade do |t|
     t.bigint "num", default: 1
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.string "barkable_type", null: false
     t.bigint "barkable_id", null: false
     t.datetime "created_at", null: false
@@ -70,7 +70,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_10_161457) do
 
   create_table "comments", force: :cascade do |t|
     t.text "body", null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_id"
     t.string "commentable_type", null: false
     t.bigint "commentable_id", null: false
     t.datetime "created_at", null: false
@@ -168,8 +168,8 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_10_161457) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
-  add_foreign_key "barks", "users"
-  add_foreign_key "comments", "users"
+  add_foreign_key "barks", "users", on_delete: :nullify
+  add_foreign_key "comments", "users", on_delete: :nullify
   add_foreign_key "contents", "users"
   add_foreign_key "contents_dogs", "contents"
   add_foreign_key "contents_dogs", "dogs"
