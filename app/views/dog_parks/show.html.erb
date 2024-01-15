@@ -1,7 +1,7 @@
 <%= render @dog_park, dog_park: @dog_park %>
 
 <p>
-  <%= turbo_frame_tag "follow-unfollow-dog_park" %>
+  <%= turbo_frame_tag "follow-unfollow-dog_park" do %>
     <% if current_user && current_user.following?(@dog_park) %>
       <%= link_to 'Unfollow', unfollow_dog_park_path(@dog_park), method: :delete, data: {turbo_method: :delete} %> | 
     <% else %>

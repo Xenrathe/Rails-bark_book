@@ -17,11 +17,11 @@
 </ul>
 
 <% if current_user %>
-  <%= form_tag attend_play_date_path, method: :post do %>
+  <%= form_tag attend_play_date_path(play_date), method: :post do %>
     <%= turbo_frame_tag "attend-play_date" do %>
       <% current_user.dogs.each do |dog| %>
         <label>
-          <%= check_box_tag 'dog_attendee_ids[]', dog.id, @play_date.attendees.include?(dog) %>
+          <%= check_box_tag 'dog_attendee_ids[]', dog.id, play_date.attendees.include?(dog) %>
           <%= dog.name %>
         </label><br>
       <% end %>

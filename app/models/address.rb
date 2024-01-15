@@ -1,5 +1,6 @@
 class Address < ApplicationRecord
   belongs_to :addressable, polymorphic: true
+  has_one :user_primary, class_name: 'User', foreign_key: 'primary_address_id', dependent: :nullify
 
   def self.find_existing(attributes)
     find_by(

@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :addresses, as: :addressable
+  belongs_to :primary_address, class_name: 'Address', optional: true
   has_many :dogs, dependent: :destroy
   has_many :contents, dependent: :destroy
   has_many :play_dates, dependent: :destroy

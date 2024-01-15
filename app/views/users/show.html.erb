@@ -1,3 +1,61 @@
+<% if current_user && current_user.id == @user.id %>
+  <h2>Personal details:</h2>
+  <div id="user-details">
+    <strong>E-mail:</strong><%= @user.email %><br>
+    <strong>Name:</strong><%= @user.name %>
+  </div>
+  <div id="user-addresses">
+    <h3>Addresses:</h3>
+    <%= turbo_frame_tag "user-addresses" do %>
+      <% @user.addresses.each do |address| %>
+        <div class="user-address">
+          <strong><%= address.name %></strong><br>
+          <%= address.address_one %> <%= address.address_two %><br>
+          <%= address.city %>, <%= address.state %>, <%= address.country %> <%= address.postal_code %><br>
+        </div>
+        <% if !@user.primary_address.nil? && @user.primary_address == address %>
+          Primary<br><br>
+        <% else %>
+          <%= link_to 'Make Primary', make_primary_user_path(@user, address), method: :patch, data: {turbo_method: :patch} %><br><br>
+        <% end %>
+      <% end %>
+
+      <%= button_tag 'Add New Address', class: 'toggle-form-button', id: 'add-address-button' %>
+
+      <div id="new-address-form" style="display: none;">
+      <%= form_with(model: @new_address, url: new_address_user_path, local: true) do |new_address_form| %>
+        <%= render 'shared/addressform', address_form: new_address_form, include_name: true %>
+        <%= new_address_form.submit %>
+        <% if @new_address.errors.any? %>
+          <div style="color: red">
+            <h2><%= pluralize(@new_address.errors.count, "error") %> prohibited this address from being saved:</h2>
+
+            <ul>
+              <% @new_address.errors.each do |error| %>
+                <li><%= error.full_message %></li>
+              <% end %>
+            </ul>
+          </div>
+        <% end %>
+      <% end %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+<h2>Your dogs:</h2>
+
+<div id="dogs owned">
+  <% @owned_dogs.each do |dog| %>
+    <%= render dog %>
+    <%= link_to "View", dog, data: { turbo_frame: "_top" } %>
+    <% if current_user && current_user.id == @user.id %>
+      <%= link_to "Delete entry", dog, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this dog?"} %>
+    <% end %>
+  <% end %>
+  <%= link_to "New dog", new_dog_path %>
+</div>
+
 <h2>Followed dogs:</h2>
 
 <div id="dogs followed">
@@ -12,19 +70,6 @@
       <% end %>
     <% end %>
   <% end %>
-</div>
-
-<h2>Your dogs:</h2>
-
-<div id="dogs owned">
-  <% @owned_dogs.each do |dog| %>
-    <%= render dog %>
-    <%= link_to "View", dog, data: { turbo_frame: "_top" } %>
-    <% if current_user && current_user.id == @user.id %>
-      <%= link_to "Delete entry", dog, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this dog?"} %>
-    <% end %>
-  <% end %>
-  <%= link_to "New dog", new_dog_path %>
 </div>
 
 <h2>Followed dog-parks:</h2>
@@ -42,4 +87,16 @@
       <% end %>
     <% end %>
   <% end %>
+  <%= button_to 'New Dog Park', new_dog_park_path, method: :get, data: {turbo_method: :get} %>
 </div>
+
+<script>
+  document.addEventListener('turbo:load', function () {
+    const addButton = document.getElementById('add-address-button');
+    const formDiv = document.getElementById('new-address-form');
+
+    addButton.addEventListener('click', function () {
+      formDiv.style.display = 'block';
+    });
+  });
+</script>

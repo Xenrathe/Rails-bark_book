@@ -1,7 +1,12 @@
 Rails.application.routes.draw do
   devise_for :users, controllers: { sessions: 'users/sessions' }
 
-  resources :users, except: [:index]
+  resources :users, except: [:index] do
+    member do
+      patch 'make_primary/:address_id', to: 'users#make_primary', as: :make_primary
+      post 'new_address', to: 'users#new_address'
+    end
+  end
   get 'feed', to: 'users#feed'
 
   resources :dogs do
