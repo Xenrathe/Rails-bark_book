@@ -1,6 +1,7 @@
 <h3><%= link_to "Play Date @ #{play_date.dog_park.name}", play_date %></h3>
 
-<p><strong>Date/Time:</strong> <%= play_date.date %></p>
+<% user_time_zone = current_user ? current_user.time_zone : 'UTC' %>
+<p><strong>Date/Time:</strong> <%= play_date.date.in_time_zone(user_time_zone).strftime("%a, %b %e @ %l:%M%P") %></p>
 <p><strong>Description:</strong> <%= play_date.description %></p>
 <p><strong>Dog Size:</strong> <%= play_date.dog_size %></p>
 

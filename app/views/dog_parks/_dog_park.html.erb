@@ -3,6 +3,8 @@
 <p>For <%= dog_park.dog_size.humanize.downcase %> dogs</p>
 
 <%= dog_park.address.address_one %>
-<br><%= dog_park.address.address_two %>
+<% if dog_park.address.address_two != ''%>
+  <br><%= dog_park.address.address_two %>
+<% end %>
 <br><%= dog_park.address.city %>, <%= dog_park.address.state %> <%= dog_park.address.postal_code %>
 <br><%= dog_park.address.country %>

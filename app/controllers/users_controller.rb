@@ -1,13 +1,31 @@
 class UsersController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_user, only: %i[show edit update make_primary destroy]
 
   def show
-    @user = User.find(params[:id])
     @followed_dogs = @user.followed_dogs
     @owned_dogs = @user.dogs
     @followed_dog_parks = @user.followed_dog_parks
 
     @new_address = current_user.addresses.build if @user.id == current_user.id
+  end
+
+  def edit
+  end
+
+  def update
+    # Only allow users to change their own name
+    if current_user && current_user == @user
+      if @user.update(user_params)
+        flash[:notice] = "User successfully edited."
+        redirect_to @user
+      else
+        render :edit, status: :unprocessable_entity
+      end
+    else
+      flash[:alert] = "You cannot edit other user's profiles."
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def make_primary
@@ -57,8 +75,16 @@ class UsersController < ApplicationController
 
   private
 
+  def set_user
+    @user = User.find(params[:id])
+  end
+
   def address_params
     params.require(:address).permit(%i[name address_one address_two city state postal_code country addressable_type addressable_id])
+  end
+
+  def user_params
+    params.require(:user).permit(:name, :time_zone)
   end
 
 end
