@@ -8,14 +8,15 @@
     <div class="comments-full">
       <ul>
       <% comments.each do |comment| %>
-        <li><%= comment.user.email %>: <%= comment.body %></li>
+        <% post_user = comment.user_id.nil? ? '[deleted]' : comment.user.username %>
+        <li><%= post_user %>: <%= comment.body %></li>
       <% end %>
       </ul>
     </div>
     <% if current_user %>
       <div class="add-comment-form">
-        <%= form_with(model: Comment, id: "new_comment_form_#{commentable.class.name}_#{commentable.id}", remote: true) do |form| %>
-          <%= form.text_area :body, placeholder: "Add a comment...", rows: 2 %>
+        <%= form_with(model: Comment.new, id: "new_comment_form_#{commentable.class.name}_#{commentable.id}", remote: true) do |form| %>
+          <%= form.text_area :body, placeholder: "Add a comment...", rows: 2, maxlength: 250, required: true %>
           <%= form.hidden_field :commentable_type, value: commentable_type %>
           <%= form.hidden_field :commentable_id, value: commentable.id %>
           <%= form.submit "Post Comment", class: "btn btn-primary" %>

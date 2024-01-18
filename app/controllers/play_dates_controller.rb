@@ -11,7 +11,7 @@ class PlayDatesController < ApplicationController
   end
 
   def new
-    @play_date = PlayDate.new
+    @play_date = PlayDate.new(dog_size: 'both')
     @play_date.build_dog_park
     @play_date.dog_park.build_address
   end
@@ -28,7 +28,13 @@ class PlayDatesController < ApplicationController
       @dog_park = DogPark.find(params[:play_date][:dog_park_id])
       @play_date.dog_park = @dog_park
     else # or the user decides to create a new dog_park
-      existing_address = Address.find_existing(params[:play_date][:dog_park][:address_attributes])
+      if params[:play_date][:dog_park].present? && params[:play_date][:dog_park][:address_attributes].present?
+        existing_address = Address.find_existing(params[:play_date][:dog_park][:address_attributes])
+      else
+        flash.now[:alert] = 'Must choose a dog park or create a new one.'
+        render :new, status: :unprocessable_entity
+        return
+      end
 
       # but wait! that dog park already exists!
       if existing_address && existing_address.addressable_type == 'DogPark'
@@ -37,8 +43,10 @@ class PlayDatesController < ApplicationController
       end
     end
 
-    params[:play_date][:dog_attendee_ids].each do |dog_attendee_id|
-      @play_date.attend(Dog.find(dog_attendee_id))
+    if params[:play_date][:dog_attendee_ids].present?
+      params[:play_date][:dog_attendee_ids].each do |dog_attendee_id|
+        @play_date.attend(Dog.find(dog_attendee_id))
+      end
     end
 
     if @play_date.save
@@ -57,6 +65,17 @@ class PlayDatesController < ApplicationController
   end
 
   def destroy
+    if current_user && @play_date.user_id == current_user.id
+      if @play_date.attendees.all? { |dog| dog.user == current_user }
+        @play_date.destroy
+        redirect_to play_dates_url, notice: 'Play date removed.'
+      else
+        flash.now[:alert] = 'Cannot remove play-dates with other dogs.'
+        render :show, status: :unprocessable_entity, alert: "Cannot remove play-dates with other people's dogs."
+      end
+    else
+      render :show, status: :unprocessable_entity, alert: "You are not this play-date's owner."
+    end
   end
 
   # The expectation with this function is that a user will select their dogs

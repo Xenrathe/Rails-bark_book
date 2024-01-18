@@ -3,16 +3,16 @@
 ## BarkBook, a social media app just for dogs
 
 ## In-Development To-do List:
-* Show Dog shows all of that dog's associated content
-* Show User shows all of that user's dogs' associated content
-* Validations on all models
-* GoogleMaps integration
-* Take flash implementation from ShowerThoughts
+* GoogleMaps/geocoder integration
 
+* Take flash implementation from ShowerThoughts
 * Navigation 'test' and connectivity
+* Pagination for feeds
+* Move all javascript to Stimulus controllers
+* CSS / styling
+
 * Add admin functionality, dog_parks can be added by ANYONE but only edited or deleted by admins
 * Admins can see who created a dog_park
-* Comments of deleted users show as [deleted]
 * Barks still counts up the number of 'users'
 
 * Pressing bark plays a sound

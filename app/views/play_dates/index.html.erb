@@ -2,5 +2,5 @@
 
 <% @play_dates.each do |play_date| %>
   <hr>
-  <%= render play_date %>
+  <%= render play_date, comments_mode: 'short' %>
 <% end %>

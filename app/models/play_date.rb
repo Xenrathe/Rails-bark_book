@@ -8,7 +8,8 @@ class PlayDate < ApplicationRecord
   has_many :comments, as: :commentable
   has_many :barks, as: :barkable
 
-  validate :at_least_one_dog_attendee
+  validate :at_least_one_dog_attendee, on: :create
+  validates :date, comparison: { greater_than: DateTime.now }
 
   scope :upcoming, -> { where('date >= ?', DateTime.now).order(date: :asc) }
 
@@ -31,5 +32,5 @@ class PlayDate < ApplicationRecord
       errors.add(:base, "At least one dog attendee must be selected")
     end
   end
-  
+
 end

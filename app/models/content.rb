@@ -1,7 +1,6 @@
 class Content < ApplicationRecord
   belongs_to :user
 
-  #has_many :dog_contents, dependent: :destroy
   has_and_belongs_to_many :dogs, dependent: :destroy
 
   has_many_attached :attached_images do |attachable|
@@ -13,4 +12,21 @@ class Content < ApplicationRecord
 
   has_many :comments, as: :commentable
   has_many :barks, as: :barkable
+
+  validate :content_limitations, on: %i[create update]
+
+  private
+
+  def content_limitations
+    case content_type
+    when 'image'
+      errors.add(:image, ' must be attached') unless attached_images.attached?
+      errors.add(:caption, ' cannot be greater than 200 characters') unless body.length <= 200
+    when 'video'
+      errors.add(:video, ' must be attached') unless attached_video.attached?
+      errors.add(:caption, ' cannot be greater than 200 characters') unless body.length <= 200
+    when 'post'
+      errors.add(:body, ' must be between 10 and 2000 characters') unless body.length >= 10 && body.length <= 2000
+    end
+  end
 end

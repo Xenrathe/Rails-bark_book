@@ -11,6 +11,7 @@ class DogsController < ApplicationController
     @bark_count = @dog.barks.sum(:num)
     @bark_user_count = @dog.barks.count
     @did_user_bark = @dog.barks.where(user: current_user).exists?
+    @dog_feed = @dog.contents.to_a.sort_by!(&:created_at).reverse!
   end
 
   def new

@@ -16,10 +16,11 @@ class DogParksController < ApplicationController
   end
 
   def create
+    @dog_park = DogPark.new(dog_park_params)
     existing_address = Address.find_existing(params[:dog_park][:address_attributes])
 
-    if existing_address
-      flash[:alert] = 'This dog park already exists.'
+    if existing_address && existing_address.addressable_type == 'DogPark'
+      flash.now[:alert] = 'This dog park already exists.'
       render :new, status: :unprocessable_entity
     else
       @dog_park = DogPark.new(dog_park_params)

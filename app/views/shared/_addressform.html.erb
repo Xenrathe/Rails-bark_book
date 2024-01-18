@@ -1,13 +1,13 @@
 <% if include_name %>
   <div>
     <%= address_form.label :name %>
-    <%= address_form.text_field :name %>
+    <%= address_form.text_field :name, required: true %>
   </div>
 <% end %>
 
 <div>
   <%= address_form.label :address_one %>
-  <%= address_form.text_field :address_one %>
+  <%= address_form.text_field :address_one, required: true %>
 </div>
 
 <div>
@@ -17,7 +17,7 @@
 
 <div>
   <%= address_form.label :city %>
-  <%= address_form.text_field :city %>
+  <%= address_form.text_field :city, required: true %>
 </div>
 
 <div>
@@ -27,7 +27,7 @@
 
 <div>
   <%= address_form.label :country %>
-  <%= address_form.text_field :country %>
+  <%= address_form.text_field :country, required: true %>
 </div>
 
 <div>

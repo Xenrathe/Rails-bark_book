@@ -1,21 +1,25 @@
-<% if current_user %>
-  <%= link_to 'All dogs', dogs_path %>
-  -
-  <%= link_to 'Feed', feed_path %>
-  -
-  <%= link_to 'New Post', new_post_contents_path %>
-  -
-  <%= link_to 'New Image', new_image_contents_path %>
-  -
-  <%= link_to 'New Video', new_video_contents_path %>
-  -
-  <%= link_to 'New Playdate', new_play_date_path %>
-  -
-  <%= link_to 'Dog Parks', dog_parks_path %>
-  -
-  <%= link_to 'Profile', user_path(current_user) %>
-  -
-  <%= link_to 'Logout', destroy_user_session_path, method: :delete, data: { turbo_method: :delete } %>
-<% else %>
-  <%= link_to 'Login/signup', new_user_session_path %>
-<% end %>
+<div class="navbar actions">
+  <% if current_user %>
+    <%= link_to 'All dogs', dogs_path %>
+    -
+    <%= link_to 'Feed', feed_path %>
+    -
+    <%= link_to 'New Post', new_post_contents_path %>
+    -
+    <%= link_to 'New Image', new_image_contents_path %>
+    -
+    <%= link_to 'New Video', new_video_contents_path %>
+    -
+    <%= link_to 'New Playdate', new_play_date_path %>
+    -
+    <%= link_to 'Dog Parks', dog_parks_path %>
+    -
+    <%= link_to 'Profile', user_path(current_user) %>
+    -
+    <%= link_to 'Logout', destroy_user_session_path, method: :delete, data: { turbo_method: :delete } %>
+  <% else %>
+    <%= link_to 'Login/signup', new_user_session_path %>
+  <% end %>
+    -
+    <span style="color: green"><%= notice %></span><span style="color: red"><%= alert %></span>
+</div>

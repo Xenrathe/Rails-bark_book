@@ -2,13 +2,6 @@
   <% if dog.avatar.attached? %>
     <%= image_tag dog.avatar.variant(:thumb) %><br>
   <% end %>
-  <% years_old = (Time.zone.now.to_date - dog.birthdate).to_i / 365 %>
-  <% months_old = (Time.zone.now.to_date - dog.birthdate).to_i / 30 %>
   <%= dog.name %>, a 
-  <% if years_old == 0 %> 
-    <%= months_old %> months old 
-  <% else %>
-    <%= years_old %> years old 
-  <% end %>
-  <%= dog.breed %> weighing <%= dog.weight %> lbs.
+  <%= dog.breed %> weighing <%= dog.weight %> lbs, born in <%= dog.birthdate.year %>.
 </div>

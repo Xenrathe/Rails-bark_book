@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2024_01_16_211654) do
+ActiveRecord::Schema[7.0].define(version: 2024_01_18_014541) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -69,7 +69,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_16_211654) do
   end
 
   create_table "comments", force: :cascade do |t|
-    t.text "body", null: false
+    t.string "body", limit: 250, null: false
     t.bigint "user_id"
     t.string "commentable_type", null: false
     t.bigint "commentable_id", null: false
@@ -115,12 +115,12 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_16_211654) do
   end
 
   create_table "dogs", force: :cascade do |t|
-    t.string "breed"
-    t.string "name"
-    t.integer "weight"
+    t.string "breed", null: false
+    t.string "name", null: false
+    t.integer "weight", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.date "birthdate"
+    t.datetime "birthdate", null: false
     t.bigint "user_id", null: false
     t.index ["user_id"], name: "index_dogs_on_user_id"
   end
@@ -145,7 +145,7 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_16_211654) do
     t.datetime "date", null: false
     t.text "description"
     t.bigint "dog_park_id", null: false
-    t.integer "dog_size"
+    t.integer "dog_size", default: 2, null: false
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -161,12 +161,13 @@ ActiveRecord::Schema[7.0].define(version: 2024_01_16_211654) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "name"
+    t.string "username", limit: 25, null: false
     t.bigint "primary_address_id"
     t.string "time_zone", default: "UTC", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["primary_address_id"], name: "index_users_on_primary_address_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["username"], name: "index_users_on_username", unique: true
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

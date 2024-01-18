@@ -18,6 +18,9 @@ class User < ApplicationRecord
   has_many :dog_park_followings, dependent: :destroy
   has_many :followed_dog_parks, through: :dog_park_followings, source: :dog_park
 
+  validates :email, :time_zone, presence: true
+  validates :username, presence: true, uniqueness: true, length: { maximum: 25 }
+
   def follow(object)
     if object.class.name.downcase == 'dog'
       followed_dogs << object unless following?(object)

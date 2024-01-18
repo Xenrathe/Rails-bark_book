@@ -8,6 +8,15 @@ class UsersController < ApplicationController
     @followed_dog_parks = @user.followed_dog_parks
 
     @new_address = current_user.addresses.build if @user.id == current_user.id
+
+    @user_content = Set.new
+  
+    @owned_dogs.each do |dog|
+      @user_content.merge(dog.contents)
+    end
+
+    @user_content = @user_content.to_a
+    @user_content.sort_by! { |dog_content| dog_content.created_at }.reverse!
   end
 
   def edit
@@ -84,7 +93,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:name, :time_zone)
+    params.require(:user).permit(:username, :time_zone)
   end
 
 end
