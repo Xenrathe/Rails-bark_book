@@ -1,19 +1,31 @@
 <h1>Dog Parks</h1>
 
-<% @dog_parks.each do |dog_park| %>
-  <div class="dog-park">
-    <h3>
-      <%= dog_park.name %> 
-      (<%= link_to 'view', dog_park %>) 
-      (<%= turbo_frame_tag "follow-actions-#{dog_park.id}" do %>
-          <% if current_user.following?(dog_park) %>
-            <%= link_to 'Unfollow', unfollow_dog_park_path(dog_park), method: :delete, data: {turbo_method: :delete} %>
-          <% else %>
-            <%= link_to 'Follow', follow_dog_park_path(dog_park), method: :post, data: {turbo_method: :post} %>
-          <% end %>
-        <% end %>)
-    </h3>  
-  </div>
+<% if current_user && current_user.primary_address %>
+
+  <%= form_tag(dog_parks_path, method: :get) do %>
+    <%= label_tag 'distance', 'Choose Nearby Distance:' %>
+    <% selected_distance = params[:distance].present? ? params[:distance].to_i : 25 %>
+    <%= select_tag 'distance', options_for_select([10, 25, 50, 100], selected: selected_distance) %>
+    <%= submit_tag 'Filter' %>
+  <% end %>
+
+  <% @nearby_dog_parks.each do |dog_park| %>
+    <div class="dog-park">
+      <h3>
+        <%= dog_park.name %> - <%= dog_park.address.distance_from(current_user.primary_address).round(1) %> mi 
+        (<%= link_to 'view', dog_park %>) 
+        (<%= turbo_frame_tag "follow-actions-#{dog_park.id}" do %>
+            <% if current_user.following?(dog_park) %>
+              <%= link_to 'Unfollow', unfollow_dog_park_path(dog_park), method: :delete, data: {turbo_method: :delete} %>
+            <% else %>
+              <%= link_to 'Follow', follow_dog_park_path(dog_park), method: :post, data: {turbo_method: :post} %>
+            <% end %>
+          <% end %>)
+      </h3>  
+    </div>
+  <% end %>
+<% else %>
+  <div class="error">Cannot use nearby dog parks feature unless you are signed in and have set a primary address.</div>
 <% end %>
 
 <%= link_to "New dog park", new_dog_park_path %>

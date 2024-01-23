@@ -1,4 +1,9 @@
-<h3><%= dog_park.name %></h3>
+<h3>
+  <%= dog_park.name %> 
+  <% if current_user && current_user.primary_address %>
+    (<%= dog_park.address.distance_from(current_user.primary_address).round(1) %> mi away)
+  <% end%>
+</h3>
 
 <p>For <%= dog_park.dog_size.humanize.downcase %> dogs</p>
 

@@ -1,5 +1,5 @@
 class DogParksController < ApplicationController
-  before_action :authenticate_user!, except: %i[show index]
+  before_action :authenticate_user!, except: %i[show]
   before_action :set_dogpark, only: %i[show edit update destroy follow unfollow]
 
   def show
@@ -7,7 +7,11 @@ class DogParksController < ApplicationController
   end
 
   def index
-    @dog_parks = DogPark.all
+    distance = params[:distance].present? ? params[:distance].to_i : 25
+    @nearby_dog_parks = DogPark.nearby(current_user, distance)
+    @nearby_dog_parks.each do |dog_park|
+      p dog_park
+    end
   end
 
   def new

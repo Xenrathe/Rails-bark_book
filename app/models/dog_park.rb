@@ -8,4 +8,15 @@ class DogPark < ApplicationRecord
   has_many :comments, as: :commentable
 
   validates :name, :dog_size, presence: true
+
+  def self.nearby(user, distance)
+    return unless user.primary_address.present?
+
+    nearby_dogparks = []
+    user.primary_address.nearbys(distance).where('addressable_type = ?', 'DogPark').each do |address|
+      nearby_dogparks << address.addressable
+    end
+
+    nearby_dogparks
+  end
 end

@@ -99,6 +99,7 @@ GEM
     erubi (1.12.0)
     ffi (1.16.3)
     flickr (2.1.0)
+    geocoder (1.8.2)
     globalid (1.2.1)
       activesupport (>= 6.1)
     i18n (1.14.1)
@@ -237,6 +238,7 @@ DEPENDENCIES
   debug
   devise (~> 4.9)
   flickr
+  geocoder
   image_processing (~> 1.2)
   importmap-rails
   jbuilder
