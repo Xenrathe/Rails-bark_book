@@ -1,10 +1,19 @@
 class DogsController < ApplicationController
+  include PaginationConcern
+  
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_dog, only: %i[ show edit update destroy follow unfollow ]
 
-  # GET /dogs or /dogs.json
   def index
-    @dogs = Dog.all
+    distance = params[:distance].present? ? params[:distance] : '25'
+    if distance != 'all' && current_user && current_user.primary_address
+      @dogs = Dog.nearby(current_user, distance.to_i)
+    else
+      @dogs = Dog.all
+    end
+
+    # Pagination
+    @dogs, @total_pages = paginate_collection(@dogs, 10)
   end
 
   def show
@@ -12,6 +21,8 @@ class DogsController < ApplicationController
     @bark_user_count = @dog.barks.count
     @did_user_bark = @dog.barks.where(user: current_user).exists?
     @dog_feed = @dog.contents.to_a.sort_by!(&:created_at).reverse!
+
+    @dog_feed, @total_pages = paginate_collection(@dog_feed, 10)
   end
 
   def new

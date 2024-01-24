@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   resources :users, except: [:index] do
     member do
       patch 'make_primary/:address_id', to: 'users#make_primary', as: :make_primary
+      get 'edit_address/:address_id', to: 'users#show', as: :edit_address
       post 'new_address', to: 'users#new_address'
     end
   end
@@ -36,9 +37,10 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :comments, except: [:index, :show]
-  resources :barks, only: [:new, :create]
+  resources :comments, except: %i[index show]
+  resources :barks, only: %i[new create]
+  resources :address, only: %i[update destroy]
 
   # Defines the root path route ("/")
-  root "dogs#index"
+  root 'users#feed'
 end

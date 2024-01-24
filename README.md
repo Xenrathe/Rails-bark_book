@@ -1,33 +1,37 @@
 # README
 
-## BarkBook, a social media app just for dogs
+## TheBarkPark, a social media app just for dogs
 
-## In-Development To-do List:
-* GoogleMaps/geocoder integration
+## Development To-do List:
 
-* Take flash implementation from ShowerThoughts
-* Navigation 'test' and connectivity
-* Pagination for feeds
-* Move all javascript to Stimulus controllers
-* CSS / styling
-
-* Add admin functionality, dog_parks can be added by ANYONE but only edited or deleted by admins
-* Admins can see who created a dog_park
-* Barks still counts up the number of 'users'
-
+### Barks
+* Barks still counts up the number of 'users' even if users delete
 * Pressing bark plays a sound
 * Several default bark sounds / bark selection on user profile
 * Ability to upload custom bark sound
-* User can add / delete / edit addresses on profile
-* User can change name on user profile
-* Timezone selection on user profile
-* Channel / websocket for feed and comments
-* Implement a real mailer
+
+### CSS and Java
+* Take flash implementation from ShowerThoughts
+* Move all javascript to Stimulus controllers
+* CSS / Styling
+* Channel / websocket for feed and comments?
+
+### Admin
+* Add admin functionality, dog_parks can be added by ANYONE but only edited or deleted by admins
+* Admins can see who created a dog_park
+* Admins have full access to edit / delete / etc
+* Admins can ban users
+
+### Production
+* Implement a real mailer and mailer views
 * Add cloud storage via google/amazon/microsoft
+
+### Future additions
+* API access
 
 ### Primary:
 
-BarkBook is a social-media website JUST for dogs, allowing users to make posts with text, images, and videos. Additionally, it can be used to schedule play-dates at local dog parks.
+TheBarkPark is a social-media website JUST for dogs, allowing users to make posts with text, images, and videos. Additionally, it can be used to schedule play-dates at local dog parks.
 
 BarkBook is active on fly.io: (LINK)
 

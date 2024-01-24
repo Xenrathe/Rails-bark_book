@@ -5,6 +5,7 @@ class Content < ApplicationRecord
 
   has_many_attached :attached_images do |attachable|
     attachable.variant :thumb, resize_to_limit: [200, 200]
+    attachable.variant :feedsize, resize_to_limit: [500, 500]
     attachable.variant :midsize, resize_to_limit: [1000, 1000]
   end
 

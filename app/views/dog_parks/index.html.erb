@@ -4,8 +4,8 @@
 
   <%= form_tag(dog_parks_path, method: :get) do %>
     <%= label_tag 'distance', 'Choose Nearby Distance:' %>
-    <% selected_distance = params[:distance].present? ? params[:distance].to_i : 25 %>
-    <%= select_tag 'distance', options_for_select([10, 25, 50, 100], selected: selected_distance) %>
+    <% selected_distance = params[:distance].present? ? params[:distance] : '25' %>
+    <%= select_tag 'distance', options_for_select(['10', '25', '50', '100', 'all'], selected: selected_distance) %>
     <%= submit_tag 'Filter' %>
   <% end %>
 

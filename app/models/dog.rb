@@ -21,10 +21,17 @@ class Dog < ApplicationRecord
 
   scope :small, -> { where('weight <= ?', 25) }
   scope :large, -> { where('weight > ?', 25) }
-  scope :in_my_city, lambda { |current_user|
-    joins("INNER JOIN addresses ON addresses.user_id = users.id AND addresses.id = (SELECT id FROM addresses WHERE user_id = users.id ORDER BY created_at LIMIT 1)")
-      .where('addresses.city = ? AND addresses.state = ?', current_user.addresses.first.city, current_user.addresses.first.state)
-  }
+
+  def self.nearby(user, distance)
+    return unless user.primary_address.present?
+
+    nearby_dogs = [user.dogs]
+    user.primary_address.nearbys(distance)&.where('addressable_type = ?', 'User')&.each do |address|
+      nearby_dogs << address.addressable.dogs if User.find(address.addressable_id).primary_address.id == address.id
+    end
+
+    nearby_dogs.flatten
+  end
 
   private
 

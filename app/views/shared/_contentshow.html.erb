@@ -1,9 +1,10 @@
 <h2> <%= content.title %> </h2>
 <% if type == 'video' %>
-  <%= video_tag rails_blob_path(content.attached_video, only_path: true), :controls => true %>
+  <% width = media_size == :feedsize ? '500' : '1000' %>
+  <%= video_tag rails_blob_path(content.attached_video, only_path: true), controls: true, width: width %>
 <% elsif type == 'image' %>
   <% content.attached_images.each do |attached_image| %>
-    <%= image_tag attached_image.variant(:midsize) %><br>
+    <%= image_tag attached_image.variant(media_size) %><br>
   <% end %>
 <% end %>
 <p> 

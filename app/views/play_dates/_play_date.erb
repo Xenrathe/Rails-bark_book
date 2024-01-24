@@ -8,27 +8,27 @@
 <%= render play_date.dog_park %>
 
 <h2>Dog Attendees</h2>
-<ul>
-  <% play_date.attendees.each do |dog| %>
-    <% if dog.avatar.attached? %>
-      <%= image_tag dog.avatar.variant(:attendee) %><br>
+<%= turbo_frame_tag "play_date-attendees" do %>
+  <div class="attendees">
+    <% play_date.attendees.each do |dog| %>
+      <% if dog.avatar.attached? %>
+        <%= image_tag dog.avatar.variant(:attendee) %><br>
+      <% end %>
+      <%= link_to dog.name, dog %><br>
     <% end %>
-    <%= link_to dog.name, dog %>
-  <% end %>
-</ul>
+  </div>
 
-<% if current_user %>
-  <%= form_tag attend_play_date_path(play_date), method: :post do %>
-    <%= turbo_frame_tag "attend-play_date" do %>
+  <% if current_user %>
+    <%= form_tag attend_play_date_path(play_date), method: :post do %>
       <% current_user.dogs.each do |dog| %>
         <label>
           <%= check_box_tag 'dog_attendee_ids[]', dog.id, play_date.attendees.include?(dog) %>
           <%= dog.name %>
         </label><br>
       <% end %>
-    <% end %>
 
-    <%= submit_tag 'Alter attendance' %>
+      <%= submit_tag 'Alter attendance' %>
+    <% end %>
   <% end %>
 <% end %>
 

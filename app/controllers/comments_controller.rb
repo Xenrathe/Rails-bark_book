@@ -36,6 +36,8 @@ class CommentsController < ApplicationController
         Content.find(params[:comment][:commentable_id])
       elsif params[:comment][:commentable_type] == 'play_date'
         PlayDate.find(params[:comment][:commentable_id])
+      elsif params[:comment][:commentable_type] == 'dog_park'
+        DogPark.find(params[:comment][:commentable_id])
       end
     end
   end

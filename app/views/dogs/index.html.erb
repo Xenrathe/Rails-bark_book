@@ -1,24 +1,33 @@
 <h1>Dogs</h1>
 
-<div id="dogs">
-  <% @dogs.each do |dog| %>
-    <%= render dog %>
-    <p>
-      <%= link_to "View", dog %>
-      <% if current_user && current_user.id == dog.user_id %>
-        <%= link_to "Delete entry", dog, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this dog?"} %>
-      <% end %>
-      <% if current_user && current_user.id != dog.user_id %>
-        <%= turbo_frame_tag "follow-actions-#{dog.id}" do %>
-          <% if current_user.following?(dog) %>
-            <%= link_to 'Unfollow', unfollow_dog_path(dog), method: :delete, data: {turbo_method: :delete} %>
-          <% else %>
-            <%= link_to 'Follow', follow_dog_path(dog), method: :post, data: {turbo_method: :post} %>
+<div class="dog">
+  <% if current_user && current_user.primary_address %>
+
+    <%= form_tag(dogs_path, method: :get) do %>
+      <%= label_tag 'distance', 'Choose Nearby Distance:' %>
+      <% selected_distance = params[:distance].present? ? params[:distance] : '25' %>
+      <%= select_tag 'distance', options_for_select(['10', '25', '50', '100', 'all'], selected: selected_distance) %>
+      <%= submit_tag 'Filter' %>
+    <% end %>
+  <% end %>
+  <hr>
+
+  <div class="list">
+    <% @dogs.each do |dog| %>
+      <%= render dog, show_ownership: false, image_link: true %>
+      <p>
+        <% if current_user && current_user.id != dog.user_id %>
+          <%= turbo_frame_tag "follow-actions-#{dog.id}" do %>
+            <% if current_user.following?(dog) %>
+              <%= link_to 'Unfollow', unfollow_dog_path(dog), method: :delete, data: {turbo_method: :delete} %>
+            <% else %>
+              <%= link_to 'Follow', follow_dog_path(dog), method: :post, data: {turbo_method: :post} %>
+            <% end %>
           <% end %>
         <% end %>
-      <% end %>
-    </p>
-  <% end %>
+      </p>
+    <% end %>
+  </div>
 </div>
 
-<%= link_to "New dog", new_dog_path %>
+<%= render 'shared/pagination', page: @page, total_pages: @total_pages %>

@@ -4,13 +4,15 @@ class DogParksController < ApplicationController
 
   def show
     @upcoming_play_dates = @dog_park.play_dates.upcoming
+    @comments = @dog_park.comments
   end
 
   def index
-    distance = params[:distance].present? ? params[:distance].to_i : 25
-    @nearby_dog_parks = DogPark.nearby(current_user, distance)
-    @nearby_dog_parks.each do |dog_park|
-      p dog_park
+    distance = params[:distance].present? ? params[:distance] : '25'
+    if distance != 'all'
+      @nearby_dog_parks = DogPark.nearby(current_user, distance.to_i)
+    else
+      @nearby_dog_parks = DogPark.all
     end
   end
 
@@ -21,9 +23,9 @@ class DogParksController < ApplicationController
 
   def create
     @dog_park = DogPark.new(dog_park_params)
-    existing_address = Address.find_existing(params[:dog_park][:address_attributes])
+    existing_address = @dog_park.address.find_existing
 
-    if existing_address && existing_address.addressable_type == 'DogPark'
+    if !existing_address.empty? && existing_address.first.addressable_type == 'DogPark'
       flash.now[:alert] = 'This dog park already exists.'
       render :new, status: :unprocessable_entity
     else
@@ -44,6 +46,22 @@ class DogParksController < ApplicationController
   end
 
   def update
+    # Eventually allow admins to edit but for now only users can upload images
+    if current_user
+      if params[:dog_park][:attached_images].present?
+        params[:dog_park][:attached_images].each do |image|
+          @dog_park.attached_images.attach(image)
+        end
+        flash.now[:notice] = "Images successfully added."
+        redirect_back(fallback_location: root_path)
+      else
+        flash.now[:notice] = "Error adding images"
+        redirect_back(fallback_location: root_path, status: :unprocessable_entity)
+      end
+    else
+      flash.now[:alert] = "Must be logged in to post images."
+      render :edit, status: :unprocessable_entity
+    end
   end
 
   def destroy
@@ -68,7 +86,11 @@ class DogParksController < ApplicationController
   end
 
   def dog_park_params
-    params.require(:dog_park).permit(:name, :dog_size, address_attributes:
+    params.require(:dog_park).permit(:name, :dog_size, attached_images: [], address_attributes:
       %i[address_one address_two city state postal_code country])
+  end
+
+  def dog_park_image_params
+    params.require(:dog_park).permit(attached_images: [])
   end
 end

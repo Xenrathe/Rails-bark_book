@@ -1,26 +1,48 @@
 <% ownership_access = false # EVENTUALLY ADMIN ACCESS %>
-<%= render @dog_park, dog_park: @dog_park %>
+<div class="dog-park show">
+  <%= render @dog_park, dog_park: @dog_park %>
 
-<div class="actions">
-  <%= turbo_frame_tag "follow-unfollow-dog_park" do %>
-    <% if current_user && current_user.following?(@dog_park) %>
-      <%= link_to 'Unfollow', unfollow_dog_park_path(@dog_park), method: :delete, data: {turbo_method: :delete} %> 
-    <% else %>
-      <%= link_to 'Follow', follow_dog_park_path(@dog_park), method: :post, data: {turbo_method: :post} %> 
+  <div class="actions">
+    <%= turbo_frame_tag "follow-unfollow-dog_park" do %>
+      <% if current_user && current_user.following?(@dog_park) %>
+        <%= link_to 'Unfollow', unfollow_dog_park_path(@dog_park), method: :delete, data: {turbo_method: :delete} %> 
+      <% else %>
+        <%= link_to 'Follow', follow_dog_park_path(@dog_park), method: :post, data: {turbo_method: :post} %> 
+      <% end %>
+      <% if ownership_access %>
+        <%= link_to 'Edit', edit_dog_park_path(@dog_park) %> |
+        <%= link_to 'Delete', dog_park_path(@dog_park), method: :delete, data: {turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this park?'} %>
+      <% end %>
     <% end %>
-    <% if ownership_access %>
-      <%= link_to 'Edit', edit_dog_park_path(@dog_park) %> |
-      <%= link_to 'Delete', dog_park_path(@dog_park), method: :delete, data: {turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this park?'} %>
-    <% end %>
-  <% end %>
-</div>
+  </div>
 
-<div class="play-dates">
-  <h3>Upcoming Play-dates:</h3>
-  <ul>
-  <% @upcoming_play_dates.each do |play_date| %>
-    <% user_time_zone = current_user ? current_user.time_zone : 'UTC' %>
-    <li><%= link_to "On #{play_date.date.in_time_zone(user_time_zone).strftime("%a, %b %e @ %l:%M%P")}, with #{play_date.attendees.count} dogs", play_date %>
-  <% end %>
-  </ul>
+  <div class="play-dates">
+    <h3>Upcoming Play-dates:</h3>
+    <ul>
+    <% @upcoming_play_dates.each do |play_date| %>
+      <% user_time_zone = current_user ? current_user.time_zone : 'UTC' %>
+      <li><%= link_to "On #{play_date.date.in_time_zone(user_time_zone).strftime("%a, %b %e @ %l:%M%P")}, with #{play_date.attendees.count} dogs", play_date %>
+    <% end %>
+    </ul>
+  </div>
+
+  <div class="images">
+    <h3>Images</h3>
+    <% if @dog_park.attached_images.any? %>
+      <% @dog_park.attached_images.each do |attached_image| %>
+        <%= image_tag attached_image.variant(:thumb) %>
+      <% end %>
+    <% end %>
+
+    <% if current_user %>
+      <div id="new-image-form">
+        <%= form_with(model: @dog_park, local: true) do |new_image_form| %>
+          <%= new_image_form.file_field :attached_images, multiple: true %><br>
+          <%= new_image_form.submit "Upload images" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+
+  <%= render "shared/comments", commentable: @dog_park, comments: @comments, commentable_type: 'dog_park', comments_mode: 'full' %>
 </div>

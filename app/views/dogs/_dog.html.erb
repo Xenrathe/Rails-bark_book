@@ -1,7 +1,18 @@
 <div class="dog partial-dog">
   <% if dog.avatar.attached? %>
-    <%= image_tag dog.avatar.variant(:thumb) %><br>
+    <% if image_link %>
+      <%= link_to image_tag(dog.avatar.variant(:thumb), alt: 'Dog picture'), dog_path(dog), data: { turbo_frame: "_top" } %><br>
+    <% else %>
+      <%= image_tag dog.avatar.variant(:thumb) %><br>
+    <% end %>
   <% end %>
   <%= dog.name %>, a 
-  <%= dog.breed %> weighing <%= dog.weight %> lbs, born in <%= dog.birthdate.year %>.
+  <%= dog.breed %> weighing <%= dog.weight %> lbs, born in <%= dog.birthdate.year %>. 
+  <% if show_ownership %>
+    <% if current_user && dog.user == current_user %>
+      YOUR best friend!
+    <% else %>
+      Best friend of <%= link_to dog.user.username, user_path(dog.user) %>.
+    <% end %>
+  <% end %>
 </div>

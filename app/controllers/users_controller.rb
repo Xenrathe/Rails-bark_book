@@ -1,4 +1,6 @@
 class UsersController < ApplicationController
+  include PaginationConcern
+
   before_action :authenticate_user!
   before_action :set_user, only: %i[show edit update make_primary destroy]
 
@@ -9,6 +11,10 @@ class UsersController < ApplicationController
 
     @new_address = current_user.addresses.build if @user.id == current_user.id
 
+    if params[:address_id].present?
+      @edit_address = Address.find(params[:address_id])
+    end
+
     @user_content = Set.new
   
     @owned_dogs.each do |dog|
@@ -17,6 +23,8 @@ class UsersController < ApplicationController
 
     @user_content = @user_content.to_a
     @user_content.sort_by! { |dog_content| dog_content.created_at }.reverse!
+    # Pagination
+    @user_content, @total_pages = paginate_collection(@user_content, 10)
   end
 
   def edit
@@ -34,6 +42,16 @@ class UsersController < ApplicationController
     else
       flash[:alert] = "You cannot edit other user's profiles."
       render :edit, status: :unprocessable_entity
+    end
+  end
+
+
+  def destroy
+    if current_user && @user == current_user
+      @user.destroy
+      redirect_to dogs_path, alert: 'Account deleted.'
+    else
+      render :edit, status: :unprocessable_entity, alert: 'You cannot delete other user accounts'
     end
   end
 
@@ -80,6 +98,9 @@ class UsersController < ApplicationController
 
     @feed_content = @feed_content.to_a
     @feed_content.sort_by! { |dog_content| dog_content.created_at }.reverse!
+    
+    # Pagination
+    @feed_content, @total_pages = paginate_collection(@feed_content, 10)
   end
 
   private

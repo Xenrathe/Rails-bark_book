@@ -21,6 +21,7 @@
 
           <%= edit_user_form.submit 'Update details' %>
         <% end %>
+        <%= button_to "DELETE ACCOUNT", @user, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete account? All associated content will be destroyed."}%>
       <% end %>
     </div>
     <div id="user-addresses">
@@ -28,15 +29,27 @@
       <%= turbo_frame_tag "user-addresses" do %>
         <% @user.addresses.each do |address| %>
           <div class="user-address">
-            <strong><%= address.name %></strong><br>
-            <%= address.address_one %> <%= address.address_two %><br>
-            <%= address.city %>, <%= address.state %>, <%= address.country %> <%= address.postal_code %><br>
+            <% if @edit_address == address %>
+              <%= form_with(model: address, method: :patch, local: true) do |edit_address_form| %>
+                <%= render 'shared/addressform', address_form: edit_address_form, include_name: true %>
+                <%= edit_address_form.submit %>
+              <% end %>
+            <% else %>
+              <div class="details">
+                <strong><%= address.name %> <% if !@user.primary_address.nil? && @user.primary_address == address %>(primary)<% end %></strong> <br>
+                <%= address.address_one %> <%= address.address_two %><br>
+                <%= address.city %>, <%= address.state %>, <%= address.country %> <%= address.postal_code %><br>
+              </div>
+              <div class="actions">
+                <% if @user.primary_address.nil? || @user.primary_address != address %>
+                  <%= button_to 'Primary', make_primary_user_path(@user, address), method: :patch, data: {turbo_method: :patch} %>
+                <% end %>
+                <%= button_to 'Edit', edit_address_user_path(@user, address), method: :get, data: { turbo_method: :get } %>
+                <%= button_to 'Delete', address, method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete address?" } %>
+              </div>
+            <% end %>
+            <br>
           </div>
-          <% if !@user.primary_address.nil? && @user.primary_address == address %>
-            Primary<br><br>
-          <% else %>
-            <%= link_to 'Make Primary', make_primary_user_path(@user, address), method: :patch, data: {turbo_method: :patch} %><br><br>
-          <% end %>
         <% end %>
 
         <%= button_tag 'Add New Address', class: 'toggle-form-button', id: 'add-address-button' %>
@@ -67,13 +80,12 @@
 
   <div id="dogs owned">
     <% @owned_dogs.each do |dog| %>
-      <%= render dog %>
-      <%= link_to "View", dog, data: { turbo_frame: "_top" } %>
+      <%= render dog, show_ownership: false, image_link: true %>
       <% if current_user && current_user.id == @user.id %>
         <%= link_to "Delete entry", dog, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this dog?"} %>
       <% end %>
     <% end %>
-    <% if ownership_access%>
+    <% if ownership_access %>
       <br><br><%= button_to "New dog", new_dog_path, method: :get, data: {turbo_method: :get} %>
     <% end %>
   </div>
@@ -84,7 +96,7 @@
     <%= turbo_frame_tag "followed-dogs" do %>
       <% @followed_dogs.each do |dog| %>
       
-        <%= render dog %>
+        <%= render dog, show_ownership: true, image_link: true %>
         <%= link_to "View", dog, data: { turbo_frame: "_top" } %>
         
         <% if ownership_access %>
