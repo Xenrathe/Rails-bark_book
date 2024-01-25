@@ -20,6 +20,7 @@
   <% else %>
     <%= link_to 'Login/signup', new_user_session_path %>
   <% end %>
-    -
-    <span style="color: green"><%= notice %></span><span style="color: red"><%= alert %></span>
+    <% if notice || alert %>
+    - <span style="color: green"><%= notice %></span><span style="color: red"><%= alert %></span>
+    <% end %>
 </div>

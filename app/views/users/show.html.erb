@@ -1,7 +1,16 @@
 <% ownership_access = current_user && current_user == @user ? true : false%>
 
 <div class="user show">
+  <div class="tab-links">
+    <br>
+    <% if ownership_access %><a href="#details-tab" class="tab-link">Details</a> | <% end %>
+    <a href="#dogs-tab" class="tab-link">Dogs</a> | 
+    <a href="#dog-parks-tab" class="tab-link">Dog Parks</a> | 
+    <a href="#posts-tab" class="tab-link">Posts</a>
+  </div>
+
   <% if ownership_access %>
+  <div id="details-tab" class="tab-content">
     <h2>Personal details:</h2>
     <div id="user-details">
       <strong>E-mail: </strong><%= @user.email %><br>
@@ -24,6 +33,7 @@
         <%= button_to "DELETE ACCOUNT", @user, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete account? All associated content will be destroyed."}%>
       <% end %>
     </div>
+    
     <div id="user-addresses">
       <h3>Addresses:</h3>
       <%= turbo_frame_tag "user-addresses" do %>
@@ -73,60 +83,67 @@
         </div>
       <% end %>
     </div>
+  </div>
   <% end %>
 
-  <h2><% prefix = ownership_access ? "Your" : "#{@user.username}'s" %> 
-  <%= prefix %> dogs:</h2>
+  <div id="dogs-tab" class="tab-content">
+    <h2><% prefix = ownership_access ? "Your" : "#{@user.username}'s" %> 
+    <%= prefix %> dogs:</h2>
 
-  <div id="dogs owned">
-    <% @owned_dogs.each do |dog| %>
-      <%= render dog, show_ownership: false, image_link: true %>
-      <% if current_user && current_user.id == @user.id %>
-        <%= link_to "Delete entry", dog, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this dog?"} %>
-      <% end %>
-    <% end %>
-    <% if ownership_access %>
-      <br><br><%= button_to "New dog", new_dog_path, method: :get, data: {turbo_method: :get} %>
-    <% end %>
-  </div>
-
-  <h2>Followed dogs:</h2>
-
-  <div id="dogs followed">
-    <%= turbo_frame_tag "followed-dogs" do %>
-      <% @followed_dogs.each do |dog| %>
-      
-        <%= render dog, show_ownership: true, image_link: true %>
-        <%= link_to "View", dog, data: { turbo_frame: "_top" } %>
-        
-        <% if ownership_access %>
-          <%= link_to 'Unfollow', unfollow_dog_path(dog), method: :delete, data: {turbo_method: :delete} %>
+    <div id="dogs owned">
+      <% @owned_dogs.each do |dog| %>
+        <%= render dog, show_ownership: false, image_link: true %>
+        <% if current_user && current_user.id == @user.id %>
+          <%= link_to "Delete entry", dog, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this dog?"} %>
         <% end %>
       <% end %>
-    <% end %>
-  </div>
+      <% if ownership_access %>
+        <br><br><%= button_to "New dog", new_dog_path, method: :get, data: {turbo_method: :get} %>
+      <% end %>
+    </div>
 
-  <h2>Followed dog-parks:</h2>
+    <h2>Followed dogs:</h2>
 
-  <div id="dog-parks followed">
-    <%= turbo_frame_tag "followed-dog-parks" do %>
-      <% @followed_dog_parks.each do |dog_park| %>
-      
-        <%= render dog_park %>
-        <br>
-        <%= link_to "View", dog_park, data: { turbo_frame: "_top" } %>
+    <div id="dogs followed">
+      <%= turbo_frame_tag "followed-dogs" do %>
+        <% @followed_dogs.each do |dog| %>
         
-        <% if ownership_access %>
-          <%= link_to 'Unfollow', unfollow_dog_park_path(dog_park), method: :delete, data: {turbo_method: :delete} %>
+          <%= render dog, show_ownership: true, image_link: true %>
+          <%= link_to "View", dog, data: { turbo_frame: "_top" } %>
+          
+          <% if ownership_access %>
+            <%= link_to 'Unfollow', unfollow_dog_path(dog), method: :delete, data: {turbo_method: :delete} %>
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
+    </div>
+  </div>
+  
+  <div id="dog-parks-tab" class="tab-content">
+    <h2>Followed dog-parks:</h2>
+
+    <div id="dog-parks followed">
+      <%= turbo_frame_tag "followed-dog-parks" do %>
+        <% @followed_dog_parks.each do |dog_park| %>
+        
+          <%= render dog_park %>
+          <br>
+          <%= link_to "View", dog_park, data: { turbo_frame: "_top" } %>
+          
+          <% if ownership_access %>
+            <%= link_to 'Unfollow', unfollow_dog_park_path(dog_park), method: :delete, data: {turbo_method: :delete} %>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 
-  <div class="contents">
+  <div id="posts-tab" class="tab-content">
+    <div class="contents">
     <h2>Content from <%= @user.username %>'s dogs:</h2>
     
     <%= render 'shared/contentfeed', feed_contents: @user_content %>
+    </div>
   </div>
 </div>
 
@@ -138,6 +155,33 @@
 
     addButton.addEventListener('click', function () {
       formDiv.style.display = 'block';
+    });
+  });
+
+  document.addEventListener('turbo:load', function() {
+    // Hide all tab contents except dogs
+    document.querySelectorAll('.tab-content').forEach(function(tabContent) {
+      if (tabContent.id == 'dogs-tab') {
+        tabContent.style.display = 'block';
+      } else {
+        tabContent.style.display = 'none';
+      }
+    });
+
+    // Handle tab link clicks
+    document.querySelectorAll('.tab-link').forEach(function(tabLink) {
+      tabLink.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        // Hide all tab contents
+        document.querySelectorAll('.tab-content').forEach(function(tabContent) {
+          tabContent.style.display = 'none';
+        });
+
+        // Show the selected tab content
+        const targetTabId = this.getAttribute('href').substring(1);
+        document.getElementById(targetTabId).style.display = 'block';
+      });
     });
   });
 </script>

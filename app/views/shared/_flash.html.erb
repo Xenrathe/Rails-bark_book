@@ -1,0 +1,6 @@
+  <% # These are styled to have a fixed display over top everything and then fade out %>
+  <% flash.each do |key, value| %>
+  <div class="flash flash-<%= key %>">
+    <span class="text"><%= value %></span>
+  </div>
+  <% end %>

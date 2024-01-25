@@ -5,13 +5,11 @@
 ## Development To-do List:
 
 ### Barks
-* Barks still counts up the number of 'users' even if users delete
 * Pressing bark plays a sound
 * Several default bark sounds / bark selection on user profile
 * Ability to upload custom bark sound
 
 ### CSS and Java
-* Take flash implementation from ShowerThoughts
 * Move all javascript to Stimulus controllers
 * CSS / Styling
 * Channel / websocket for feed and comments?
