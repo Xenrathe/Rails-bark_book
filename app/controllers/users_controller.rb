@@ -114,7 +114,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:username, :time_zone)
+    params.require(:user).permit(:username, :time_zone, :bark_sound, :custom_bark)
   end
 
 end

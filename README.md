@@ -4,28 +4,31 @@
 
 ## Development To-do List:
 
-### Barks
-* Pressing bark plays a sound
-* Several default bark sounds / bark selection on user profile
-* Ability to upload custom bark sound
-
 ### CSS and Java
 * Move all javascript to Stimulus controllers
 * CSS / Styling
+
+### Optimization and validation
+* Check for N+1
+* Validation checks on file-type (images have to be .png, .jpg, etc; custom barks .wav; video, etc)
+* Validation checks on maximum file size
+
+### Production
+* Implement a real mailer and mailer views
+* Add cloud storage via google/amazon/microsoft
+* Upload to Fly
+
+### Future additions
+* API access
 * Channel / websocket for feed and comments?
+* Admin functionality (see below)
 
 ### Admin
 * Add admin functionality, dog_parks can be added by ANYONE but only edited or deleted by admins
 * Admins can see who created a dog_park
 * Admins have full access to edit / delete / etc
 * Admins can ban users
-
-### Production
-* Implement a real mailer and mailer views
-* Add cloud storage via google/amazon/microsoft
-
-### Future additions
-* API access
+* Users can flag content, which admins can see
 
 ### Primary:
 

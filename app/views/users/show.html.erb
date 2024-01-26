@@ -3,7 +3,7 @@
 <div class="user show">
   <div class="tab-links">
     <br>
-    <% if ownership_access %><a href="#details-tab" class="tab-link">Details</a> | <% end %>
+    <% if ownership_access %><a href="#details-tab" class="tab-link">Settings</a> | <% end %>
     <a href="#dogs-tab" class="tab-link">Dogs</a> | 
     <a href="#dog-parks-tab" class="tab-link">Dog Parks</a> | 
     <a href="#posts-tab" class="tab-link">Posts</a>
@@ -11,8 +11,8 @@
 
   <% if ownership_access %>
   <div id="details-tab" class="tab-content">
-    <h2>Personal details:</h2>
     <div id="user-details">
+      <h2>Personal details:</h2>
       <strong>E-mail: </strong><%= @user.email %><br>
       <% unless ownership_access %>
         <strong>Username: </strong><%= @user.username %>
@@ -31,6 +31,35 @@
           <%= edit_user_form.submit 'Update details' %>
         <% end %>
         <%= button_to "DELETE ACCOUNT", @user, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete account? All associated content will be destroyed."}%>
+      <% end %>
+    </div>
+
+    <div id="user-barks">
+      <%= turbo_frame_tag "bark-setings" do %>
+        <h3>Bark Settings</h3>
+        <%= form_with(model: @user, local: true, html: { multipart: true }) do |bark_form| %>
+          <div class="bark-radios">
+            <%= bark_form.radio_button :bark_sound, 'mute', checked: @user.bark_sound == 'mute', id: 'mute-sound' %>
+            <%= bark_form.label 'mute-sound', 'Mute Sound', for: 'mute-sound' %><br>
+
+            <% (1..5).each do |num|%>
+              <%= bark_form.radio_button :bark_sound, "bark_#{num}", checked: @user.bark_sound == "bark_#{num}", id: "bark_#{num}", data: {soundurl: "#{asset_path("bark_#{num}")}"} %>
+              <%= bark_form.label "bark_#{num}", "Bark #{num}", for: "bark_#{num}" %><br>
+            <% end %>
+    
+            <% custom_url = @user.custom_bark.attached? ? rails_blob_path(@user.custom_bark) : '' %>
+            <%= bark_form.radio_button :bark_sound, 'custom', checked: @user.bark_sound == 'custom' && @user.custom_bark.attached?, id: "custom_sound", data: {soundurl: custom_url} %>
+            <%= bark_form.label "custom_sound", "Custom Bark", for: 'custom_sound' %><br>
+          </div>
+            
+          <div id="upload-sound-options" style="<%= 'display: none;' unless !@user.bark_sound && @user.custom_bark.attached? %>">
+            <%= bark_form.label :custom_bark, 'Upload WAV' %><br>
+            <%= bark_form.file_field :custom_bark %>
+          </div>
+
+          <%= bark_form.button 'Test Bark', id: 'test-sound-button', data: {controller: "sound", action: "click->sound#test"} %>
+          <%= bark_form.submit 'Update Bark Settings' %>
+        <% end %>
       <% end %>
     </div>
     
@@ -149,6 +178,7 @@
 
 
 <script>
+  // Hiding / showing the address form
   document.addEventListener('turbo:load', function () {
     const addButton = document.getElementById('add-address-button');
     const formDiv = document.getElementById('new-address-form');
@@ -158,6 +188,7 @@
     });
   });
 
+  // Hiding / showing the tab contents
   document.addEventListener('turbo:load', function() {
     // Hide all tab contents except dogs
     document.querySelectorAll('.tab-content').forEach(function(tabContent) {
@@ -182,6 +213,31 @@
         const targetTabId = this.getAttribute('href').substring(1);
         document.getElementById(targetTabId).style.display = 'block';
       });
+    });
+  });
+
+  // Hiding / showing the upload custom sound
+  document.addEventListener('turbo:load', function() {
+    // Function to toggle visibility of upload-sound-options
+    function toggleUploadOptions() {
+      var customSoundRadio = document.getElementById('custom_sound');
+      var uploadOptionsDiv = document.getElementById('upload-sound-options');
+
+      // Check if the custom_sound radio button is checked
+      if (customSoundRadio.checked) {
+        uploadOptionsDiv.style.display = 'block'; // Show the upload-sound-options div
+      } else {
+        uploadOptionsDiv.style.display = 'none'; // Hide the upload-sound-options div
+      }
+    }
+
+    // Initial call to set visibility based on the initial state
+    toggleUploadOptions();
+
+    // Add event listeners to the radio buttons
+    var radioButtons = document.querySelectorAll('[name="user[bark_sound]"]');
+    radioButtons.forEach(function(radioButton) {
+      radioButton.addEventListener('change', toggleUploadOptions);
     });
   });
 </script>
