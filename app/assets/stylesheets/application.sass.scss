@@ -1,8 +1,8 @@
 // Entry point for your Sass build
+@use "navbar";
 
-.navbar {
-  position: fixed;
-  top: 0px;
-  background-color: white;
-  padding: 4px;
+body {
+  display: flex;
+  flex-direction: row;
 }
+
