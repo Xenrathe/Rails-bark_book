@@ -1,14 +1,21 @@
-<h2> <%= content.title %> </h2>
-<% if type == 'video' %>
-  <% width = media_size == :feedsize ? '500' : '1000' %>
-  <%= video_tag rails_blob_path(content.attached_video, only_path: true), controls: true, width: width %>
-<% elsif type == 'image' %>
-  <% content.attached_images.each do |attached_image| %>
-    <%= image_tag attached_image.variant(media_size) %><br>
+<div class="content">
+  <% if content.title != ''%>
+    <h2> <%= content.title %> </h2>
   <% end %>
-<% end %>
-<p> 
-  <%= content.body %>
-</p>
-<%= render "shared/barks", barks: barks, barkable: content %>
-<%= render "shared/comments", commentable: content, comments: comments, commentable_type: 'content', comments_mode: comments_mode %>
+  <% if type == 'video' %>
+    <% width = media_size == :feedsize ? '500' : '1000' %>
+    <%= video_tag rails_blob_path(content.attached_video, only_path: true), controls: true, width: width %>
+  <% elsif type == 'image' %>
+    <% content.attached_images.each do |attached_image| %>
+      <%= image_tag attached_image.variant(media_size) %>
+    <% end %>
+  <% end %>
+  <% if content.body != '' && !content.body.nil? %>
+    <p> <%= content.body %> </p>
+  <% end%>
+
+  <div class="barks-comments-<%= comments_mode %>">
+    <%= render "shared/barks", barks: barks, barkable: content %> | 
+    <%= render "shared/comments", commentable: content, comments: comments, commentable_type: 'content', comments_mode: comments_mode %>
+  </div>
+</div>

@@ -7,6 +7,10 @@
 ### CSS and Java
 * Move all javascript to Stimulus controllers
 * CSS / Styling
+* Better buttons!
+
+### Additional features
+* Search bar for dogs, searching by breed
 
 ### Optimization and validation
 * Check for N+1
@@ -48,6 +52,8 @@ BarkBook is active on fly.io: (LINK)
 * list o stuff
 
 ### Image Attribution
--stuffs
+-Bark Icon by Gregor Cresnar from <a href="https://thenounproject.com/browse/icons/term/bark/" target="_blank" title="bark Icons">Noun Project</a> (CC BY 3.0)
+-Park Background by <a href="https://unsplash.com/@megindoors?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Meg</a> on <a href="https://unsplash.com/photos/a-picnic-table-in-the-middle-of-a-field-of-flowers-3hyfMlJJ8rU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+  
 
 ![Screenshot of the X](LINK)

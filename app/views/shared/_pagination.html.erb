@@ -1,7 +1,7 @@
 <div class="pagination">
   <% if total_pages > 1 %>
     <span class="pagination-info">Page <%= page %> of <%= total_pages %></span>
-    <%= link_to 'Previous', { page: page - 1 } if page > 1 %>
-    <%= link_to 'Next', { page: page + 1 } if page < total_pages %>
+    <%= link_to 'Previous', { page: page - 1 }.merge(navigation_params) if page > 1 %>
+    <%= link_to 'Next', { page: page + 1 }.merge(navigation_params) if page < total_pages %>
   <% end %>
 </div>

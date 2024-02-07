@@ -2,11 +2,12 @@
 
 .navbar {
   background-color: white;
-  padding: 4px;
+  padding: 10px;
   max-width: 25vw;
   min-width: 10vw;
+  position: sticky;
 
-  box-shadow: 1px 0px 0px 0px #030303;
+  box-shadow: 1px 1px 0px 0px #030303;
   margin-right: 15px;
 
   display: flex;
@@ -18,7 +19,6 @@
   .logo {
     font-weight: bold;
     margin-bottom: 5px;
-    margin-right: 10px;
   }
 
   .links {
@@ -56,16 +56,15 @@
   }
 
   .navbar {
-    position: fixed;
+    margin: 0px;
+    z-index: 999;
     top: 0px;
     left: 0px;
-    z-index: 999;
-    margin: 0px;
 
     flex-direction: row;
     justify-content: center;
     box-shadow: 0px 1px 0px 0px #030303;
-    min-width: 100%;
+    min-width: calc(100% - 20px);
 
     .logo {
       font-size: 0px;
@@ -96,6 +95,10 @@
 //MIDDLE-SIZED SCREEN
 @media only screen and (min-width: calc(globalvars.$mobile-width + 1px)) and (max-width: globalvars.$midscreen-width){
   .navbar {
+    align-self: flex-start;
+    left: 7px;
+    top: 7px;
+    margin-top: 7px;
 
     .logo {
       text-align: center;
@@ -117,19 +120,29 @@
 //LARGEST SCREEN
 @media only screen and (min-width: calc(globalvars.$midscreen-width + 1px)){
   .navbar {
+    align-self: flex-start;
+    left: 15px;
+    margin-top: 15px;
+    top: 15px;
 
     .logo {
       text-align: left;
       padding-left: 10px;
+      margin-right: 10px;
     }
 
     .logo:after {
       content: 'The Bark Park';
-      font-size: 18px;
+      font-size: 20px;
     }
 
     .links {
       align-items: flex-start;
+      width: 100%;
+
+      .link {
+        width: calc(100% - 25px);
+      }
     }
   }
 }

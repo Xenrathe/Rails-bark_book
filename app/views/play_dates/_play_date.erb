@@ -1,36 +1,50 @@
-<h3><%= link_to "Play Date @ #{play_date.dog_park.name}", play_date %></h3>
-
-<% user_time_zone = current_user ? current_user.time_zone : 'UTC' %>
-<p><strong>Date/Time:</strong> <%= play_date.date.in_time_zone(user_time_zone).strftime("%a, %b %e @ %l:%M%P") %></p>
-<p><strong>Description:</strong> <%= play_date.description %></p>
-<p><strong>Dog Size:</strong> <%= play_date.dog_size %></p>
-
-<%= render play_date.dog_park %>
-
-<h2>Dog Attendees</h2>
-<%= turbo_frame_tag "play_date-attendees" do %>
-  <div class="attendees">
-    <% play_date.attendees.each do |dog| %>
-      <% if dog.avatar.attached? %>
-        <%= image_tag dog.avatar.variant(:attendee) %><br>
-      <% end %>
-      <%= link_to dog.name, dog %><br>
-    <% end %>
+<div class="play-date transparent-bg">
+  
+  <div class="title-section">
+    <% ownership = current_user && current_user.id == play_date.user_id && include_actions %>
+    <% if ownership %><%= button_to 'Edit', edit_play_date_path(play_date), method: :get %><% end %>
+    <div class="title"><%= link_to "Play Date @ #{play_date.dog_park.name}", play_date %></div>
+    <% if ownership %><%= button_to 'Delete', play_date_path(play_date), method: :delete, data: {turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this play date?'} %><% end %>
   </div>
 
-  <% if current_user %>
-    <%= form_tag attend_play_date_path(play_date), method: :post do %>
-      <% current_user.dogs.each do |dog| %>
-        <label>
-          <%= check_box_tag 'dog_attendee_ids[]', dog.id, play_date.attendees.include?(dog) %>
-          <%= dog.name %>
-        </label><br>
-      <% end %>
+  <% user_time_zone = current_user ? current_user.time_zone : 'UTC' %>
+  <div class="details">
+    <div class="item"><span class="label">Date/Time:</span> <%= play_date.date.in_time_zone(user_time_zone).strftime("%a, %b %e @ %l:%M%P") %></div>
+    <div class="item"><span class="label">Dog Size:</span> <%= play_date.dog_size %></div>
+    <div class="item"><span class="label">Description:</span> <%= play_date.description %></div>
+  </div>
 
-      <%= submit_tag 'Alter attendance' %>
+  <%= render play_date.dog_park %>
+
+  <h2>Dog Attendees</h2>
+  <%= turbo_frame_tag "play_date-attendees" do %>
+    <div class="attendees">
+      <% play_date.attendees.each do |dog| %>
+        <% dog_class = current_user && dog.user == current_user ? "owned" : "" %>
+        <%= link_to dog do %>
+          <% if dog.avatar.attached? %>
+            <%= image_tag dog.avatar.variant(:attendee), class: dog_class %><br>
+          <% end %>
+        <% end %>
+      <% end %>
+    </div>
+
+    <% if current_user %>
+      <%= form_tag attend_play_date_path(play_date), method: :post do %>
+        <% current_user.dogs.each do |dog| %>
+          <label>
+            <%= check_box_tag 'dog_attendee_ids[]', dog.id, play_date.attendees.include?(dog) %>
+            <%= dog.name %>
+          </label><br>
+        <% end %>
+
+        <%= submit_tag 'Alter attendance' %>
+      <% end %>
     <% end %>
   <% end %>
-<% end %>
 
-<%= render "shared/barks", barks: play_date.barks, barkable: play_date %>
-<%= render "shared/comments", commentable: play_date, commentable_type: 'play_date', comments: play_date.comments, comments_mode: comments_mode %>
+  <div class="barks-comments-<%= comments_mode %>">
+    <%= render "shared/barks", barks: play_date.barks, barkable: play_date %> <% unless comments_mode == 'full'%> | <% end %> 
+    <%= render "shared/comments", commentable: play_date, commentable_type: 'play_date', comments: play_date.comments, comments_mode: comments_mode %>
+  </div>
+</div>

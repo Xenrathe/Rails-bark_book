@@ -1,11 +1,13 @@
 class DogsController < ApplicationController
   include PaginationConcern
+  helper_method :navigation_params
   
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_dog, only: %i[ show edit update destroy follow unfollow ]
 
   def index
     distance = params[:distance].present? ? params[:distance] : '25'
+
     if distance != 'all' && current_user && current_user.primary_address
       @dogs = Dog.nearby(current_user, distance.to_i)
     else
@@ -14,6 +16,7 @@ class DogsController < ApplicationController
 
     # Pagination
     @dogs, @total_pages = paginate_collection(@dogs, 10)
+    puts "@dogs size is #{@dogs.count}"
   end
 
   def show
@@ -87,5 +90,9 @@ class DogsController < ApplicationController
 
   def dog_params
     params.require(:dog).permit(:avatar, :birthdate, :breed, :name, :weight)
+  end
+
+  def navigation_params
+    params.permit(:distance, :commit)
   end
 end

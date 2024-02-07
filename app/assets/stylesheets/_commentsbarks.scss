@@ -1,0 +1,103 @@
+@use "globalvars";
+
+.barks-comments-full, .barks-comments-short {
+  margin-top: 5px;
+  width: 100%;
+  font-size: 18px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .barks {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+
+    button {
+      background: white;
+      border-radius: 10px;
+      width: 45px;
+      height: 45px;
+      padding: 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  
+      img {
+        width: 30px;
+      }
+    }
+  
+    button:hover {
+      background: rgb(233, 233, 233);
+  
+      img {
+        width: 32px;
+      }
+    }
+  
+    button:active {
+  
+      img {
+        width: 33px;
+      }
+    }
+  }
+
+  .comments-turbo {
+    min-width: 90%;
+  }
+
+  .comments-full { 
+    font-size: 15px;
+    max-width: 90%;
+
+    .comments-title {
+      font-weight: bold;
+      text-decoration:underline;
+      margin-bottom: 3px;
+      font-size: 17px;
+    }
+
+    .comment-list {
+
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+
+      .comment {
+  
+        .comment-user {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .add-comment-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    max-width: 400px;
+    margin-top: 5px;
+
+    textarea {
+      max-width: 400px;
+      min-width: 200px;
+      min-height: 80px;
+    }
+  }
+}
+
+.barks-comments-full {
+  flex-direction: column;
+  gap: 2px;
+}
+
+.barks-comments-short {
+  flex-direction: row;
+  gap: 10px;
+}
+

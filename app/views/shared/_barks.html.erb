@@ -1,20 +1,23 @@
-<div class="barks">
-  <%= turbo_frame_tag "barks_#{barkable.class.name}_#{barkable.id}" do %>
-    <%= barks.sum(:num) %> barks from <%= barks.count %> users
-    <% if current_user && current_user.id != barkable.user_id %>
-      <%= form_with(model: Bark, id: "new_bark_form_#{barkable.class.name}_#{barkable.id}", remote: true) do |form| %>
-        <%= form.hidden_field :barkable_type, value: barkable.class.name.downcase %>
-        <%= form.hidden_field :barkable_id, value: barkable.id %>
+<%= turbo_frame_tag "barks_#{barkable.class.name}_#{barkable.id}", class: "barks" do %>
+  <% if current_user && current_user.id != barkable.user_id %>
+    <%= form_with(model: Bark, id: "new_bark_form_#{barkable.class.name}_#{barkable.id}", remote: true) do |form| %>
+      <%= form.hidden_field :barkable_type, value: barkable.class.name.downcase %>
+      <%= form.hidden_field :barkable_id, value: barkable.id %>
 
-        <% if current_user.bark_sound == 'custom' %>
-          <% url = current_user.custom_bark.attached? ? rails_blob_path(current_user.custom_bark) : 'mute' %>
-        <% elsif current_user.bark_sound == 'mute' %>
-          <% url = 'mute' %>
-        <% else %>
-          <% url = asset_path(current_user.bark_sound) %>
-        <% end %>
-        <%= form.submit "Bark!", class: "btn btn-primary", data: {controller: "sound", action: "click->sound#bark", url: url } %>
+      <% if current_user.bark_sound == 'custom' %>
+        <% url = current_user.custom_bark.attached? ? rails_blob_path(current_user.custom_bark) : 'mute' %>
+      <% elsif current_user.bark_sound == 'mute' %>
+        <% url = 'mute' %>
+      <% else %>
+        <% url = asset_path(current_user.bark_sound) %>
+      <% end %>
+
+      <%= button_to(url, method: :post, form: { class: "btn btn-primary" }, remote: true) do %>
+        <%= image_tag("bark.png", alt: "Bark Image") %>
       <% end %>
     <% end %>
   <% end %>
-</div>
+  <div class="count">
+    <%= barks.sum(:num) %> barks from <%= barks.count %> users
+  </div>
+<% end %>

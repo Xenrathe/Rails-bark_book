@@ -1,8 +1,221 @@
 // Entry point for your Sass build
 @use "navbar";
+@use "globalvars";
+@use "commentsbarks";
 
 body {
   display: flex;
-  flex-direction: row;
+  margin: 0px;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  background: rgba(224, 234, 241, 0);
+  background-image: url('park-blurred.jpg');
+  background-attachment: fixed;
+  opacity: 0.75;
+}
+
+@media only screen and (max-width: globalvars.$mobile-width){
+  body {
+    flex-direction: column;
+  }
+}
+
+@media only screen and (min-width: calc(globalvars.$mobile-width + 1px)){
+  body {
+    flex-direction: row;
+  }
+}
+
+:not(.transparent-bg) > .transparent-bg {
+  background: rgba(255, 255, 255, 0.73);
+}
+
+.user-feed {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .feed-content {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    border: solid 1px black;
+    width: calc(275px + 25vw);
+    max-width: calc(100vw - 20px);
+
+    .content {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+
+      img {
+        max-width: calc(250px + 25vw);
+      }
+  
+      video {
+        max-width: calc(250px + 25vw);
+      }
+    }
+  }
+}
+
+.play-date {
+  padding: 10px;
+
+  display: flex;
+  flex-direction: column;
+
+  .title-section {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    margin: 5px 5% 20px 5%;
+
+    button {
+      font-size: 16px;
+      padding: 0 10px;
+    }
+
+    .title {
+      font-size: 20px;
+      background-color: rgba(255, 255, 255, 0.205);
+      box-shadow: 0px 2px 2px 3px #938948;
+      padding: 2px;
+      margin: 0px auto;
+  
+      a {
+        text-decoration: none;
+        color: rgb(145, 64, 10);
+      }
+    }
+  }
+
+
+  .details {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+
+    .label {
+      font-weight: bold;
+    }
+  }
+
+  .attendees {
+    display: flex;
+    flex-wrap:wrap;
+    gap: 5px;
+
+    img {
+      height: 100px;
+      max-width: 200px;
+
+      border: solid 1px black;
+    }
+
+    img[class="owned"] {
+      border: dashed 2px red;
+    }
+  }
+}
+
+.play-date-show {
+  flex: 1;
+  margin-top: 10px;
+
+  display: flex;
+  justify-content: center;
+
+  .play-date {
+    width: min(92%, 600px);
+  }
+}
+
+.dogs {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  margin-top: 15px;
+
+  .index {
+    border: solid black 1px;
+    width: calc(275px + 25vw);
+    max-width: calc(100vw - 20px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+
+    .title {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .top {
+      width: 100%;
+      display: flex;
+      gap: 10px;
+      margin-left: 20%;
+    }
+
+    hr {
+      width: 75%;
+    }
+
+    .list {
+      display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      gap: 5px;
+
+      .list-dog {
+        border: solid 1px black;
+        flex: 0;
+
+        .dog.partial-dog {
+          display: flex;
+          flex-direction: column;
+
+          .image {
+            img {
+              height: 200px;
+            }
+          }
+
+          .text {
+            padding: 0px 5px;
+            margin: 0px;
+            text-align: center;
+            flex: 0;
+            font-weight: bold;
+            font-size: 15px;
+          }
+        }
+      }
+
+      .list-dog.owned {
+        border: dashed 1px red;
+      }
+
+      .list-dog.followed {
+        border: dashed 1px green;
+      }
+    }
+  }
 }
 
