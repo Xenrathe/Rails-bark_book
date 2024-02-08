@@ -8,7 +8,7 @@ class Address < ApplicationRecord
   after_validation :geocode_cascading
 
   def full_address
-    [address_one, city, state, postal_code, country].compact.join(', ')
+    [address_one, city, state, country].compact.join(', ')
   end
   
   def find_existing
@@ -24,22 +24,14 @@ class Address < ApplicationRecord
   end
 
   def geocode_cascading
+    self.latitude = nil
+    self.longitude = nil
+
     puts "GEOCODE CASCADING CALLED"
     address = Geocoder.search(full_address).first
     if address
       self.latitude = address.latitude
       self.longitude = address.longitude
-    end
-
-    return unless latitude.nil?
-
-    if postal_code.present?
-      puts "GEOCODE CASCADING: POSTAL CODE"
-      address = Geocoder.search(postal_code).first
-      if address
-        self.latitude = address.latitude
-        self.longitude = address.longitude
-      end
     end
 
     return unless latitude.nil?
