@@ -1,3 +1,7 @@
-<h1>New <%= @content.content_type %></h1>
+<div class="contents core-window">
+  <div class="new transparent-bg core-content">
+    <h1>New <%= @content.content_type %></h1>
 
-<%= render "shared/contentform", content: @content, type: @content.content_type %>
+    <%= render "shared/contentform", content: @content, type: @content.content_type %>
+  </div>
+</div>

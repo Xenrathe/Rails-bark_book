@@ -1,21 +1,25 @@
-<h1>Edit Dog Park</h1>
+<div class="dog-park core-window">
+  <div class="edit transparent-bg core-content">
+    <h1>Edit Dog Park</h1>
 
-<%= form_with(model: @dog_park, url: dog_parks_path, local: true) do |form| %>
-  <%= render 'shared/dogparkform', form: form %>
+    <%= form_with(model: @dog_park, url: dog_parks_path, local: true) do |form| %>
+      <%= render 'shared/dogparkform', form: form %>
 
-  <div>
-    <%= form.submit %>
+      <div>
+        <%= form.submit %>
+      </div>
+
+      <% if @dog_park.errors.any? %>
+        <div style="color: red">
+          <h2><%= pluralize(@dog_park.errors.count, "error") %> prohibited this dog park from being saved:</h2>
+
+          <ul>
+            <% @dog_park.errors.each do |error| %>
+              <li><%= error.full_message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+    <% end %>
   </div>
-
-  <% if @dog_park.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(@dog_park.errors.count, "error") %> prohibited this dog park from being saved:</h2>
-
-      <ul>
-        <% @dog_park.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
-<% end %>
+</div>

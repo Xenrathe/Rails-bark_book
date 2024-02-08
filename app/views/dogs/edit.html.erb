@@ -1,10 +1,14 @@
-<h1>Editing dog</h1>
+<div class="dogs core-window">
+  <div class="edit transparent-bg core-content">
+    <h1>Editing dog</h1>
 
-<%= render "form", dog: @dog %>
+    <%= render "form", dog: @dog %>
 
-<br>
+    <br>
 
-<div>
-  <%= link_to "Show this dog", @dog %> |
-  <%= link_to "Back to dogs", dogs_path %>
+    <div>
+      <%= link_to "Show this dog", @dog %> |
+      <%= link_to "Back to dogs", dogs_path %>
+    </div>
+  </div>
 </div>

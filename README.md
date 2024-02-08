@@ -4,10 +4,13 @@
 
 ## Development To-do List:
 
-### CSS and Java
+### CSS and Java and other view features
+* Dog: Show, edit, new styling
+* 
 * Move all javascript to Stimulus controllers
 * CSS / Styling
 * Better buttons!
+* Empty 'home' gives a message encouraging posting stuff
 
 ### Additional features
 * Search bar for dogs, searching by breed

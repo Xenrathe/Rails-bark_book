@@ -1,177 +1,179 @@
 <% ownership_access = current_user && current_user == @user ? true : false%>
 
-<div class="user show">
-  <div class="tab-links">
-    <br>
-    <% if ownership_access %><a href="#details-tab" class="tab-link">Settings</a> | <% end %>
-    <a href="#dogs-tab" class="tab-link">Dogs</a> | 
-    <a href="#dog-parks-tab" class="tab-link">Dog Parks</a> | 
-    <a href="#posts-tab" class="tab-link">Posts</a>
-  </div>
-
-  <% if ownership_access %>
-  <div id="details-tab" class="tab-content">
-    <div id="user-details">
-      <h2>Personal details:</h2>
-      <strong>E-mail: </strong><%= @user.email %><br>
-      <% unless ownership_access %>
-        <strong>Username: </strong><%= @user.username %>
-      <% else %>
-        <%= form_with(model: @user) do |edit_user_form| %>
-          <div>
-            <strong><%= edit_user_form.label :username %>: </strong>
-            <%= edit_user_form.text_field :username %>
-          </div>
-
-          <div>
-            <strong><%= edit_user_form.label :time_zone %>: </strong>
-            <%= edit_user_form.select :time_zone, ActiveSupport::TimeZone.all.map { |tz| [tz.name, tz.name] }, { prompt: 'Select Time Zone' } %>
-          </div>
-
-          <%= edit_user_form.submit 'Update details' %>
-        <% end %>
-        <%= button_to "DELETE ACCOUNT", @user, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete account? All associated content will be destroyed."}%>
-      <% end %>
+<div class="user core-window">
+  <div class="show transparent-bg core-content">
+    <div class="tab-links">
+      <br>
+      <% if ownership_access %><a href="#details-tab" class="tab-link">Settings</a> | <% end %>
+      <a href="#dogs-tab" class="tab-link">Dogs</a> | 
+      <a href="#dog-parks-tab" class="tab-link">Dog Parks</a> | 
+      <a href="#posts-tab" class="tab-link">Posts</a>
     </div>
 
-    <div id="user-barks">
-      <%= turbo_frame_tag "bark-setings" do %>
-        <h3>Bark Settings</h3>
-        <%= form_with(model: @user, local: true, html: { multipart: true }) do |bark_form| %>
-          <div class="bark-radios">
-            <%= bark_form.radio_button :bark_sound, 'mute', checked: @user.bark_sound == 'mute', id: 'mute-sound' %>
-            <%= bark_form.label 'mute-sound', 'Mute Sound', for: 'mute-sound' %><br>
+    <% if ownership_access %>
+    <div id="details-tab" class="tab-content">
+      <div id="user-details">
+        <h2>Personal details:</h2>
+        <strong>E-mail: </strong><%= @user.email %><br>
+        <% unless ownership_access %>
+          <strong>Username: </strong><%= @user.username %>
+        <% else %>
+          <%= form_with(model: @user) do |edit_user_form| %>
+            <div>
+              <strong><%= edit_user_form.label :username %>: </strong>
+              <%= edit_user_form.text_field :username %>
+            </div>
 
-            <% (1..5).each do |num|%>
-              <%= bark_form.radio_button :bark_sound, "bark_#{num}", checked: @user.bark_sound == "bark_#{num}", id: "bark_#{num}", data: {soundurl: "#{asset_path("bark_#{num}")}"} %>
-              <%= bark_form.label "bark_#{num}", "Bark #{num}", for: "bark_#{num}" %><br>
-            <% end %>
-    
-            <% custom_url = @user.custom_bark.attached? ? rails_blob_path(@user.custom_bark) : '' %>
-            <%= bark_form.radio_button :bark_sound, 'custom', checked: @user.bark_sound == 'custom' && @user.custom_bark.attached?, id: "custom_sound", data: {soundurl: custom_url} %>
-            <%= bark_form.label "custom_sound", "Custom Bark", for: 'custom_sound' %><br>
-          </div>
-            
-          <div id="upload-sound-options" style="<%= 'display: none;' unless !@user.bark_sound && @user.custom_bark.attached? %>">
-            <%= bark_form.label :custom_bark, 'Upload WAV' %><br>
-            <%= bark_form.file_field :custom_bark %>
-          </div>
+            <div>
+              <strong><%= edit_user_form.label :time_zone %>: </strong>
+              <%= edit_user_form.select :time_zone, ActiveSupport::TimeZone.all.map { |tz| [tz.name, tz.name] }, { prompt: 'Select Time Zone' } %>
+            </div>
 
-          <%= bark_form.button 'Test Bark', id: 'test-sound-button', data: {controller: "sound", action: "click->sound#test"} %>
-          <%= bark_form.submit 'Update Bark Settings' %>
+            <%= edit_user_form.submit 'Update details' %>
+          <% end %>
+          <%= button_to "DELETE ACCOUNT", @user, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete account? All associated content will be destroyed."}%>
         <% end %>
-      <% end %>
-    </div>
-    
-    <div id="user-addresses">
-      <h3>Addresses:</h3>
-      <%= turbo_frame_tag "user-addresses" do %>
-        <% @user.addresses.each do |address| %>
-          <div class="user-address">
-            <% if @edit_address == address %>
-              <%= form_with(model: address, method: :patch, local: true) do |edit_address_form| %>
-                <%= render 'shared/addressform', address_form: edit_address_form, include_name: true %>
-                <%= edit_address_form.submit %>
+      </div>
+
+      <div id="user-barks">
+        <%= turbo_frame_tag "bark-setings" do %>
+          <h3>Bark Settings</h3>
+          <%= form_with(model: @user, local: true, html: { multipart: true }) do |bark_form| %>
+            <div class="bark-radios">
+              <%= bark_form.radio_button :bark_sound, 'mute', checked: @user.bark_sound == 'mute', id: 'mute-sound' %>
+              <%= bark_form.label 'mute-sound', 'Mute Sound', for: 'mute-sound' %><br>
+
+              <% (1..5).each do |num|%>
+                <%= bark_form.radio_button :bark_sound, "bark_#{num}", checked: @user.bark_sound == "bark_#{num}", id: "bark_#{num}", data: {soundurl: "#{asset_path("bark_#{num}")}"} %>
+                <%= bark_form.label "bark_#{num}", "Bark #{num}", for: "bark_#{num}" %><br>
               <% end %>
-            <% else %>
-              <div class="details">
-                <strong><%= address.name %> <% if !@user.primary_address.nil? && @user.primary_address == address %>(primary)<% end %></strong> <br>
-                <%= address.address_one %> <%= address.address_two %><br>
-                <%= address.city %>, <%= address.state %>, <%= address.country %> <%= address.postal_code %><br>
-              </div>
-              <div class="actions">
-                <% if @user.primary_address.nil? || @user.primary_address != address %>
-                  <%= button_to 'Primary', make_primary_user_path(@user, address), method: :patch, data: {turbo_method: :patch} %>
-                <% end %>
-                <%= button_to 'Edit', edit_address_user_path(@user, address), method: :get, data: { turbo_method: :get } %>
-                <%= button_to 'Delete', address, method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete address?" } %>
-              </div>
-            <% end %>
-            <br>
-          </div>
+      
+              <% custom_url = @user.custom_bark.attached? ? rails_blob_path(@user.custom_bark) : '' %>
+              <%= bark_form.radio_button :bark_sound, 'custom', checked: @user.bark_sound == 'custom' && @user.custom_bark.attached?, id: "custom_sound", data: {soundurl: custom_url} %>
+              <%= bark_form.label "custom_sound", "Custom Bark", for: 'custom_sound' %><br>
+            </div>
+              
+            <div id="upload-sound-options" style="<%= 'display: none;' unless !@user.bark_sound && @user.custom_bark.attached? %>">
+              <%= bark_form.label :custom_bark, 'Upload WAV' %><br>
+              <%= bark_form.file_field :custom_bark %>
+            </div>
+
+            <%= bark_form.button 'Test Bark', id: 'test-sound-button', data: {controller: "sound", action: "click->sound#test"} %>
+            <%= bark_form.submit 'Update Bark Settings' %>
+          <% end %>
         <% end %>
-
-        <%= button_tag 'Add New Address', class: 'toggle-form-button', id: 'add-address-button' %>
-
-        <div id="new-address-form" style="display: none;">
-        <%= form_with(model: @new_address, url: new_address_user_path, local: true) do |new_address_form| %>
-          <%= render 'shared/addressform', address_form: new_address_form, include_name: true %>
-          <%= new_address_form.submit %>
-          <% if @new_address.errors.any? %>
-            <div style="color: red">
-              <h2><%= pluralize(@new_address.errors.count, "error") %> prohibited this address from being saved:</h2>
-
-              <ul>
-                <% @new_address.errors.each do |error| %>
-                  <li><%= error.full_message %></li>
+      </div>
+      
+      <div id="user-addresses">
+        <h3>Addresses:</h3>
+        <%= turbo_frame_tag "user-addresses" do %>
+          <% @user.addresses.each do |address| %>
+            <div class="user-address">
+              <% if @edit_address == address %>
+                <%= form_with(model: address, method: :patch, local: true) do |edit_address_form| %>
+                  <%= render 'shared/addressform', address_form: edit_address_form, include_name: true %>
+                  <%= edit_address_form.submit %>
                 <% end %>
-              </ul>
+              <% else %>
+                <div class="details">
+                  <strong><%= address.name %> <% if !@user.primary_address.nil? && @user.primary_address == address %>(primary)<% end %></strong> <br>
+                  <%= address.address_one %> <%= address.address_two %><br>
+                  <%= address.city %>, <%= address.state %>, <%= address.country %> <%= address.postal_code %><br>
+                </div>
+                <div class="actions">
+                  <% if @user.primary_address.nil? || @user.primary_address != address %>
+                    <%= button_to 'Primary', make_primary_user_path(@user, address), method: :patch, data: {turbo_method: :patch} %>
+                  <% end %>
+                  <%= button_to 'Edit', edit_address_user_path(@user, address), method: :get, data: { turbo_method: :get } %>
+                  <%= button_to 'Delete', address, method: :delete, data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete address?" } %>
+                </div>
+              <% end %>
+              <br>
             </div>
           <% end %>
+
+          <%= button_tag 'Add New Address', class: 'toggle-form-button', id: 'add-address-button' %>
+
+          <div id="new-address-form" style="display: none;">
+          <%= form_with(model: @new_address, url: new_address_user_path, local: true) do |new_address_form| %>
+            <%= render 'shared/addressform', address_form: new_address_form, include_name: true %>
+            <%= new_address_form.submit %>
+            <% if @new_address.errors.any? %>
+              <div style="color: red">
+                <h2><%= pluralize(@new_address.errors.count, "error") %> prohibited this address from being saved:</h2>
+
+                <ul>
+                  <% @new_address.errors.each do |error| %>
+                    <li><%= error.full_message %></li>
+                  <% end %>
+                </ul>
+              </div>
+            <% end %>
+          <% end %>
+          </div>
         <% end %>
-        </div>
-      <% end %>
+      </div>
     </div>
-  </div>
-  <% end %>
+    <% end %>
 
-  <div id="dogs-tab" class="tab-content">
-    <h2><% prefix = ownership_access ? "Your" : "#{@user.username}'s" %> 
-    <%= prefix %> dogs:</h2>
+    <div id="dogs-tab" class="tab-content">
+      <h2><% prefix = ownership_access ? "Your" : "#{@user.username}'s" %> 
+      <%= prefix %> dogs:</h2>
 
-    <div id="dogs owned">
-      <% @owned_dogs.each do |dog| %>
-        <%= render dog, show_ownership: false, image_link: true %>
-        <% if current_user && current_user.id == @user.id %>
-          <%= link_to "Delete entry", dog, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this dog?"} %>
-        <% end %>
-      <% end %>
-      <% if ownership_access %>
-        <br><br><%= button_to "New dog", new_dog_path, method: :get, data: {turbo_method: :get} %>
-      <% end %>
-    </div>
-
-    <h2>Followed dogs:</h2>
-
-    <div id="dogs followed">
-      <%= turbo_frame_tag "followed-dogs" do %>
-        <% @followed_dogs.each do |dog| %>
-        
-          <%= render dog, show_ownership: true, image_link: true %>
-          <%= link_to "View", dog, data: { turbo_frame: "_top" } %>
-          
-          <% if ownership_access %>
-            <%= link_to 'Unfollow', unfollow_dog_path(dog), method: :delete, data: {turbo_method: :delete} %>
+      <div id="dogs owned">
+        <% @owned_dogs.each do |dog| %>
+          <%= render dog, full_details: true, show_ownership: false, image_link: true %>
+          <% if current_user && current_user.id == @user.id %>
+            <%= link_to "Delete entry", dog, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this dog?"} %>
           <% end %>
         <% end %>
-      <% end %>
-    </div>
-  </div>
-  
-  <div id="dog-parks-tab" class="tab-content">
-    <h2>Followed dog-parks:</h2>
+        <% if ownership_access %>
+          <br><br><%= button_to "New dog", new_dog_path, method: :get, data: {turbo_method: :get} %>
+        <% end %>
+      </div>
 
-    <div id="dog-parks followed">
-      <%= turbo_frame_tag "followed-dog-parks" do %>
-        <% @followed_dog_parks.each do |dog_park| %>
-        
-          <%= render dog_park %>
-          <br>
-          <%= link_to "View", dog_park, data: { turbo_frame: "_top" } %>
+      <h2>Followed dogs:</h2>
+
+      <div id="dogs followed">
+        <%= turbo_frame_tag "followed-dogs" do %>
+          <% @followed_dogs.each do |dog| %>
           
-          <% if ownership_access %>
-            <%= link_to 'Unfollow', unfollow_dog_park_path(dog_park), method: :delete, data: {turbo_method: :delete} %>
+            <%= render dog, full_details: true, show_ownership: true, image_link: true %>
+            <%= link_to "View", dog, data: { turbo_frame: "_top" } %>
+            
+            <% if ownership_access %>
+              <%= link_to 'Unfollow', unfollow_dog_path(dog), method: :delete, data: {turbo_method: :delete} %>
+            <% end %>
           <% end %>
         <% end %>
-      <% end %>
+      </div>
     </div>
-  </div>
-
-  <div id="posts-tab" class="tab-content">
-    <div class="contents">
-    <h2>Content from <%= @user.username %>'s dogs:</h2>
     
-    <%= render 'shared/contentfeed', feed_contents: @user_content %>
+    <div id="dog-parks-tab" class="tab-content">
+      <h2>Followed dog-parks:</h2>
+
+      <div id="dog-parks followed">
+        <%= turbo_frame_tag "followed-dog-parks" do %>
+          <% @followed_dog_parks.each do |dog_park| %>
+          
+            <%= render dog_park %>
+            <br>
+            <%= link_to "View", dog_park, data: { turbo_frame: "_top" } %>
+            
+            <% if ownership_access %>
+              <%= link_to 'Unfollow', unfollow_dog_park_path(dog_park), method: :delete, data: {turbo_method: :delete} %>
+            <% end %>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+
+    <div id="posts-tab" class="tab-content">
+      <div class="contents">
+      <h2>Content from <%= @user.username %>'s dogs:</h2>
+      
+      <%= render 'shared/contentfeed', feed_contents: @user_content %>
+      </div>
     </div>
   </div>
 </div>

@@ -1,20 +1,22 @@
-<div class="dog show">
-  <%= render @dog, full_details: true, show_ownership: true, image_link: false %>
+<div class="dogs core-window">
+  <div class="show transparent-bg core-content">
+    <%= render @dog, full_details: true, show_ownership: true, image_link: false %>
 
-  <div class="actions">
-    <% if current_user %>
-      <% if current_user.following?(@dog) && @dog.user_id != current_user.id %>
-        <%= link_to 'Unfollow', unfollow_dog_path(@dog), method: :delete, data: {turbo_method: :delete} %>
-      <% elsif @dog.user_id != current_user.id %>
-        <%= link_to 'Follow', follow_dog_path(@dog), method: :post, data: {turbo_method: :post} %>
-      <% elsif @dog.user_id == current_user.id %>
-        <%= link_to "Edit", edit_dog_path(@dog) %> | 
-        <%= link_to "Delete", @dog, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete #{@dog.name}'s entry?"} %>
+    <div class="actions">
+      <% if current_user %>
+        <% if current_user.following?(@dog) && @dog.user_id != current_user.id %>
+          <%= link_to 'Unfollow', unfollow_dog_path(@dog), method: :delete, data: {turbo_method: :delete} %>
+        <% elsif @dog.user_id != current_user.id %>
+          <%= link_to 'Follow', follow_dog_path(@dog), method: :post, data: {turbo_method: :post} %>
+        <% elsif @dog.user_id == current_user.id %>
+          <%= link_to "Edit", edit_dog_path(@dog) %> | 
+          <%= link_to "Delete", @dog, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete #{@dog.name}'s entry?"} %>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
+    </div>
 
-  <div class="contents">
-    <%= render 'shared/contentfeed', feed_contents: @dog_feed %>
+    <div class="contents">
+      <%= render 'shared/contentfeed', feed_contents: @dog_feed %>
+    </div>
   </div>
 </div>

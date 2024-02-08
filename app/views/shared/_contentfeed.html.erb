@@ -1,5 +1,5 @@
 <% feed_contents.each do |feed_content| %>
-  <div class="feed-content transparent-bg">
+  <div class="feed-content transparent-bg core-content">
     <% if feed_content.class.name.downcase == 'content' %>
       <%= render "shared/contentshow", content: feed_content, media_size: :feedsize, type: feed_content.content_type, comments: feed_content.comments, comments_mode: 'short', barks: feed_content.barks %>
     <% elsif feed_content.class.name.downcase == 'playdate' %>

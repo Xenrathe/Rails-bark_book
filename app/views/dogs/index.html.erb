@@ -1,8 +1,6 @@
-<div class="dogs">
-  <div class="index transparent-bg">
+<div class="dogs core-window">
+  <div class="index transparent-bg core-content">
     <div class="title">Dogs</div>
-
-
         <div class="top">
         <% if current_user && current_user.primary_address %>
           <%= form_tag(dogs_path, method: :get) do %>

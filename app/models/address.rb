@@ -5,7 +5,7 @@ class Address < ApplicationRecord
   validates :address_one, :city, :country, :name, presence: true
 
   geocoded_by :full_address
-  after_validation :geocode
+  after_validation :geocode_cascading
 
   def full_address
     [address_one, city, state, postal_code, country].compact.join(', ')
@@ -21,5 +21,36 @@ class Address < ApplicationRecord
     #  attributes[:country].downcase
     #)
     Address.near(full_address, 0.1)
+  end
+
+  def geocode_cascading
+    puts "GEOCODE CASCADING CALLED"
+    address = Geocoder.search(full_address).first
+    if address
+      self.latitude = address.latitude
+      self.longitude = address.longitude
+    end
+
+    return unless latitude.nil?
+
+    if postal_code.present?
+      puts "GEOCODE CASCADING: POSTAL CODE"
+      address = Geocoder.search(postal_code).first
+      if address
+        self.latitude = address.latitude
+        self.longitude = address.longitude
+      end
+    end
+
+    return unless latitude.nil?
+
+    if city.present? && state.present? && country.present?
+      puts "GEOCODE CASCADING: CITY STATE"
+      address = Geocoder.search("#{city}, #{state}, #{country}").first
+      if address
+        self.latitude = address.latitude
+        self.longitude = address.longitude
+      end
+    end
   end
 end

@@ -1,4 +1,6 @@
-<div class="content">
-  <%= render "shared/contentshow", content: @content, type: @content.content_type, barks: @barks, media_size: :midsize, comments: @comments, comments_mode: 'full' %>
-  <%= render "shared/contentactions", content: @content, type: @content.content_type %>
+<div class="contents core-window">
+  <div class="show transparent-bg core-content">
+    <%= render "shared/contentshow", content: @content, type: @content.content_type, barks: @barks, media_size: :midsize, comments: @comments, comments_mode: 'full' %>
+    <%= render "shared/contentactions", content: @content, type: @content.content_type %>
+  </div>
 </div>

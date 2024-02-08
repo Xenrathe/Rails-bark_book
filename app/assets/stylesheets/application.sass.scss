@@ -38,6 +38,26 @@ body::before {
   background: rgba(255, 255, 255, 0.73);
 }
 
+.core-window {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15px;
+  
+  .core-content {
+    border: solid black 1px;
+    width: calc(275px + 25vw);
+    max-width: calc(100vw - 20px);
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+  }
+}
+
 .user-feed {
   flex: 1;
 
@@ -145,20 +165,7 @@ body::before {
 }
 
 .dogs {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  margin-top: 15px;
-
   .index {
-    border: solid black 1px;
-    width: calc(275px + 25vw);
-    max-width: calc(100vw - 20px);
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 10px;
 
     .title {
       font-size: 20px;
