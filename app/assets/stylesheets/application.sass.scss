@@ -164,14 +164,41 @@ body::before {
   }
 }
 
-.dogs {
-  .index {
 
-    .title {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 5px;
+.dogs {
+
+  .title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .actions {
+    display: flex;
+    gap: 5px;
+    margin-top: 8px;
+  }
+
+  .partial-dog {
+    .image {
+      display: flex;
+      justify-content: center;
     }
+
+    .details {
+      .text {
+        padding: 0px 5px;
+        margin: 0px;
+        text-align: center;
+        flex: 0;
+        font-weight: bold;
+        font-size: 15px;
+      }
+    }
+
+  }
+
+  .index {
 
     .top {
       width: 100%;
@@ -222,6 +249,64 @@ body::before {
       .list-dog.followed {
         border: dashed 1px green;
       }
+    }
+  }
+
+  .show {
+    .avatar {
+
+      width: 95%;
+    }
+  }
+
+  .new, .edit {
+
+    .single-input{
+      display: flex;
+      flex-direction: row;
+
+      label {
+        width: 70px;
+        font-weight: bold;
+      }
+
+      input {
+        width: 140px;
+        padding: 1px 3px;
+      }
+    }
+
+    .inputs {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .details {
+        margin-bottom: 5px;
+
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+      }
+
+      .avatar {
+        display: flex;
+        flex-direction: column;
+        gap: 3px;
+        margin-bottom: 10px;
+
+        label {
+          font-weight: bold;
+        }
+      }
+    }
+
+    .avatar-image {
+      max-width: 250px;
+    }
+
+    input[type="submit"]{
+      width: 100%;
     }
   }
 }
