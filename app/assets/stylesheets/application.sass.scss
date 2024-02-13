@@ -164,7 +164,6 @@ body::before {
   }
 }
 
-
 .dogs {
 
   .title {
@@ -211,7 +210,7 @@ body::before {
       width: 75%;
     }
 
-    .list {
+    .dog-list {
       display: flex;
       justify-content: flex-start;
       flex-wrap: wrap;
@@ -304,9 +303,61 @@ body::before {
     .avatar-image {
       max-width: 250px;
     }
+  }
+}
 
+form {
+  .single-input{
+    display: flex;
+    flex-direction: row;
+
+    label {
+      width: 70px;
+      font-weight: bold;
+    }
+
+    .longer-input {
+      width: 250px;
+      max-width: 250px;
+      min-width: 250px;
+      padding: 1px 3px;
+    }
+
+    textarea {
+      min-height: 100px;
+    }
+  }
+
+  .sub-title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-top: 10px;
+  }
+
+  .wide-button {
     input[type="submit"]{
       width: 100%;
+    }
+  }
+
+  .dog-list {
+    .list {
+      display: flex;
+      margin-bottom: 5px;
+      gap: 5px;
+
+      label {
+        display: flex;
+        cursor: pointer;
+      }
+
+      input[type="checkbox"]{
+        display: none;
+      }
+
+      .clicked {
+        box-shadow: 0px 0px 10px 2px #ef0000;
+      }
     }
   }
 }

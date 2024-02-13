@@ -14,7 +14,7 @@
       </div>
       <hr>
 
-      <div class="list">
+      <div class="dog-list">
         <% @dogs.each do |dog| %>
           <% status = "" %>
           <% status = " followed" if current_user && current_user.following?(dog) %>

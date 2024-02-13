@@ -1,11 +1,11 @@
 <%= form_with(model: content) do |form| %>
-  <div>
-    <%= form.label :title, style: "display: block" %>
-    <%= form.text_field :title %>
+  <div class="single-input">
+    <%= form.label :title %>
+    <%= form.text_field :title, class: "longer-input" %>
   </div>
 
-  <div>
-    <% if type == 'image'%>
+  <% if type == 'image'%>
+    <div class="media">
       <% if content.attached_images.attached? %>
         <% content.attached_images.each do |attached_image| %>
           <%= image_tag attached_image.variant(:thumb) %>
@@ -14,38 +14,43 @@
         <%= form.label :attached_images, style: "display: block" %>
       <% end %>
       <%= form.file_field :attached_images, multiple: true %>
-    <% elsif type == 'video' %>
+    </div>
+  <% elsif type == 'video' %>
+    <div class="media">
       <% if content.attached_video.attached? %>
         <%= video_tag content.attached_video %>
       <% else %>
         <%= form.label :attached_video, style: "display: block" %>
       <% end %>
       <%= form.file_field :attached_video %>
-    <% else %>
-    <% end %>
-  </div>
+    </div>
+  <% end %>
 
-  <div>
+  <div class="single-input">
     <% if type == 'post'%>
       <%= form.label :body, style: "display: block" %>
-      <%= form.text_area :body, minlength: 10, maxlength: 2000 %>
+      <%= form.text_area :body, minlength: 10, maxlength: 2000, class: "longer-input"  %>
     <% else %>
       <%= form.label :body, "Caption", style: "display: block" %>
-      <%= form.text_field :body, maxlength: 200 %>
+      <%= form.text_field :body, maxlength: 200, class: "longer-input"  %>
     <% end %>
   </div>
 
-  <div class="dog-tag">
-    <h3>Select Dogs:</h3>
+  <div class="dog-list" data-controller="dogselector">
+    <div class="sub-title">Select dogs</div>
+    <div class="list">
     <% current_user.dogs.each do |dog| %>
-      <label>
-        <%= check_box_tag 'content[dog_ids][]', dog.id, content.dogs.include?(dog) %>
-        <%= dog.name %>
-      </label>
+      <div class="dog-checkbox">
+        <%= check_box_tag 'content[dog_ids][]', dog.id, content.dogs.include?(dog), { class: 'dog-select-checkbox', id: "dog_ids_#{dog.id}" } %>
+        <% label_class = content.dogs.include?(dog) ? "dog-select-label clicked" : "dog-select-label"%>
+        <%= label_tag "dog_ids_#{dog.id}", image_tag(dog.avatar.variant(:thumb), class: "dog-select"), class: label_class, data: { action: "click->dogselector#select" } %>
+      </div>
     <% end %>
+    </div>
   </div>
 
-  <div>
+  <div class="wide-button">
+    <%= form.hidden_field 'dog_ids][]', value: '' %>
     <%= form.hidden_field :content_type, value: @content.content_type %>
     <%= form.submit %>
   </div>
