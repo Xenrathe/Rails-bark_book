@@ -5,6 +5,7 @@
   padding: 10px;
   max-width: 25vw;
   min-width: 10vw;
+  max-height: 100vh;
   position: sticky;
 
   box-shadow: 1px 1px 0px 0px #030303;
@@ -60,11 +61,12 @@
     z-index: 999;
     top: 0px;
     left: 0px;
+    position: fixed;
 
     flex-direction: row;
     justify-content: center;
     box-shadow: 0px 1px 0px 0px #030303;
-    min-width: calc(100% - 20px);
+    min-width: 100vw;
 
     .logo {
       font-size: 0px;

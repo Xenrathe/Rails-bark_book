@@ -4,8 +4,18 @@
     <%= form.text_field :title, class: "longer-input" %>
   </div>
 
+  <div class="single-input">
+    <% if type == 'post'%>
+      <%= form.label :body, style: "display: block" %>
+      <%= form.text_area :body, minlength: 10, maxlength: 2000, class: "longer-input"  %>
+    <% else %>
+      <%= form.label :body, "Caption", style: "display: block" %>
+      <%= form.text_field :body, maxlength: 200, class: "longer-input"  %>
+    <% end %>
+  </div>
+
   <% if type == 'image'%>
-    <div class="media">
+    <div class="media single-input">
       <% if content.attached_images.attached? %>
         <% content.attached_images.each do |attached_image| %>
           <%= image_tag attached_image.variant(:thumb) %>
@@ -16,7 +26,7 @@
       <%= form.file_field :attached_images, multiple: true %>
     </div>
   <% elsif type == 'video' %>
-    <div class="media">
+    <div class="media single-input">
       <% if content.attached_video.attached? %>
         <%= video_tag content.attached_video %>
       <% else %>
@@ -25,16 +35,6 @@
       <%= form.file_field :attached_video %>
     </div>
   <% end %>
-
-  <div class="single-input">
-    <% if type == 'post'%>
-      <%= form.label :body, style: "display: block" %>
-      <%= form.text_area :body, minlength: 10, maxlength: 2000, class: "longer-input"  %>
-    <% else %>
-      <%= form.label :body, "Caption", style: "display: block" %>
-      <%= form.text_field :body, maxlength: 200, class: "longer-input"  %>
-    <% end %>
-  </div>
 
   <div class="dog-list" data-controller="dogselector">
     <div class="sub-title">Select dogs</div>
