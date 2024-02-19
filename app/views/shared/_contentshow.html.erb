@@ -15,7 +15,7 @@
   <% end%>
 
   <div class="barks-comments-<%= comments_mode %>">
-    <%= render "shared/barks", barks: barks, barkable: content %> | 
+    <%= render "shared/barks", barks: barks, barkable: content %><% if comments_mode != 'full' %> | <% end %> 
     <%= render "shared/comments", commentable: content, comments: comments, commentable_type: 'content', comments_mode: comments_mode %>
   </div>
 </div>

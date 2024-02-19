@@ -15,18 +15,21 @@
   </div>
 
   <% if type == 'image'%>
-    <div class="media single-input">
-      <% if content.attached_images.attached? %>
-        <% content.attached_images.each do |attached_image| %>
-          <%= image_tag attached_image.variant(:thumb) %>
-        <% end %>
-      <% else %>
+    <div class="attachments" data-controller="contents">
+      <div class="single-input">
         <%= form.label :attached_images, style: "display: block" %>
-      <% end %>
-      <%= form.file_field :attached_images, multiple: true %>
+        <%= form.file_field :attached_images, multiple: true, accept: "image/*", data: { maxFiles: 10, contents_target: "fileupload" } %>
+      </div>
+      <div class="preview-images" data-contents-target="imgpreview">
+        <% if content.attached_images.attached? %>
+          <% content.attached_images.each do |attached_image| %>
+            <%= image_tag attached_image.variant(:thumb) %>
+          <% end %>
+        <% end %>
+      </div>
     </div>
   <% elsif type == 'video' %>
-    <div class="media single-input">
+    <div class="attachments single-input">
       <% if content.attached_video.attached? %>
         <%= video_tag content.attached_video %>
       <% else %>

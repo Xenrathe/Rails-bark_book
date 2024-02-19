@@ -23,6 +23,7 @@ class Content < ApplicationRecord
     when 'image'
       errors.add(:image, ' must be attached') unless attached_images.attached?
       errors.add(:caption, ' cannot be greater than 200 characters') unless body.length <= 200
+      errors.add(:attached_images, ' cannot exceed 10 files') if attached_images.count > 10
     when 'video'
       errors.add(:video, ' must be attached') unless attached_video.attached?
       errors.add(:caption, ' cannot be greater than 200 characters') unless body.length <= 200

@@ -5,15 +5,14 @@
 ## Development To-do List:
 
 ### CSS and Java and other view features
-* Dog: Show, edit, new styling
-* 
+* Contents views / styling (new, show, etc)
 * Move all javascript to Stimulus controllers
-* CSS / Styling
 * Better buttons!
-* Empty 'home' gives a message encouraging posting stuff
 
 ### Additional features
 * Search bar for dogs, searching by breed
+* Cookies for remembering nearby distance filter
+* Can use 'location services' rather than address
 
 ### Optimization and validation
 * Check for N+1
