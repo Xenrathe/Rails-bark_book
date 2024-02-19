@@ -10,7 +10,6 @@
 * Better buttons!
 
 ### Additional features
-* Search bar for dogs, searching by breed
 * Cookies for remembering nearby distance filter
 * Can use 'location services' rather than address
 

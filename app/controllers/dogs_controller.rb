@@ -7,16 +7,21 @@ class DogsController < ApplicationController
 
   def index
     distance = params[:distance].present? ? params[:distance] : '25'
+    breed = params[:breed]
 
+    # filter by distance
     if distance != 'all' && current_user && current_user.primary_address
-      @dogs = Dog.nearby(current_user, distance.to_i)
+      nearby_dogs = Dog.nearby(current_user, distance.to_i) # Returns an array
+      @dogs = Dog.where(id: nearby_dogs.pluck(:id)) # Convert back to relation... inefficient?
     else
       @dogs = Dog.all
     end
 
+    # filter by breed name
+    @dogs = @dogs.where('LOWER(breed) LIKE ?', "%#{breed.downcase}%") if breed.present?
+
     # Pagination
     @dogs, @total_pages = paginate_collection(@dogs, 10)
-    puts "@dogs size is #{@dogs.count}"
   end
 
   def show

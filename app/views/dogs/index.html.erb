@@ -7,6 +7,8 @@
             <%= label_tag 'distance', 'Choose Nearby Distance:' %>
             <% selected_distance = params[:distance].present? ? params[:distance] : '25' %>
             <%= select_tag 'distance', options_for_select(['10', '25', '50', '100', 'all'], selected: selected_distance) %>
+            <%= label_tag 'breed', 'Breed: ' %>
+            <%= text_field_tag 'breed', params[:breed], placeholder: 'Dashund...' %>
             <%= submit_tag 'Filter' %>
           <% end %>
         <% end %>
@@ -25,5 +27,4 @@
         <% end %>
       </div>
     </div>
-  
 </div>
