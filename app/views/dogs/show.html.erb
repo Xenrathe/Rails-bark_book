@@ -1,6 +1,6 @@
 <div class="dogs core-window">
   <div class="show transparent-bg core-content">
-    <div class="dog-details">
+    <div class="dog-details details-bar">
       <%= render @dog, full_details: true, show_ownership: true, image_size: 'full', image_link: false %>
 
       <%= turbo_frame_tag "dog-following", class: "actions" do %>
