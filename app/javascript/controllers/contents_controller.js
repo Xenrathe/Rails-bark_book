@@ -1,10 +1,24 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["fileupload", "imgpreview"]
+  static targets = ["fileupload", "imgpreview", "video"]
+  resizeHandler = this.videoResizer.bind(this);
 
   connect() {
-    this.fileuploadTarget.addEventListener("change", this.imagesUpload.bind(this));
+    if (this.hasImgpreviewTarget) {
+      console.log("imagesUpload connected");
+      this.fileuploadTarget.addEventListener("change", this.imagesUpload.bind(this));
+    }
+    else if (this.hasVideoTarget) {
+      console.log("videoResizer connected");
+      this.videoResizer();
+      window.addEventListener("resize", this.resizeHandler);
+    }
+  }
+
+  disconnect() {
+    console.log("videoResizer disconnected");
+    window.removeEventListener("resize", this.resizeHandler);
   }
 
   imagesUpload(event) {
@@ -34,5 +48,25 @@ export default class extends Controller {
 
       reader.readAsDataURL(file);
     });
+  }
+
+  videoResizer() {
+    const video = this.videoTarget;
+    const coreContentParent = video.closest('.core-content');
+    const aspectRatio = video.dataset.aspectRatio;
+
+    const maxWidth = coreContentParent.clientWidth - 40;
+    const maxHeight = window.innerHeight * 0.9; //aka 90vh
+
+    const widthLimiting = maxWidth / maxHeight < aspectRatio;
+
+    if (widthLimiting) {
+      video.style.width = maxWidth + 'px';
+      video.style.height = 'auto';
+    }
+    else {
+      video.style.width = 'auto';
+      video.style.height = maxHeight + 'px';
+    }
   }
 }

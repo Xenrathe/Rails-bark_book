@@ -2,6 +2,7 @@
 @use "navbar";
 @use "globalvars";
 @use "commentsbarks";
+@use "forms";
 
 body {
   display: flex;
@@ -43,6 +44,7 @@ div {
     background: white;
     border-top: 1px black inset;
     display: flex;
+    z-index: 999;
 
     .partial-dog {
       display: flex;
@@ -59,7 +61,7 @@ div {
 
         .text {
           flex: 1;
-          font-size: 16px;
+          font-size: calc(7px + 2vw);
           font-weight: normal;
           padding: 2px 5px;
         }
@@ -68,6 +70,11 @@ div {
 
     .actions {
       margin: 2px 4px 2px 0px;
+      gap: 3px;
+
+      button {
+        padding: 0px;
+      }
     }
   }
 }
@@ -83,9 +90,15 @@ div {
     background: white;
     border: 1px black inset;
     display: flex;
+    z-index: 999;
 
     .actions {
       margin: 2px 4px 2px 0px;
+      gap: 3px;
+
+      button {
+        padding: 0px;
+      }
     }
 
     .partial-dog {
@@ -103,7 +116,7 @@ div {
 
         .text {
           flex: 1;
-          font-size: 16px;
+          font-size: 15px;
           font-weight: bold;
           padding: 2px 5px;
         }
@@ -129,6 +142,7 @@ div {
 
     .actions {
       margin-top: 8px;
+      gap: 5px;
     }
 
     .partial-dog {
@@ -166,7 +180,6 @@ div {
 
 .height-capped {
   max-height: 100vh;
-  height: 100vh;
 }
 
 .core-window {
@@ -301,21 +314,6 @@ div {
     margin-bottom: 10px;
   }
 
-  .actions {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
-
-    .button_to {
-      display: flex;
-      justify-content: center;
-
-      button {
-        width: 100%;
-      }
-    }
-  }
-
   .partial-dog {
     max-height: 100%;
     .image {
@@ -338,7 +336,27 @@ div {
       width: 100%;
       display: flex;
       gap: 10px;
-      margin-left: 20%;
+      margin-left: 25%;
+
+      form {
+        width: min(75%, 400px);
+        display: flex;
+        flex-direction: column;
+        gap: 1px;
+
+        .filter-and-page{
+          display: flex;
+          justify-content: space-between;
+  
+          input[type="submit"]{
+            width: 50%;
+          }
+        }
+      }
+
+      hr {
+        width: min(75%, 400px);
+      }
     }
 
     hr {
@@ -466,100 +484,36 @@ div {
   }
 }
 
-form {
-  .single-input{
-    display: flex;
-    flex-direction: row;
-
-    label {
-      width: 70px;
-      font-weight: bold;
-    }
-
-    .longer-input {
-      width: 250px;
-      max-width: 250px;
-      min-width: 250px;
-      padding: 1px 3px;
-    }
-
-    textarea {
-      min-height: 100px;
-    }
-  }
-
-  .sub-title {
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 10px;
-  }
-
-  .wide-button {
-    width: 100%;
-
-    input[type="submit"]{
-      width: 100%;
-    }
-  }
-
-  .dog-list {
-    .list {
-      display: flex;
-      margin-bottom: 5px;
-      gap: 5px;
-
-      label {
-        display: flex;
-        cursor: pointer;
-      }
-
-      input[type="checkbox"]{
-        display: none;
-      }
-
-      .clicked {
-        box-shadow: 0px 0px 10px 2px #ef0000;
-      }
-    }
-  }
-}
-
 .contents, .feed-content {
+
+  .actions {
+    .buttons {
+      display: flex;
+      gap: 10px;
+    }
+  }
+
   .content {
     display: flex;
     flex-direction: column;
     gap: 5px;
+    width: 100%;
+
+    .title {
+      font-size: 20px;
+      font-weight: bold;
+      margin: 4px auto;
+    }
 
     img {
       width: 100%;
     }
-  }
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    flex: 0;
 
-    .attachments {
-      max-width: 400px;
-      width: 400px;
-  
-      .preview-images {
-        display: flex;
-        gap: 5px;
-        flex-wrap: wrap;
-        max-width: 75%;
-        width: 75%;
-    
-        img {
-          max-height: 100px;
-          height: 100px;
-        }
-      }
-    }
+    .video-container {
+      margin: 0px auto;
 
-    input[type="file"]{
-      max-width: 200px;
+      display: flex;
+      justify-content: center;
     }
   }
 }

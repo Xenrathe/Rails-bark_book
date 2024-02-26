@@ -12,7 +12,7 @@
   <% end %>
   <div class="details">
     <p class="text">
-    <%= dog.name %><% if full_details %>, a <%= dog.breed %> weighing <%= dog.weight %> lbs, born in <%= dog.birthdate.year %>.<% end %>
+    <%= dog.name %><% if full_details %>, an <%= dog.weight %> lbs <%= dog.breed %>, born <%= dog.birthdate.year %>.<% end %>
     <% if show_ownership %>
       <% if current_user && dog.user == current_user %>
         YOUR best friend!

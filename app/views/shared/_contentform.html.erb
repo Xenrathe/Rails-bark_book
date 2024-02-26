@@ -35,7 +35,7 @@
       <% else %>
         <%= form.label :attached_video, style: "display: block" %>
       <% end %>
-      <%= form.file_field :attached_video %>
+      <%= form.file_field :attached_video, accept: "video/*" %>
     </div>
   <% end %>
 

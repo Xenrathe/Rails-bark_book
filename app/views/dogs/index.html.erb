@@ -4,15 +4,21 @@
         <div class="top">
         <% if current_user && current_user.primary_address %>
           <%= form_tag(dogs_path, method: :get) do %>
-            <%= label_tag 'distance', 'Choose Nearby Distance:' %>
-            <% selected_distance = params[:distance].present? ? params[:distance] : '25' %>
-            <%= select_tag 'distance', options_for_select(['10', '25', '50', '100', 'all'], selected: selected_distance) %>
-            <%= label_tag 'breed', 'Breed: ' %>
-            <%= text_field_tag 'breed', params[:breed], placeholder: 'Dashund...' %>
-            <%= submit_tag 'Filter' %>
+            <div class="single-input">
+              <%= label_tag 'distance', 'Distance:' %>
+              <% selected_distance = params[:distance].present? ? params[:distance] : '25' %>
+              <%= select_tag 'distance', options_for_select(['10', '25', '50', '100', 'all'], selected: selected_distance) %>
+            </div>
+            <div class="single-input">
+              <%= label_tag 'breed', 'Breed: ' %>
+              <%= text_field_tag 'breed', params[:breed], placeholder: 'Dashund...' %>
+            </div>
+            <div class="filter-and-page">
+              <%= submit_tag 'Filter' %>
+              <%= render 'shared/pagination', page: @page, total_pages: @total_pages %>
+            </div>
           <% end %>
         <% end %>
-        <%= render 'shared/pagination', page: @page, total_pages: @total_pages %>
       </div>
       <hr>
 

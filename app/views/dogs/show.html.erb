@@ -6,9 +6,9 @@
       <%= turbo_frame_tag "dog-following", class: "actions" do %>
         <% if current_user %>
           <% if current_user.following?(@dog) && @dog.user_id != current_user.id %>
-            <%= button_to 'Unfollow', unfollow_dog_path(@dog), method: :delete, data: {turbo_method: :delete} %>
+            <%= button_to 'Untrack', unfollow_dog_path(@dog), method: :delete, data: {turbo_method: :delete} %>
           <% elsif @dog.user_id != current_user.id %>
-            <%= button_to 'Follow', follow_dog_path(@dog), method: :post, class: "wide-button", data: {turbo_method: :post} %>
+            <%= button_to 'Track', follow_dog_path(@dog), method: :post, class: "wide-button", data: {turbo_method: :post} %>
           <% elsif @dog.user_id == current_user.id %>
             <%= button_to "Edit", edit_dog_path(@dog), method: :get, data: {turbo_method: :get, turbo_frame: "_top"} %> 
             <%= button_to "Delete", @dog, method: :delete, data: {turbo_method: :delete, turbo_frame: "_top", turbo_confirm: "Are you sure you want to delete #{@dog.name}'s entry?"} %>
