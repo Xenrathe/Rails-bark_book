@@ -21,6 +21,7 @@ class Content < ApplicationRecord
   def content_limitations
     case content_type
     when 'image'
+      puts "Image error found!"
       errors.add(:image, ' must be attached') unless attached_images.attached?
       errors.add(:caption, ' cannot be greater than 200 characters') unless body.length <= 200
       errors.add(:attached_images, ' cannot exceed 10 files') if attached_images.count > 10

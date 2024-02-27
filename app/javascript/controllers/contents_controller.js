@@ -35,6 +35,11 @@ export default class extends Controller {
 
   previewImages(files) {
     this.imgpreviewTarget.innerHTML = ""; // Clear previous previews
+    this.imgpreviewTarget.style.border = "none";
+
+    if (files.length > 0){
+      this.imgpreviewTarget.style.border = "1px solid black";
+    }
 
     files.forEach(file => {
       const reader = new FileReader();

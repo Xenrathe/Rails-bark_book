@@ -28,15 +28,12 @@ form {
     margin-top: 10px;
   }
 
-  .wide-button {
-    width: 100%;
-
-    input[type="submit"]{
-      width: 100%;
-    }
-  }
-
   .dog-list {
+
+    .sub-title {
+      margin-bottom: 5px;
+    }
+
     .list {
       display: flex;
       margin-bottom: 5px;
@@ -64,10 +61,11 @@ form {
     flex-direction: column;
     align-items: flex-start;
     flex: 0;
+    width: 95%;
 
     .attachments {
       max-width: 400px;
-      width: 400px;
+      
   
       .preview-images {
         display: flex;
@@ -75,6 +73,7 @@ form {
         flex-wrap: wrap;
         max-width: 75%;
         width: 75%;
+        margin: 2px;
     
         img {
           max-height: 100px;
@@ -106,6 +105,165 @@ form {
     }
   }
 }
+
+//BUTTONS BUTTONS BUTTONS
+$create-color: #006900;
+$edit-color: #72b900;
+$edit-secondary-color: rgb(149, 206, 84);
+$delete-color: red;
+$delete-secondary-color: rgb(255, 103, 103);
+
+.wide-button {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+input[type="submit"].create {
+  border: 3px solid $create-color;
+}
+
+input[type="submit"].edit {
+  border: 3px solid $edit-color;
+}
+
+input[type="submit"].create, input[type="submit"].edit {
+  height: 40px;
+  width: 85%;
+  margin: 3px auto;
+  border-radius: 15px;
+  transition: all 0.3s;
+  cursor: pointer;
+  background: white;
+  font-size: 1.1em;
+  font-weight: 550;
+  //font-family: 'Montserrat', sans-serif; 
+}
+
+input[type="submit"].create:hover {
+  background: $create-color;
+  color: white;
+  font-size: 1.3em;
+}
+
+input[type="submit"].edit:hover {
+  background: $edit-color;
+  color: white;
+  font-size: 1.3em;
+}
+
+input[type="submit"].create:active {
+  background: $create-color;
+  color: white;
+  font-size: 4em;
+}
+
+input[type="submit"].edit:active {
+  background: $edit-color;
+  color: white;
+  font-size: 4em;
+}
+
+.contents, .feed-content {
+
+  .actions {
+    .buttons {
+      display: flex;
+      gap: 10px;
+
+      a {
+        text-decoration: none;
+      }
+
+      //SPECIFIC COLORS FOR EDIT BUTTON
+      .edit {
+        button {
+          background: $edit-color;
+
+          .icon {
+            border-left: 1px solid $edit-secondary-color;
+          }
+        }
+
+        button:hover {
+          background: $edit-secondary-color;
+         }
+      }
+
+      //SPECIFIC COLORS FOR DELETE BUTTON
+      .delete {
+        button {
+          background: $delete-color;
+
+          .icon {
+            border-left: 1px solid $delete-secondary-color;
+          }
+        }
+
+        button:hover {
+          background: $delete-secondary-color;
+         }
+      }
+
+      button {
+        width: 150px;
+        height: 50px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+        font-size: 16px;
+       }
+       
+       button, button span {
+        transition: 200ms;
+       }
+       
+       button .text {
+        transform: translateX(20px);
+        color: white;
+        font-weight: bold;
+       }
+       
+       button .icon {
+        position: absolute;
+        transform: translateX(105px);
+        height: 40px;
+        width: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+       }
+       
+       button svg {
+        width: 15px;
+        fill: #eee;
+       }
+       
+       button:hover .text {
+        color: transparent;
+       }
+       
+       button:hover .icon {
+        width: 150px;
+        border-left: none;
+        transform: translateX(0);
+       }
+       
+       button:focus {
+        outline: none;
+       }
+       
+       button:active .icon svg {
+        transform: scale(0.8);
+       }
+    }
+  }
+}
+
+//NO MORE BUTTONS BUTTONS BUTTONS
 
 //MOBILE SCREENS
 @media only screen and (max-width: globalvars.$mobile-width){

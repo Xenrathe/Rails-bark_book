@@ -35,19 +35,19 @@ class ContentsController < ApplicationController
 
     # Validate that content_type actually matches
     if @content.content_type == 'image' && !@content.attached_images.attached?
-      flash[:alert] = 'Image posts must contain at least one image'
+      flash.now[:alert] = 'Image posts must contain at least one image'
       render :new, status: :unprocessable_entity
     elsif @content.content_type == 'image' && @content.attached_video.attached?
-      flash[:alert] = 'Image posts cannot have video attachments'
+      flash.now[:alert] = 'Image posts cannot have video attachments'
       render :new, status: :unprocessable_entity
     elsif @content.content_type == 'video' && @content.attached_images.attached?
-      flash[:alert] = 'Video posts cannot have image attachments'
+      flash.now[:alert] = 'Video posts cannot have image attachments'
       render :new, status: :unprocessable_entity
     elsif @content.content_type == 'video' && !@content.attached_video.attached?
-      flash[:alert] = 'Video posts must have a video attachment'
+      flash.now[:alert] = 'Video posts must have a video attachment'
       render :new, status: :unprocessable_entity
     elsif @content.content_type == 'post' && (@content.attached_images.attached? || @content.attached_video.attached?)
-      flash[:alert] = 'Text posts cannot have attachments'
+      flash.now[:alert] = 'Text posts cannot have attachments'
       render :new, status: :unprocessable_entity
     elsif @content.save
       redirect_to @content

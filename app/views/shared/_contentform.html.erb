@@ -18,7 +18,9 @@
     <div class="attachments" data-controller="contents">
       <div class="single-input">
         <%= form.label :attached_images, style: "display: block" %>
-        <%= form.file_field :attached_images, multiple: true, accept: "image/*", data: { maxFiles: 10, contents_target: "fileupload" } %>
+        <% if mode != 'Edit' # Cannot alter attached images via editing %>
+          <%= form.file_field :attached_images, multiple: true, accept: "image/*", data: { maxFiles: 10, contents_target: "fileupload" } %>
+        <% end %>
       </div>
       <div class="preview-images" data-contents-target="imgpreview">
         <% if content.attached_images.attached? %>
@@ -31,11 +33,15 @@
   <% elsif type == 'video' %>
     <div class="attachments single-input">
       <% if content.attached_video.attached? %>
-        <%= video_tag content.attached_video %>
+        <div class="video-container" data-controller="contents">
+          <% metadata = content.attached_video.blob.metadata %>
+          <% aspect_ratio = metadata[:width].to_f / metadata[:height].to_f %>
+          <%= video_tag rails_blob_path(content.attached_video, only_path: true), controls: true, data: {contents_target: "video", aspect_ratio: aspect_ratio } %>
+        </div>
       <% else %>
         <%= form.label :attached_video, style: "display: block" %>
+        <%= form.file_field :attached_video, accept: "video/*" %>
       <% end %>
-      <%= form.file_field :attached_video, accept: "video/*" %>
     </div>
   <% end %>
 
@@ -55,18 +61,8 @@
   <div class="wide-button">
     <%= form.hidden_field 'dog_ids][]', value: '' %>
     <%= form.hidden_field :content_type, value: @content.content_type %>
-    <%= form.submit %>
+    <%= form.submit "#{mode}", class: "#{mode.downcase}" %>
   </div>
 
-  <% if content.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(content.errors.count, "error") %> prohibited this <%= type %> post from being saved:</h2>
-
-      <ul>
-        <% content.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render 'shared/errors', object: content %>
 <% end %>

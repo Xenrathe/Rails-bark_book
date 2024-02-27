@@ -1,0 +1,16 @@
+<% if object.errors.any? || flash[:alert] %>
+  <div class="errors" style="color: red">
+    <h2>Errors prohibited this <%= object.class.name.downcase %> from being posted:</h2>
+
+    <ul>
+      <% object.errors.each do |error| %>
+        <li><%= error.full_message %></li>
+      <% end %>
+      <% flash.each do |key, value| %>
+        <div class="flash flash-<%= key %>">
+          <li><%= value %></li>
+        </div>
+      <% end %>
+    </ul>
+  </div>
+<% end %>  

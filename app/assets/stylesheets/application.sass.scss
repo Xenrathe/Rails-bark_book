@@ -486,13 +486,6 @@ div {
 
 .contents, .feed-content {
 
-  .actions {
-    .buttons {
-      display: flex;
-      gap: 10px;
-    }
-  }
-
   .content {
     display: flex;
     flex-direction: column;
@@ -508,13 +501,13 @@ div {
     img {
       width: 100%;
     }
+  }
 
-    .video-container {
-      margin: 0px auto;
+  .video-container {
+    margin: 3px auto;
 
-      display: flex;
-      justify-content: center;
-    }
+    display: flex;
+    justify-content: center;
   }
 }
 
