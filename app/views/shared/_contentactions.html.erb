@@ -2,8 +2,8 @@
   <% if current_user && current_user.id == content.user_id %>
     <hr>
     <div class="buttons">
-      <%= link_to edit_content_path(content), class: "edit", method: :get, data: {turbo_method: :get } do %>
-        <button>
+      <%= link_to edit_content_path(content), class: "action-button", method: :get, data: {turbo_method: :get } do %>
+        <button class="edit">
           <span class="text">EDIT</span>
           <span class="icon">
             <svg class="svg" viewBox="0 0 512 512">
@@ -12,8 +12,8 @@
           </span>
         </button>
       <% end %>
-      <%= link_to content, class: "delete", data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this #{type} post?"} do %>
-        <button>
+      <%= link_to content, class: "action-button", data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this #{type} post?"} do %>
+        <button class="delete">
           <span class="text">DELETE</span>
           <span class="icon">
             <svg class="svg" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">

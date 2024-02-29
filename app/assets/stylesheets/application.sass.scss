@@ -1,8 +1,7 @@
-// Entry point for your Sass build
-@use "navbar";
-@use "globalvars";
-@use "commentsbarks";
-@use "forms";
+@use "navbar"; //CSS for the navbar
+@use "globalvars"; //Variables
+@use "commentsbarks"; //CSS for comments and barks
+@use "forms"; //CSS for forms, INCLUDING BUTTONS
 
 body {
   display: flex;
@@ -485,6 +484,12 @@ div {
 }
 
 .contents, .feed-content {
+  .actions {
+    .buttons {
+      display: flex;
+      gap: 10px;
+    }
+  }
 
   .content {
     display: flex;
@@ -496,6 +501,12 @@ div {
       font-size: 20px;
       font-weight: bold;
       margin: 4px auto;
+    }
+
+    .body {
+      max-width: 400px;
+      margin-left: 5%;
+      margin-right: auto;
     }
 
     img {

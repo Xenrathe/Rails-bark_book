@@ -112,6 +112,8 @@ $edit-color: #72b900;
 $edit-secondary-color: rgb(149, 206, 84);
 $delete-color: red;
 $delete-secondary-color: rgb(255, 103, 103);
+$filter-color: rgb(56, 56, 56);
+$filter-secondary-color: rgb(110, 110, 110);
 
 .wide-button {
   width: 100%;
@@ -164,102 +166,117 @@ input[type="submit"].edit:active {
   font-size: 4em;
 }
 
-.contents, .feed-content {
+a.action-button {
+  text-decoration: none;
 
-  .actions {
-    .buttons {
-      display: flex;
-      gap: 10px;
+  button {
+    width: 150px;
+    height: 50px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
+    font-size: 16px;
+    padding: 1px 0px;
+  }
 
-      a {
-        text-decoration: none;
-      }
+  button.filter {
+    width: 120px;
+    height: 20px;
+    font-size: 13px;
+  }
+   
+  button, button span {
+    transition: 200ms;
+  }
+   
+  button .text {
+    transform: translateX(20px);
+    color: white;
+    font-weight: bold;
+  }
+   
+  button .icon {
+    position: absolute;
+    transform: translateX(105px);
+    height: 40px;
+    width: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 
-      //SPECIFIC COLORS FOR EDIT BUTTON
-      .edit {
-        button {
-          background: $edit-color;
+  button.filter .icon {
+    height: 15px;
+    transform: translateX(80px);
+  }
+   
+  button svg {
+    width: 15px;
+    fill: #eee;
+  }
+   
+  button:hover .text {
+    color: transparent;
+  }
+   
+  button:hover .icon {
+    width: 150px;
+    border-left: none;
+    transform: translateX(0);
+  }
 
-          .icon {
-            border-left: 1px solid $edit-secondary-color;
-          }
-        }
+  button.filter:hover .icon {
+    width: 120px;
+  }
+   
+  button:focus {
+    outline: none;
+  }
+   
+  button:active .icon svg {
+    transform: scale(0.8);
+  }
 
-        button:hover {
-          background: $edit-secondary-color;
-         }
-      }
+  //SPECIFIC COLORS FOR EDIT BUTTON
+  button.edit {
+    background: $edit-color;
 
-      //SPECIFIC COLORS FOR DELETE BUTTON
-      .delete {
-        button {
-          background: $delete-color;
-
-          .icon {
-            border-left: 1px solid $delete-secondary-color;
-          }
-        }
-
-        button:hover {
-          background: $delete-secondary-color;
-         }
-      }
-
-      button {
-        width: 150px;
-        height: 50px;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        border: none;
-        border-radius: 5px;
-        box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-        font-size: 16px;
-       }
-       
-       button, button span {
-        transition: 200ms;
-       }
-       
-       button .text {
-        transform: translateX(20px);
-        color: white;
-        font-weight: bold;
-       }
-       
-       button .icon {
-        position: absolute;
-        transform: translateX(105px);
-        height: 40px;
-        width: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-       }
-       
-       button svg {
-        width: 15px;
-        fill: #eee;
-       }
-       
-       button:hover .text {
-        color: transparent;
-       }
-       
-       button:hover .icon {
-        width: 150px;
-        border-left: none;
-        transform: translateX(0);
-       }
-       
-       button:focus {
-        outline: none;
-       }
-       
-       button:active .icon svg {
-        transform: scale(0.8);
-       }
+    .icon {
+      border-left: 1px solid $edit-secondary-color;
     }
+  }
+
+  button.edit:hover {
+    background: $edit-secondary-color;
+  }
+
+  //SPECIFIC COLORS FOR DELETE BUTTON
+  button.delete {
+    background: $delete-color;
+
+    .icon {
+      border-left: 1px solid $delete-secondary-color;
+    }
+  }
+
+  button.delete:hover {
+    background: $delete-secondary-color;
+  }
+
+  //SPECIFIC COLORS FOR FILTER BUTTON
+  button.filter {
+    background: $filter-color;
+
+    .icon {
+      border-left: 1px solid $filter-secondary-color;
+    }
+  }
+
+  button.filter:hover {
+    background: $filter-secondary-color;
   }
 }
 

@@ -5,9 +5,14 @@
 ## Development To-do List:
 
 ### CSS and Java and other view features
-* Contents views / styling (new, show, etc)
+* Past PlayDates have no 'alter attendence' and instead a note about 'PlayDate is in the past'
+* PlayDate (new, edit, show) styling
+* Parks styling
+* Profile styling
+* Login/logout/new account styling
+* Dog pages styling
+* Show/Collapse comments section
 * Move all javascript to Stimulus controllers
-* Better buttons!
 
 ### Additional features
 * Cookies for remembering nearby distance filter
