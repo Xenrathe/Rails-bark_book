@@ -5,7 +5,7 @@
 ## Development To-do List:
 
 ### CSS and Java and other view features
-* Past PlayDates have no 'alter attendence' and instead a note about 'PlayDate is in the past'
+* Edit / delete buttons on dog show
 * PlayDate (new, edit, show) styling
 * Parks styling
 * Profile styling

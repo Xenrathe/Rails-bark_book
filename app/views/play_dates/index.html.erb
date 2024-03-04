@@ -1,10 +1,8 @@
-<div class="play-date core-window">
-  <div class="index transparent-bg core-content">
+<div class="play-dates index core-window">
     <h1>Play Dates</h1>
-
     <% @play_dates.each do |play_date| %>
-      <hr>
-      <%= render play_date, comments_mode: 'short', include_actions: false %>
+      <div class="feed-content transparent-bg core-content">
+        <%= render play_date, comments_mode: 'short', include_actions: false %>
+      </div>
     <% end %>
-  </div>
 </div>

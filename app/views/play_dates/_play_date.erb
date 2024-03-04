@@ -21,7 +21,7 @@
     <div class="attendees">
       <% play_date.attendees.each do |dog| %>
         <% dog_class = current_user && dog.user == current_user ? "owned" : "" %>
-        <%= link_to dog do %>
+        <%= link_to dog, data: { turbo_frame: "_top" } do %>
           <% if dog.avatar.attached? %>
             <%= image_tag dog.avatar.variant(:attendee), class: dog_class %><br>
           <% end %>
@@ -29,7 +29,7 @@
       <% end %>
     </div>
 
-    <% if current_user %>
+    <% if current_user && play_date.date > DateTime.now() %>
       <%= form_tag attend_play_date_path(play_date), method: :post do %>
         <% current_user.dogs.each do |dog| %>
           <label>

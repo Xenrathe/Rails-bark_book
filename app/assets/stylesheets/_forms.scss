@@ -114,6 +114,10 @@ $delete-color: red;
 $delete-secondary-color: rgb(255, 103, 103);
 $filter-color: rgb(56, 56, 56);
 $filter-secondary-color: rgb(110, 110, 110);
+$track-color: rgb(2, 168, 197);
+$track-secondary-color: rgb(99, 201, 219);
+$untrack-color: rgb(197, 90, 2);
+$untrack-secondary-color: rgb(216, 130, 60);
 
 .wide-button {
   width: 100%;
@@ -168,22 +172,25 @@ input[type="submit"].edit:active {
 
 a.action-button {
   text-decoration: none;
+  width: calc(70px + 3vw);
+  display: flex;
+  align-items: center;
 
   button {
-    width: 150px;
+    width: 100%;
     height: 50px;
     cursor: pointer;
     display: flex;
     align-items: center;
+    gap: 10px;
     border: none;
     border-radius: 5px;
-    box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-    font-size: 16px;
+    box-shadow: 1px 1px 3px #00000026;
+    font-size: calc(2px + 0.8vw);
     padding: 1px 0px;
   }
 
   button.filter {
-    width: 120px;
     height: 20px;
     font-size: 13px;
   }
@@ -193,29 +200,46 @@ a.action-button {
   }
    
   button .text {
-    transform: translateX(20px);
+    margin-left: 10px;
     color: white;
     font-weight: bold;
   }
    
   button .icon {
     position: absolute;
-    transform: translateX(105px);
+    //transform: translateX(105px);
+    margin-left: calc(55px + 1.5vw);
     height: 40px;
-    width: 40px;
+    width: calc(12px + 1.5vw);
     display: flex;
     align-items: center;
     justify-content: center;
+
+    .svg {
+      margin: 0px 5px;
+    }
   }
 
   button.filter .icon {
     height: 15px;
-    transform: translateX(80px);
+    //transform: translateX(80px);
   }
    
   button svg {
-    width: 15px;
+    width: 20px;
+    min-width: 20px;
+    height: 20px;
+    min-height: 20px;
     fill: #eee;
+  }
+
+  @media only screen and (max-width: globalvars.$midscreen-width){
+    button svg {
+      width: 25px;
+      min-width: 25px;
+      height: 25px;
+      min-height: 25px;
+    }
   }
    
   button:hover .text {
@@ -223,13 +247,37 @@ a.action-button {
   }
    
   button:hover .icon {
-    width: 150px;
+    position: absolute;
+    margin: 0px;
     border-left: none;
-    transform: translateX(0);
   }
 
-  button.filter:hover .icon {
-    width: 120px;
+  @media only screen and (max-width: globalvars.$midscreen-width){
+    button, button.filter {
+      font-size: 0px;
+      justify-content: center;
+    }
+
+    button, button span {
+      transition: 0ms;
+    }
+
+    button .icon {
+      margin-left: 0px;
+      flex: 1;
+      border-left: none !important;
+    }
+
+    button:hover .icon {
+      margin: 0px;
+      flex: 1;
+    }
+  }
+
+  @media only screen and (min-width: calc(globalvars.$midscreen-width + 1px)){
+    button:hover .icon {
+      width: calc(70px + 3vw);
+    }
   }
    
   button:focus {
@@ -277,6 +325,52 @@ a.action-button {
 
   button.filter:hover {
     background: $filter-secondary-color;
+  }
+
+  //SPECIFIC COLORS FOR TRACK BUTTON
+  button.track {
+    background: $track-color;
+
+    .icon {
+      border-left: 1px solid $track-secondary-color;
+    }
+  }
+
+  button.track:hover {
+    background: $track-secondary-color;
+  }
+
+  //SPECIFIC COLORS FOR UNTRACK BUTTON
+  button.untrack {
+    background: $untrack-color;
+
+    .icon {
+      border-left: 1px solid $untrack-secondary-color;
+    }
+  }
+
+  button.untrack:hover {
+    background: $untrack-secondary-color;
+  }
+}
+
+a.action-button.wide {
+  width: calc(85px + 3vw);
+
+  button .icon {
+    margin-left: calc(70px + 1.5vw);
+    height: 40px;
+    width: calc(12px + 1.5vw);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  @media only screen and (max-width: globalvars.$midscreen-width){
+    button .icon {
+      margin-left: 0px;
+      border-left: none !important;
+    }
   }
 }
 

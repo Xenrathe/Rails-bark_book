@@ -189,7 +189,7 @@ div {
   align-items: center;
   padding-top: 15px;
 
-  //Add space for the 'fixed' navbar
+  //Add space for the 'fixed' navbar for mobile
   @media only screen and (max-width: globalvars.$mobile-width){
     margin-top: 50px;
   }
@@ -206,7 +206,7 @@ div {
   }
 }
 
-.user-feed, .dogs {
+.user-feed, .dogs, .play-dates {
   .feed-content {
     margin-top: 8px;
     margin-bottom: 8px;
