@@ -25,6 +25,17 @@ class PlayDate < ApplicationRecord
     attendees.include?(dog)
   end
 
+  def self.nearby(user, distance)
+    return unless user.primary_address.present?
+
+    nearby_playdates = []
+    user.primary_address.nearbys(distance)&.where('addressable_type = ?', 'DogPark')&.each do |address|
+      nearby_playdates << address.addressable.play_dates.upcoming
+    end
+
+    nearby_playdates.flatten
+  end
+
   private
 
   def at_least_one_dog_attendee

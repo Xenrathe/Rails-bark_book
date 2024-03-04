@@ -11,7 +11,7 @@
             <% end %>
           <% elsif @dog.user_id != current_user.id %>
             <%= link_to follow_dog_path(@dog), class: "action-button wide", method: :post, data: {turbo_method: :post } do %>
-              <%= render 'shared/trackbutton' %>
+              <%= render 'shared/plusbutton', btn_text: 'TRACK' %>
             <% end %>
           <% elsif @dog.user_id == current_user.id %>
             <%= link_to edit_dog_path(@dog), class: "action-button", method: :get, data: {turbo_method: :get, turbo_frame: "_top" } do %>

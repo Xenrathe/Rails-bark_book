@@ -1,4 +1,7 @@
 class PlayDatesController < ApplicationController
+  include PaginationConcern
+  helper_method :navigation_params
+
   before_action :authenticate_user!
   before_action :set_playdate, only: %i[ show edit update destroy attend ]
 
@@ -7,7 +10,17 @@ class PlayDatesController < ApplicationController
   end
 
   def index
-    @play_dates = PlayDate.all
+    distance = params[:distance].present? ? params[:distance] : '25'
+
+    # filter by distance
+    if distance != 'all' && current_user && current_user.primary_address
+      nearby_playdates = PlayDate.nearby(current_user, distance.to_i) # Returns an array
+      @play_dates = PlayDate.where(id: nearby_playdates.pluck(:id)) # Convert back to relation... inefficient?
+    else
+      @play_dates = PlayDate.upcoming
+    end
+
+    @play_dates, @total_pages = paginate_collection(@play_dates, 10)
   end
 
   def new
@@ -107,5 +120,9 @@ class PlayDatesController < ApplicationController
         address_attributes: %i[address_one address_two city state postal_code country]
       ]
     )
+  end
+
+  def navigation_params
+    params.permit(:distance, :commit)
   end
 end

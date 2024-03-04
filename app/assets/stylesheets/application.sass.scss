@@ -206,6 +206,12 @@ div {
   }
 }
 
+.title {
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
 .user-feed, .dogs, .play-dates {
   .feed-content {
     margin-top: 8px;
@@ -228,6 +234,16 @@ div {
         max-width: calc(250px + 25vw);
       }
     }
+  }
+}
+
+.play-dates.index {
+  .form-page-and-new {
+    width: 75%;
+
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-evenly;
   }
 }
 

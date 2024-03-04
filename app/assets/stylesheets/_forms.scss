@@ -252,6 +252,7 @@ a.action-button {
     border-left: none;
   }
 
+  // Tablets and mobile
   @media only screen and (max-width: globalvars.$midscreen-width){
     button, button.filter {
       font-size: 0px;
@@ -274,6 +275,7 @@ a.action-button {
     }
   }
 
+  //Desktop
   @media only screen and (min-width: calc(globalvars.$midscreen-width + 1px)){
     button:hover .icon {
       width: calc(70px + 3vw);
@@ -359,11 +361,18 @@ a.action-button.wide {
 
   button .icon {
     margin-left: calc(70px + 1.5vw);
-    height: 40px;
-    width: calc(12px + 1.5vw);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  }
+
+  button:hover .icon {
+    position: absolute;
+    margin: 0px;
+    flex: 1;
+  }
+
+  @media only screen and (min-width: calc(globalvars.$midscreen-width + 1px)) {
+    button:hover .icon {
+      width: calc(85px + 3vw);
+    }
   }
 
   @media only screen and (max-width: globalvars.$midscreen-width){

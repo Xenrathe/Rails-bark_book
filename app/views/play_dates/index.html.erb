@@ -1,5 +1,36 @@
 <div class="play-dates index core-window">
-    <h1>Play Dates</h1>
+  <div class="core-content transparent-bg">
+    <div class="title">Play Dates</div>
+    <div class="form-page-and-new">
+      <% if current_user && current_user.primary_address %>
+        <%= form_tag(play_dates_path, method: :get) do %>
+          <div class="single-input">
+            <%= label_tag 'distance', 'Distance:' %>
+            <% selected_distance = params[:distance].present? ? params[:distance] : '25' %>
+            <%= select_tag 'distance', options_for_select(['10', '25', '50', '100', 'all'], selected: selected_distance) %>
+          </div>
+          <div class="filter-and-page">
+            <%= link_to play_dates_path, class: 'action-button', data: {turbo_method: :get}, onclick: "this.closest('form').submit(); return false;" do %>
+              <button class="filter">  
+                <span class="text">Filter</span>
+                <span class="icon">
+                  <svg class="svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                    <path d="M14,12V19.88C14.04,20.18 13.94,20.5 13.71,20.71C13.32,21.1 12.69,21.1 12.3,20.71L10.29,18.7C10.06,18.47 9.96,18.16 10,17.87V12H9.97L4.21,4.62C3.87,4.19 3.95,3.56 4.38,3.22C4.57,3.08 4.78,3 5,3V3H19V3C19.22,3 19.43,3.08 19.62,3.22C20.05,3.56 20.13,4.19 19.79,4.62L14.03,12H14Z" />
+                  </svg>
+                </span>
+              </button>
+            <% end %>
+            <%= render 'shared/pagination', page: @page, total_pages: @total_pages %>
+          </div>
+        <% end %>
+      <% end %>
+      <div class="new">
+        <%= link_to new_play_date_path, class: "action-button", method: :get, data: {turbo_method: :get} do %>
+          <%= render 'shared/plusbutton', btn_text: 'NEW' %>
+        <% end %>
+      </div>
+    </div>
+  </div>
     <% @play_dates.each do |play_date| %>
       <div class="feed-content transparent-bg core-content">
         <%= render play_date, comments_mode: 'short', include_actions: false %>
