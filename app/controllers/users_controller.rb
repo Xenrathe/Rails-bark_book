@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   include PaginationConcern
+  helper_method :navigation_params
 
   before_action :authenticate_user!
   before_action :set_user, only: %i[show edit update make_primary destroy]
@@ -115,6 +116,10 @@ class UsersController < ApplicationController
 
   def user_params
     params.require(:user).permit(:username, :time_zone, :bark_sound, :custom_bark)
+  end
+
+  def navigation_params
+    params.permit(:distance, :commit)
   end
 
 end

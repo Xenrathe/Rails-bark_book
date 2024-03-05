@@ -5,13 +5,13 @@
 ## Development To-do List:
 
 ### CSS and Java and other view features
-* Edit / delete buttons on dog show
-* PlayDate (new, edit, show) styling
+* PlayDate index filter / new bar should become a Bottom NavBar
+* PlayDate new, edit, show styling
 * Parks styling
 * Profile styling
 * Login/logout/new account styling
-* Dog pages styling
 * Show/Collapse comments section
+* Auto-pagination scrolling for feed-style content (play date index, feeds, etc)
 * Move all javascript to Stimulus controllers
 
 ### Additional features

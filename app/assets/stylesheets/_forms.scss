@@ -207,7 +207,6 @@ a.action-button {
    
   button .icon {
     position: absolute;
-    //transform: translateX(105px);
     margin-left: calc(55px + 1.5vw);
     height: 40px;
     width: calc(12px + 1.5vw);
@@ -222,7 +221,8 @@ a.action-button {
 
   button.filter .icon {
     height: 15px;
-    //transform: translateX(80px);
+    margin-left: 80px;
+    width: 30px;
   }
    
   button svg {
@@ -234,7 +234,7 @@ a.action-button {
   }
 
   @media only screen and (max-width: globalvars.$midscreen-width){
-    button svg {
+    button + :not(filter) svg {
       width: 25px;
       min-width: 25px;
       height: 25px;
@@ -254,22 +254,22 @@ a.action-button {
 
   // Tablets and mobile
   @media only screen and (max-width: globalvars.$midscreen-width){
-    button, button.filter {
+    button:not(.filter) {
       font-size: 0px;
       justify-content: center;
     }
 
-    button, button span {
+    button:not(.filter), button:not(.filter) span {
       transition: 0ms;
     }
 
-    button .icon {
+    button:not(.filter) .icon {
       margin-left: 0px;
       flex: 1;
       border-left: none !important;
     }
 
-    button:hover .icon {
+    button:hover:not(.filter) .icon {
       margin: 0px;
       flex: 1;
     }
@@ -280,6 +280,10 @@ a.action-button {
     button:hover .icon {
       width: calc(70px + 3vw);
     }
+  }
+
+  button.filter:hover .icon {
+    width: 120px;
   }
    
   button:focus {
@@ -319,6 +323,8 @@ a.action-button {
   //SPECIFIC COLORS FOR FILTER BUTTON
   button.filter {
     background: $filter-color;
+    min-width: 120px;
+    margin-top: 3px;
 
     .icon {
       border-left: 1px solid $filter-secondary-color;
