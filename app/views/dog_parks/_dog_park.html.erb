@@ -5,7 +5,9 @@
   <% end%>
 </h3>
 
-For <%= dog_park.dog_size.humanize.downcase %> dogs<br><br>
+<% if include_size %>
+  For <%= dog_park.dog_size.humanize.downcase %> dogs<br><br>
+<% end %>
 
 <%= dog_park.address.address_one %>
 <% if dog_park.address.address_two != ''%>

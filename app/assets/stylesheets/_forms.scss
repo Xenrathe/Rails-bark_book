@@ -48,8 +48,13 @@ form {
         display: none;
       }
 
-      .clicked {
+      .dog-select-label {
+        opacity: 50%;
+      }
+
+      .dog-select-label.clicked {
         box-shadow: 0px 0px 10px 2px #ef0000;
+        opacity: 100%;
       }
     }
   }

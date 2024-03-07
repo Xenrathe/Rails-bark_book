@@ -5,7 +5,6 @@
 ## Development To-do List:
 
 ### CSS and Java and other view features
-* PlayDate index filter / new bar should become a Bottom NavBar
 * PlayDate new, edit, show styling
 * Parks styling
 * Profile styling

@@ -276,10 +276,15 @@ div {
     flex-direction: row-reverse;
     justify-content: space-evenly;
   }
+
+  .play-date {
+    min-width: 75%;
+  }
 }
 
 .play-date {
   padding: 10px;
+  font-size: 18px;
 
   display: flex;
   flex-direction: column;
@@ -298,7 +303,7 @@ div {
     }
 
     .title {
-      font-size: 20px;
+      font-size: 25px;
       background-color: rgba(255, 255, 255, 0.205);
       box-shadow: 0px 2px 2px 3px #938948;
       padding: 2px;
@@ -322,20 +327,28 @@ div {
     }
   }
 
-  .attendees {
-    display: flex;
-    flex-wrap:wrap;
-    gap: 5px;
+  .dog-attendance {
+    margin-top: 10px;
 
-    img {
-      height: 100px;
-      max-width: 200px;
-
-      border: solid 1px black;
+    .title {
+      margin-bottom: 5px;
     }
 
-    img[class="owned"] {
-      border: dashed 2px red;
+    .attendees {
+      display: flex;
+      flex-wrap:wrap;
+      gap: 5px;
+  
+      img {
+        height: 100px;
+        max-width: 200px;
+  
+        border: solid 1px black;
+      }
+  
+      img[class="followed"] {
+        border: dashed 2px green;
+      }
     }
   }
 }
