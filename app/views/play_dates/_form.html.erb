@@ -1,30 +1,35 @@
-<%= form_with(model: @play_date, local: true) do |form| %>
-  <div>
-    <%= form.label :date, 'Date and Time' %>
+<%= form_with(model: play_date, local: true) do |form| %>
+  <div class="single-input">
+    <%= form.label :date, 'Date/Time' %>
     <%= form.datetime_local_field :date %>
   </div>
 
-  <div>
+  <div class="single-input">
     <%= form.label :description %>
     <%= form.text_area :description %>
   </div>
 
-  <div>
+  <div class="single-input">
     <%= form.label :dog_size %>
     <%= form.radio_button :dog_size, :small %> Small
     <%= form.radio_button :dog_size, :large %> Large
     <%= form.radio_button :dog_size, :both %> Both
   </div>
 
-  <div>
-    <h4>Which dogs will attend?</h4>
-    <% current_user.dogs.each do |dog| %>
-      <label>
-        <%= form.check_box :dog_attendee_ids, { multiple: true }, dog.id, nil %>
-        <%= dog.name %>
-      </label><br>
-    <% end %>
-  </div>
+  <% if mode == 'Create' %>
+    <div class="dog-list" data-controller="dogselector">
+      <div class="sub-title">Select dogs</div>
+      <div class="list">
+      <% current_user.dogs.each do |dog| %>
+        <div class="dog-checkbox">
+          <%= check_box_tag 'play_date[dog_attendee_ids][]', dog.id, nil, { class: 'dog-select-checkbox', id: "dog_ids_#{dog.id}" } %>
+          <% label_class = play_date.attendees.include?(dog) ? "dog-select-label clicked" : "dog-select-label"%>
+          <%= label_tag "dog_ids_#{dog.id}", image_tag(dog.avatar.variant(:thumb), class: "dog-select"), class: label_class, data: { action: "click->dogselector#select" } %>
+        </div>
+      <% end %>
+      </div>
+    </div>
+  <% end %>
 
   <div>
     <h4>Select Dog Park:</h4>
@@ -47,21 +52,11 @@
     </div>
   </div>
 
-  <div>
-    <%= form.submit %>
+  <div class="wide-button">
+    <%= form.submit "#{mode.upcase}", class: "create" %>
   </div>
 
-  <% if @play_date.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(@play_date.errors.count, "error") %> prohibited this Play Date from being saved:</h2>
-
-      <ul>
-        <% @play_date.errors.each do |error| %>
-          <li><%= error.full_message %></li>
-        <% end %>
-      </ul>
-    </div>
-  <% end %>
+  <%= render 'shared/errors', object: @play_date %>
 <% end %>
 
 <script>

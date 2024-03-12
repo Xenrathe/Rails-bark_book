@@ -1,10 +1,7 @@
 <div class="play-date transparent-bg">
   
   <div class="title-section">
-    <% ownership = current_user && current_user.id == play_date.user_id && include_actions %>
-    <% if ownership %><%= button_to 'Edit', edit_play_date_path(play_date), method: :get %><% end %>
     <div class="title"><%= link_to "Upcoming play date!", play_date %></div>
-    <% if ownership %><%= button_to 'Delete', play_date_path(play_date), method: :delete, data: {turbo_method: :delete, turbo_confirm: 'Are you sure you want to delete this play date?'} %><% end %>
   </div>
 
   <% user_time_zone = current_user ? current_user.time_zone : 'UTC' %>
@@ -59,4 +56,17 @@
     <%= render "shared/barks", barks: play_date.barks, barkable: play_date %> <% unless comments_mode == 'full'%> | <% end %> 
     <%= render "shared/comments", commentable: play_date, commentable_type: 'play_date', comments: play_date.comments, comments_mode: comments_mode %>
   </div>
+
+  <% if current_user && current_user.id == play_date.user_id && include_actions %>
+    <div class="actions">
+      <%= link_to edit_play_date_path(play_date), class: "action-button", method: :get, data: {turbo_method: :get, turbo_frame: "_top" } do %>
+        <%= render 'shared/editbutton' %>
+      <% end %>
+      <% if play_date.attendees.all? { |dog| dog.user == current_user } %>
+        <%= link_to play_date_path(play_date), class: "action-button", data: {turbo_method: :delete, turbo_frame: "_top", turbo_confirm: "Are you sure you want to delete this"} do %>
+          <%= render 'shared/deletebutton' %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
 </div>

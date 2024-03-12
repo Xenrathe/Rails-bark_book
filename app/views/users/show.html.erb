@@ -156,7 +156,7 @@
         <%= turbo_frame_tag "followed-dog-parks" do %>
           <% @followed_dog_parks.each do |dog_park| %>
           
-            <%= render dog_park %>
+            <%= render dog_park, include_size: true %>
             <br>
             <%= link_to "View", dog_park, data: { turbo_frame: "_top" } %>
             

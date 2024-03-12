@@ -353,15 +353,18 @@ div {
   }
 }
 
-.play-date-show {
-  flex: 1;
-  margin-top: 10px;
-
-  display: flex;
-  justify-content: center;
+.play-dates.show {
 
   .play-date {
+    padding-left: 25px;
     width: min(92%, 600px);
+
+    .actions {
+      display: flex;
+      margin-top: 8px;
+      gap: 10px;
+      justify-content: center;
+    }
   }
 }
 
