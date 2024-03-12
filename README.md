@@ -5,7 +5,10 @@
 ## Development To-do List:
 
 ### CSS and Java and other view features
-* PlayDate new, edit, show styling
+* PlayDate prevent changing of dog park / address, if anyone else is attending
+* PlayDate form has client-side / javascript validations to prevent submission if no dogs selected
+* Dog Selection should be a partial?
+* New address form styling
 * Parks styling
 * Profile styling
 * Login/logout/new account styling

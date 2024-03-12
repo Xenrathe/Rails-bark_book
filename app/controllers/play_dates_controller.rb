@@ -15,7 +15,7 @@ class PlayDatesController < ApplicationController
     # filter by distance
     if distance != 'all' && current_user && current_user.primary_address
       nearby_playdates = PlayDate.nearby(current_user, distance.to_i) # Returns an array
-      @play_dates = PlayDate.where(id: nearby_playdates.pluck(:id)) # Convert back to relation... inefficient?
+      @play_dates = PlayDate.upcoming.where(id: nearby_playdates.pluck(:id)) # Convert back to relation... inefficient?
     else
       @play_dates = PlayDate.upcoming
     end

@@ -1,4 +1,4 @@
-<%= form_with(model: play_date, local: true) do |form| %>
+<%= form_with(model: play_date, local: true, html: {"data-controller": "forms"}) do |form| %>
   <div class="single-input">
     <%= form.label :date, 'Date/Time' %>
     <%= form.datetime_local_field :date %>
@@ -58,25 +58,3 @@
 
   <%= render 'shared/errors', object: @play_date %>
 <% end %>
-
-<script>
-  document.addEventListener('DOMContentLoaded', addNewAddressEvent);
-  document.addEventListener('turbo:render', addNewAddressEvent);
-
-  function addNewAddressEvent() {
-    const dogParkRadioBtns = document.querySelectorAll('.dog-park-radio');
-    const newDogParkForm = document.getElementById('new_dog_park_form');
-
-    // The 'required' fields should not be required if this sub-form isn't even visible
-    // But should be, if the field is visible!
-    const requireToggles = document.querySelectorAll('.require-toggle');
-    requireToggles.forEach((field) => field.required = false);
-
-    dogParkRadioBtns.forEach(radio => {
-      radio.addEventListener('change', function() {
-        newDogParkForm.style.display = this.value === 'new' ? 'block' : 'none';
-        requireToggles.forEach((field) => field.required = this.value === 'new' ? 'true' : false);
-      });
-    });
-  }
-</script>
