@@ -59,7 +59,7 @@
   </div>
 
   <div class="wide-button">
-    <%= form.submit "#{mode.upcase}", class: "create" %>
+    <%= form.submit "#{mode.upcase}", "data-action": "click->forms#playDateSubmit", class: "create" %>
   </div>
 
   <%= render 'shared/errors', object: @play_date %>

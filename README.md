@@ -5,7 +5,6 @@
 ## Development To-do List:
 
 ### CSS and Java and other view features
-* PlayDate form has client-side / javascript validations to prevent submission if no dogs selected
 * Dog Selection should be a partial?
 * New address form styling
 * Parks styling

@@ -3,7 +3,9 @@ import { Controller } from "@hotwired/stimulus";
 export default class extends Controller {
 
   connect() {
-    this.addNewAddressEvent();
+    if (document.getElementById('new_dog_park_form')) {
+      this.addNewAddressEvent();
+    }
   }
 
   addNewAddressEvent() {
@@ -21,5 +23,21 @@ export default class extends Controller {
         requireToggles.forEach((field) => field.required = this.value === 'new' ? 'true' : false);
       });
     })
+  }
+
+  playDateSubmit(event) {
+    const checkboxes = document.querySelectorAll("input[type='checkbox']");
+    let atLeastOneChecked = checkboxes.length == 0; // Allows the EDIT button to still work
+
+    checkboxes.forEach(checkbox => {
+      if (checkbox.checked) {
+        atLeastOneChecked = true;
+      }
+    });
+
+    if (!atLeastOneChecked) {
+      event.preventDefault();
+      alert("Please select at least one dog.");
+    }
   }
 }
