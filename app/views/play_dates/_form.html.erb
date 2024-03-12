@@ -31,25 +31,31 @@
     </div>
   <% end %>
 
-  <div>
-    <h4>Select Dog Park:</h4>
-    <% current_user.dog_park_followings.each do |dog_park_following| %>
-      <label>
-        <%= form.radio_button :dog_park_id, dog_park_following.dog_park.id, class: 'dog-park-radio' %>
-        <%= dog_park_following.dog_park.name %>
-      </label><br>
-    <% end %>
-    
-    <label>
-      <%= form.radio_button :dog_park_id, 'new', class: 'dog-park-radio' %>
-      New Dog Park
-    </label>
-
-    <div id="new_dog_park_form" style="display: none;">
-      <%= form.fields_for :dog_park do |dog_park_form| %>
-        <%= render 'shared/dogparkform', form: dog_park_form %>
+  <div class="dog-park">
+    <% if mode == 'Create' || play_date.attendees.all? { |dog| dog.user == current_user }  %>
+      <div class="sub-title">Select Dog Park:</div>
+      <% current_user.dog_park_followings.each do |dog_park_following| %>
+        <label>
+          <%= form.radio_button :dog_park_id, dog_park_following.dog_park.id, class: 'dog-park-radio' %>
+          <%= dog_park_following.dog_park.name %>
+        </label><br>
       <% end %>
-    </div>
+      
+      <% if mode == 'Create' %>
+        <label>
+          <%= form.radio_button :dog_park_id, 'new', class: 'dog-park-radio' %>
+          New Dog Park
+        </label>
+
+        <div id="new_dog_park_form" style="display: none;">
+          <%= form.fields_for :dog_park do |dog_park_form| %>
+            <%= render 'shared/dogparkform', form: dog_park_form %>
+          <% end %>
+        </div>
+      <% end %>
+    <% else %>
+      <div class="single-input"><label>Dog-park:</label> <%= link_to play_date.dog_park.name, play_date.dog_park %></div>
+    <% end %>
   </div>
 
   <div class="wide-button">
