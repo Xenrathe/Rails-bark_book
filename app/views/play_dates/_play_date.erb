@@ -35,19 +35,7 @@
     <% # Own users' dog attendance %>
     <% if current_user && play_date.date > DateTime.now() %>
       <%= form_tag attend_play_date_path(play_date), method: :post do %>
-
-        <div class="dog-list">
-          <div class="sub-title">Your attendance</div>
-          <div class="list">
-            <% current_user.dogs.each do |dog| %>
-              <div class="dog-checkbox" data-controller="dogselector">
-                <%= check_box_tag 'dog_attendee_ids[]', dog.id, play_date.attendees.include?(dog), { class: 'dog-select-checkbox', id: "#{play_date.id}_dog_ids_#{dog.id}", "data-dogselector-target": "checkbox" } %>
-                <% label_class = play_date.attendees.include?(dog) ? "dog-select-label clicked" : "dog-select-label"%>
-                <%= label_tag "#{play_date.id}_dog_ids_#{dog.id}", image_tag(dog.avatar.variant(:thumb), class: "dog-select"), class: label_class, data: { action: "click->dogselector#selectAndSubmit" } %>
-              </div>
-            <% end %>
-          </div>
-        </div>
+        <%= render 'shared/dogselector', object: play_date, dogs: play_date.attendees, tag_string: 'dog_attendee_ids[]', action: 'selectAndSubmit' %>
       <% end %>
     <% end %>
   <% end %>
