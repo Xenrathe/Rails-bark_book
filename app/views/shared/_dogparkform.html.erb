@@ -1,17 +1,16 @@
-<div>
+<div class="single-input">
   <%= form.label :name %>
   <%= form.text_field :name, required: true, class: "require-toggle" %>
 </div>
 
-<div>
+<div class="single-input">
   <%= form.label :dog_size %>
   <%= form.radio_button :dog_size, :small %> Small
   <%= form.radio_button :dog_size, :large %> Large
   <%= form.radio_button :dog_size, :both %> Both
 </div>
 
-<h2>Address</h2>
-
+<br>
 <%= form.fields_for :address do |address_form| %>
   <%= render 'shared/addressform', address_form: address_form, include_name: false %>
 <% end %>

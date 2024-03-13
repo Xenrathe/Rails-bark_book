@@ -17,7 +17,7 @@
   </div>
 
   <% if mode == 'Create' %>
-    <%= render 'shared/dogselector', object: play_date, dogs: play_date.attendees, tag_string: 'play_date[dog_attendee_ids][]' %>
+    <%= render 'shared/dogselector', object: play_date, dogs: play_date.attendees, tag_string: 'play_date[dog_attendee_ids][]', action: 'select' %>
   <% end %>
 
   <div class="dog-park">

@@ -1,36 +1,36 @@
 <% if include_name %>
-  <div>
+  <div class="single-input">
     <%= address_form.label :name %>
-    <%= address_form.text_field :name, required: true, class: "require-toggle" %>
+    <%= address_form.text_field :name, required: true, class: "require-toggle longer-input" %>
   </div>
 <% end %>
 
-<div>
+<div class="single-input">
   <%= address_form.label :address_one %>
-  <%= address_form.text_field :address_one, required: true, class: "require-toggle" %>
+  <%= address_form.text_field :address_one, required: true, class: "require-toggle longer-input" %>
 </div>
 
-<div>
+<div class="single-input">
   <%= address_form.label :address_two %>
-  <%= address_form.text_field :address_two %>
+  <%= address_form.text_field :address_two, class: "longer-input" %>
 </div>
 
-<div>
+<div class="single-input">
   <%= address_form.label :city %>
-  <%= address_form.text_field :city, required: true, class: "require-toggle" %>
+  <%= address_form.text_field :city, required: true, class: "require-toggle longer-input" %>
 </div>
 
-<div>
+<div class="single-input">
   <%= address_form.label :state %>
-  <%= address_form.text_field :state %>
+  <%= address_form.text_field :state, class: "longer-input" %>
 </div>
 
-<div>
+<div class="single-input">
   <%= address_form.label :country %>
-  <%= address_form.text_field :country, required: true, class: "require-toggle" %>
+  <%= address_form.text_field :country, required: true, class: "require-toggle longer-input" %>
 </div>
 
-<div>
+<div class="single-input">
   <%= address_form.label :postal_code %>
-  <%= address_form.text_field :postal_code %>
+  <%= address_form.text_field :postal_code, class: "longer-input" %>
 </div>

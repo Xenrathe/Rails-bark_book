@@ -5,8 +5,6 @@
 ## Development To-do List:
 
 ### CSS and Java and other view features
-* Dog Selection should be a partial?
-* New address form styling
 * Parks styling
 * Profile styling
 * Login/logout/new account styling

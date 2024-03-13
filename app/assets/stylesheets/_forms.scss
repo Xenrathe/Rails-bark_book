@@ -17,6 +17,13 @@ form {
       padding: 1px 3px;
     }
 
+    .medium-length-input {
+      width: 150px;
+      max-width: 150px;
+      min-width: 150px;
+      padding: 1px 3px;
+    }
+
     textarea {
       min-height: 100px;
     }
