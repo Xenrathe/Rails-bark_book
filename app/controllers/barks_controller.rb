@@ -46,7 +46,7 @@ class BarksController < ApplicationController
     if params[:bark][:barkable_type].present? && params[:bark][:barkable_id].present?
       if params[:bark][:barkable_type] == 'content'
         Content.find(params[:bark][:barkable_id])
-      elsif params[:bark][:barkable_type] == 'play_date'
+      elsif params[:bark][:barkable_type] == 'playdate'
         PlayDate.find(params[:bark][:barkable_id])
       end
     end
