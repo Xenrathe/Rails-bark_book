@@ -25,7 +25,7 @@ export default class extends Controller {
     })
   }
 
-  playDateSubmit(event) {
+  submitFormWithRequireDog(event) {
     const checkboxes = document.querySelectorAll("input[type='checkbox']");
     let atLeastOneChecked = checkboxes.length == 0; // Allows the EDIT button to still work
 

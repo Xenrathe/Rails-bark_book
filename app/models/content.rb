@@ -15,8 +15,15 @@ class Content < ApplicationRecord
   has_many :barks, as: :barkable
 
   validate :content_limitations, on: %i[create update]
+  validate :at_least_one_dog_selected, on: %i[create update]
 
   private
+
+  def at_least_one_dog_selected
+    if dogs.none?
+      errors.add(:base, "Content must be about at least one dog.")
+    end
+  end
 
   def content_limitations
     case content_type

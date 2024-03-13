@@ -1,4 +1,4 @@
-<%= form_with(model: content) do |form| %>
+<%= form_with(model: content, html: {"data-controller": "forms"}) do |form| %>
   <div class="single-input">
     <%= form.label :title %>
     <%= form.text_field :title, class: "longer-input" %>
@@ -50,7 +50,7 @@
   <div class="wide-button">
     <%= form.hidden_field 'dog_ids][]', value: '' %>
     <%= form.hidden_field :content_type, value: @content.content_type %>
-    <%= form.submit "#{mode}", class: "#{mode.downcase}" %>
+    <%= form.submit "#{mode}", "data-action": "click->forms#submitFormWithRequireDog", class: "#{mode.downcase}" %>
   </div>
 
   <%= render 'shared/errors', object: content %>
