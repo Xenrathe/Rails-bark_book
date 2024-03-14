@@ -7,7 +7,7 @@
         <% if current_user %>
           <% if current_user.following?(@dog) && @dog.user_id != current_user.id %>
             <%= link_to unfollow_dog_path(@dog), class: "action-button wide", method: :delete, data: {turbo_method: :delete } do %>
-              <%= render 'shared/untrackbutton' %>
+              <%= render 'shared/minusbutton', btn_text: 'UNTRACK' %>
             <% end %>
           <% elsif @dog.user_id != current_user.id %>
             <%= link_to follow_dog_path(@dog), class: "action-button wide", method: :post, data: {turbo_method: :post } do %>

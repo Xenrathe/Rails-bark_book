@@ -11,9 +11,9 @@
 
   <div class="single-input">
     <%= form.label :dog_size %>
-    <%= form.radio_button :dog_size, :small %> Small
-    <%= form.radio_button :dog_size, :large %> Large
-    <%= form.radio_button :dog_size, :both %> Both
+    <span class="radio-button"><%= form.radio_button :dog_size, :small %> <%= form.label :dog_size, value: :small %></span>
+    <span class="radio-button"><%= form.radio_button :dog_size, :large %> <%= form.label :dog_size, value: :large %></span>
+    <span class="radio-button"><%= form.radio_button :dog_size, :both %> <%= form.label :dog_size, value: :both %></span>
   </div>
 
   <% if mode == 'Create' %>

@@ -1,13 +1,13 @@
 <div class="dog-park core-window">
   <div class="new transparent-bg core-content">
-    <h1>New Dog Park</h1>
+    <div class="title">New Dog Park</div>
 
     <%= form_with(model: @dog_park, url: dog_parks_path, local: true) do |form| %>
       
       <%= render 'shared/dogparkform', form: form %>
 
-      <div>
-        <%= form.submit %>
+      <div class="wide-button">
+        <%= form.submit "Create", class: "create" %>
       </div>
 
       <% if @dog_park.errors.any? %>

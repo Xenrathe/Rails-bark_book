@@ -24,6 +24,51 @@ form {
       padding: 1px 3px;
     }
 
+    .radio-button {
+      font-size: 14px;
+      line-height: 1.1;
+      display: flex;
+
+      input[type="radio"] {
+        appearance: none;
+        background-color: #fff;
+        margin: 0;
+        font: inherit;
+        color: currentColor;
+        width: 13px;
+        height: 13px;
+        border: 1px solid currentColor;
+        border-radius: 50%;
+        transform: translateY(2px);
+
+        display: grid;
+        place-content: center;
+      }
+
+      input[type="radio"]::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        transform: scale(0);
+        transition: 120ms transform ease-in-out;
+        box-shadow: inset 10px 10px black;
+      }
+
+      input[type="radio"]:checked::before {
+        transform: scale(1);
+      }
+
+      label {
+        width: 55px;
+        font-weight: normal;
+        font-size: 16px;
+        padding-left: 4px;
+        display: flex;
+        align-items: center;
+      }
+    }
+
     textarea {
       min-height: 100px;
     }
@@ -261,13 +306,21 @@ a.action-button {
     fill: #eee;
   }
 
-  @media only screen and (max-width: globalvars.$midscreen-width){
+  @mixin svg-sizing {
     button + :not(filter) svg {
       width: 25px;
       min-width: 25px;
       height: 25px;
       min-height: 25px;
     }
+  }
+
+  @media only screen and (max-width: globalvars.$midscreen-width) {
+    @include svg-sizing;
+  }
+
+  &.icon-only {
+    @include svg-sizing;
   }
    
   button:hover .text {
@@ -280,8 +333,7 @@ a.action-button {
     border-left: none;
   }
 
-  // Tablets and mobile
-  @media only screen and (max-width: globalvars.$midscreen-width){
+  @mixin collapsed-styling {
     button:not(.filter) {
       font-size: 0px;
       justify-content: center;
@@ -303,11 +355,20 @@ a.action-button {
     }
   }
 
+  // Tablets and mobile
+  @media only screen and (max-width: globalvars.$midscreen-width){
+    @include collapsed-styling;
+  }
+
   //Desktop
   @media only screen and (min-width: calc(globalvars.$midscreen-width + 1px)){
     button:hover .icon {
       width: calc(70px + 3vw);
     }
+  }
+
+  &.icon-only {
+    @include collapsed-styling;
   }
 
   button.filter:hover .icon {
@@ -363,7 +424,7 @@ a.action-button {
     background: $filter-secondary-color;
   }
 
-  //SPECIFIC COLORS FOR TRACK BUTTON
+  //SPECIFIC COLORS FOR TRACK/PLUS BUTTON
   button.track {
     background: $track-color;
 
@@ -376,7 +437,7 @@ a.action-button {
     background: $track-secondary-color;
   }
 
-  //SPECIFIC COLORS FOR UNTRACK BUTTON
+  //SPECIFIC COLORS FOR UNTRACK/MINUS BUTTON
   button.untrack {
     background: $untrack-color;
 
@@ -415,6 +476,10 @@ a.action-button.wide {
       border-left: none !important;
     }
   }
+}
+
+a.action-button.icon-only {
+  width: 50px;
 }
 
 //NO MORE BUTTONS BUTTONS BUTTONS

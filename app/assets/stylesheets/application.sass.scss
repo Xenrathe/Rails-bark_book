@@ -3,6 +3,10 @@
 @use "commentsbarks"; //CSS for comments and barks
 @use "forms"; //CSS for forms, INCLUDING BUTTONS
 
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
 body {
   display: flex;
   margin: 0px;
@@ -24,11 +28,7 @@ body::before {
   opacity: 0.75;
 }
 
-div {
-  box-sizing: border-box;
-}
-
-//MOBILE
+//.details-bar and .filter-bar for MOBILE
 @media only screen and (max-width: globalvars.$mobile-width){
   body {
     flex-direction: column;
@@ -85,7 +85,7 @@ div {
   }
 }
 
-//TABLET
+//.details-bar and .filter-bar for TABLET
 @media only screen and (min-width: calc(globalvars.$mobile-width + 1px)) and (max-width: globalvars.$midscreen-width){
   .details-bar {
     width: calc(275px + 25vw);
@@ -148,7 +148,7 @@ div {
   }
 }
 
-//DESKTOP
+//.details-bar and .filter-bar for DESKTOP
 @media only screen and (min-width: calc(globalvars.$midscreen-width + 1px)){
   .details-bar {
     display: flex;
@@ -243,6 +243,15 @@ div {
   margin-bottom: 10px;
 }
 
+// Used in play-dates#index and dog-parks#index
+.filter-and-new {
+  width: 75%;
+
+  display: flex;
+  flex-direction: row-reverse;
+  justify-content: space-evenly;
+}
+
 .user-feed, .dogs, .play-dates {
   .feed-content {
     margin-top: 8px;
@@ -269,14 +278,6 @@ div {
 }
 
 .play-dates.index {
-  .form-page-and-new {
-    width: 75%;
-
-    display: flex;
-    flex-direction: row-reverse;
-    justify-content: space-evenly;
-  }
-
   .play-date {
     min-width: 75%;
   }
@@ -582,6 +583,33 @@ div {
 
     display: flex;
     justify-content: center;
+  }
+}
+
+.dog-parks {
+  .list {
+    padding-left: 5%;
+    padding-right: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 5px;
+
+    .dog-park {
+      width: 100%;
+      height: 60px;
+      border: inset 2px black;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 3px 5px;
+      font-size: 18px;
+
+      .actions {
+        display: flex;
+        gap: 3px;
+      }
+    }
   }
 }
 
