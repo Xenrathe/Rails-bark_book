@@ -5,7 +5,6 @@
 ## Development To-do List:
 
 ### CSS and Java and other view features
-* Bug with dog avatars not fitting the lower nav bar
 * Parks styling
 * Radio button / forms styling
 * Profile styling
