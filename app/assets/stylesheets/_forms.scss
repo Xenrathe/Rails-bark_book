@@ -74,12 +74,6 @@ form {
     }
   }
 
-  .sub-title {
-    font-size: 16px;
-    font-weight: bold;
-    margin-top: 10px;
-  }
-
   .dog-list {
 
     .sub-title {
@@ -191,6 +185,8 @@ $track-color: rgb(2, 168, 197);
 $track-secondary-color: rgb(99, 201, 219);
 $untrack-color: rgb(197, 90, 2);
 $untrack-secondary-color: rgb(216, 130, 60);
+$view-color: rgb(56, 56, 56);
+$view-secondary-color: rgb(110, 110, 110);
 
 .wide-button {
   width: 100%;
@@ -353,6 +349,10 @@ a.action-button {
       margin: 0px;
       flex: 1;
     }
+
+    button:hover .icon {
+      width: auto;
+    }
   }
 
   // Tablets and mobile
@@ -448,6 +448,20 @@ a.action-button {
 
   button.untrack:hover {
     background: $untrack-secondary-color;
+  }
+
+  //SPECIFIC COLORS FOR VIEW BUTTON
+  button.view {
+    background: $view-color;
+
+    .icon {
+      color: black;
+      border-left: 1px solid $view-secondary-color;
+    }
+  }
+
+  button.view:hover {
+    background: $view-secondary-color;
   }
 }
 

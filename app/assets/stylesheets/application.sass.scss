@@ -28,6 +28,34 @@ body::before {
   opacity: 0.75;
 }
 
+.fs-image-container {
+  display: none;
+  align-items: center;
+  justify-content: center;
+
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+  overflow: hidden;
+  
+  img {
+    width: auto;
+    height: auto;
+    max-width: 80vw;
+    max-height: 80vh;
+    object-fit: contain;
+    box-sizing: border-box;
+  }
+}
+
+.zoomable {
+  cursor: pointer;
+}
+
 //.details-bar and .filter-bar for MOBILE
 @media only screen and (max-width: globalvars.$mobile-width){
   body {
@@ -47,7 +75,7 @@ body::before {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 999;
+    z-index: 998;
 
     .partial-dog {
       display: flex;
@@ -99,7 +127,7 @@ body::before {
     background: white;
     border: 1px black inset;
     display: flex;
-    z-index: 999;
+    z-index: 998;
 
     .actions {
       margin: 2px 4px 2px 0px;
@@ -251,6 +279,12 @@ body::before {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
+}
+
+.sub-title {
+  font-size: 16px;
+  font-weight: bold;
+  margin-top: 10px;
 }
 
 // Used in play-dates#index and dog-parks#index
@@ -592,6 +626,45 @@ body::before {
 }
 
 .dog-parks {
+
+  .show {
+    align-items: start;
+
+    .title, .actions {
+      align-self: center;
+    }
+  }
+
+  .top {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    margin-left: 25%;
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+
+      .filter-and-page{
+        display: flex;
+        justify-content: space-between;
+
+        input[type="submit"]{
+          width: 50%;
+        }
+      }
+    }
+
+    hr {
+      width: min(75%, 400px);
+    }
+  }
+
+  hr {
+    width: 75%;
+  }
+  
   .list {
     padding-left: 5%;
     padding-right: 5%;
@@ -607,8 +680,17 @@ body::before {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 3px 5px;
-      font-size: 18px;
+      font-size: 20px;
+
+      a {
+        text-decoration: none;
+        color: black;
+        height: 60px;
+        flex: 1;
+        display: flex;
+        align-items: center;
+        padding: 0px 4px;
+      }
 
       .actions {
         display: flex;

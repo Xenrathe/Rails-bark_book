@@ -4,7 +4,7 @@ class DogParksController < ApplicationController
   before_action :set_dogpark, only: %i[show edit update destroy follow unfollow]
 
   def show
-    @upcoming_play_dates = @dog_park.play_dates.upcoming
+    @upcoming_play_dates = @dog_park.play_dates.upcoming.limit(10)
     @comments = @dog_park.comments
   end
 

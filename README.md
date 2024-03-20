@@ -5,8 +5,7 @@
 ## Development To-do List:
 
 ### CSS and Java and other view features
-* Parks styling
-* Radio button / forms styling
+* Parks show images (last thing for parks)
 * Profile styling
 * Login/logout/new account styling
 * Show/Collapse comments section

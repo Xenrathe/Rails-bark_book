@@ -1,14 +1,16 @@
-<h3>
+<div class="title">
   <%= dog_park.name %> 
   <% if current_user && current_user.primary_address %>
     (<%= dog_park.address.distance_from(current_user.primary_address).round(1) %> mi away)
   <% end%>
-</h3>
+</div>
 
 <% if include_size %>
-  For <%= dog_park.dog_size.humanize.downcase %> dogs<br><br>
+  <% size = dog_park.dog_size.humanize.downcase == 'both' ? 'large and small' : dog_park.dog_size.humanize.downcase %>
+  For <%= size %> dogs<br><br>
 <% end %>
 
+Address:<br>
 <%= dog_park.address.address_one %>
 <% if dog_park.address.address_two != ''%>
   <br><%= dog_park.address.address_two %>

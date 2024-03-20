@@ -10,7 +10,10 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
+  <body data-controller="window">
+    <div class="fs-image-container" data-window-target="imageContainer">
+      <img src="" alt="full-screen image" data-window-target="image">
+    </div>
     <%= render 'shared/navbar' %>
     <%= yield %>
   </body>
