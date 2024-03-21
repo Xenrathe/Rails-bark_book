@@ -34,8 +34,6 @@ body::before {
   justify-content: center;
 
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100vw;
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.7);
@@ -632,6 +630,60 @@ body::before {
 
     .title, .actions {
       align-self: center;
+    }
+
+    #image-gallery {
+      width: 100%;
+    }
+
+    .image-gallery {
+      display: grid;
+      grid-template-columns: 0.2fr 3fr 0.2fr;
+      width: 100%;
+      align-items: center;
+
+      margin-bottom: 4px;
+      min-height: min(250px, 30vw);
+      max-height: min(250px, 30vw);
+
+      .images {
+        display: grid;
+        grid-template-columns: auto auto auto;
+        justify-items: start;
+        min-height: min(250px, 30vw);
+        max-height: min(250px, 30vw);
+
+        img {
+          width: 100%;
+          max-height: min(250px, 30vw);
+        }
+      }
+
+      .left {
+        justify-self: start;
+      }
+
+      .right {
+        justify-self: end;
+      }
+
+      a {
+        display: flex;
+        align-items: center;
+      }
+
+      svg {
+        height: 50px;
+        width: 25px;
+
+        &.enabled {
+          fill: black;
+        }
+
+        &.disabled {
+          fill: grey;
+        }
+      }
     }
   }
 
