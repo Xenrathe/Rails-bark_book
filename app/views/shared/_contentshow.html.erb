@@ -10,7 +10,7 @@
     </div>
   <% elsif type == 'image' %>
     <% content.attached_images.each do |attached_image| %>
-      <%= image_tag attached_image.variant(media_size) %>
+      <%= image_tag attached_image.variant(media_size),  class: 'zoomable', "data-action": "click->window#openImageContainer", "data-original-url": rails_blob_path(attached_image, only_path: true)  %>
     <% end %>
   <% end %>
   <% if content.body != '' && !content.body.nil? %>

@@ -5,7 +5,6 @@
 ## Development To-do List:
 
 ### CSS and Java and other view features
-* zoomable class and action on other images
 * Profile styling
 * Login/logout/new account styling
 * Show/Collapse comments section

@@ -6,7 +6,7 @@
       <% if image_link %>
         <%= link_to image_tag(avatar_tag_link, alt: 'Dog picture'), dog_path(dog), class: 'avatar', data: { turbo_frame: "_top" } %><br>
       <% else %>
-        <%= image_tag avatar_tag_link, class: 'avatar' %><br>
+        <%= image_tag avatar_tag_link, class: 'avatar zoomable', "data-action": "click->window#openImageContainer", "data-original-url": rails_blob_path(dog.avatar, only_path: true) %><br>
       <% end %>
     </div>
   <% end %>
