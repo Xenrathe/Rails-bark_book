@@ -5,7 +5,7 @@
 ## Development To-do List:
 
 ### CSS and Java and other view features
-* Profile styling
+* Profile user-feed, dogs, dog-parks, settings
 * Login/logout/new account styling
 * Show/Collapse comments section
 * Auto-pagination scrolling for feed-style content (play date index, feeds, etc)

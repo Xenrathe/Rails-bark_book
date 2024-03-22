@@ -1,17 +1,27 @@
 <% ownership_access = current_user && current_user == @user ? true : false%>
 
 <div class="user core-window">
-  <div class="show transparent-bg core-content">
+  <div class="show transparent-bg core-content" data-controller="profile">
+    <div class="title"><%= @user.username %>'s profile</div>
     <div class="tab-links">
-      <br>
-      <% if ownership_access %><a href="#details-tab" class="tab-link">Settings</a> | <% end %>
-      <a href="#dogs-tab" class="tab-link">Dogs</a> | 
-      <a href="#dog-parks-tab" class="tab-link">Dog Parks</a> | 
-      <a href="#posts-tab" class="tab-link">Posts</a>
+      <a href="#posts-tab" class="tab-link selected" data-action="profile#changeTab">
+        <%= image_tag "dog-house-1" %>
+      </a>
+      <a href="#dogs-tab" class="tab-link" data-action="profile#changeTab">
+        <%= image_tag "dog-1" %>
+      </a>
+      <a href="#dog-parks-tab" class="tab-link" data-action="profile#changeTab">
+        <%= image_tag "park" %>
+      </a> 
+      <% if ownership_access %>
+        <a href="#details-tab" class="tab-link" data-action="profile#changeTab">
+          <%= image_tag "cog" %>
+        </a>
+      <% end %>
     </div>
 
     <% if ownership_access %>
-    <div id="details-tab" class="tab-content">
+    <div id="details-tab" class="tab-content" style="display: none;" data-profile-target="tab">
       <div id="user-details">
         <h2>Personal details:</h2>
         <strong>E-mail: </strong><%= @user.email %><br>
@@ -40,22 +50,28 @@
           <h3>Bark Settings</h3>
           <%= form_with(model: @user, local: true, html: { multipart: true }) do |bark_form| %>
             <div class="bark-radios">
-              <%= bark_form.radio_button :bark_sound, 'mute', checked: @user.bark_sound == 'mute', id: 'mute-sound' %>
-              <%= bark_form.label 'mute-sound', 'Mute Sound', for: 'mute-sound' %><br>
+              <span class="radio-button">
+                <%= bark_form.radio_button :bark_sound, 'mute', checked: @user.bark_sound == 'mute', id: 'mute-sound', "data-action": "click->profile#toggleUploadOptions" %>
+                <%= bark_form.label 'mute-sound', 'Mute Sound', for: 'mute-sound' %>
+              </span>
 
               <% (1..5).each do |num|%>
-                <%= bark_form.radio_button :bark_sound, "bark_#{num}", checked: @user.bark_sound == "bark_#{num}", id: "bark_#{num}", data: {soundurl: "#{asset_path("bark_#{num}")}"} %>
-                <%= bark_form.label "bark_#{num}", "Bark #{num}", for: "bark_#{num}" %><br>
+                <span class="radio-button">
+                  <%= bark_form.radio_button :bark_sound, "bark_#{num}", checked: @user.bark_sound == "bark_#{num}", id: "bark_#{num}", data: {soundurl: "#{asset_path("bark_#{num}")}", action: "click->profile#toggleUploadOptions"} %>
+                  <%= bark_form.label "bark_#{num}", "Bark #{num}", for: "bark_#{num}" %>
+                </span>
               <% end %>
       
               <% custom_url = @user.custom_bark.attached? ? rails_blob_path(@user.custom_bark) : '' %>
-              <%= bark_form.radio_button :bark_sound, 'custom', checked: @user.bark_sound == 'custom' && @user.custom_bark.attached?, id: "custom_sound", data: {soundurl: custom_url} %>
-              <%= bark_form.label "custom_sound", "Custom Bark", for: 'custom_sound' %><br>
+              <span class="radio-button">
+                <%= bark_form.radio_button :bark_sound, 'custom', checked: @user.bark_sound == 'custom' && @user.custom_bark.attached?, id: "custom_sound", data: {soundurl: custom_url, "profile-target": "customBarkRadio", action: "click->profile#toggleUploadOptions"} %>
+                <%= bark_form.label "custom_sound", "Custom Bark", for: 'custom_sound' %>
+              </span>
             </div>
               
-            <div id="upload-sound-options" style="<%= 'display: none;' unless !@user.bark_sound && @user.custom_bark.attached? %>">
-              <%= bark_form.label :custom_bark, 'Upload WAV' %><br>
-              <%= bark_form.file_field :custom_bark %>
+            <div id="upload-sound-options" style="<%= 'display: none;' unless !@user.bark_sound && @user.custom_bark.attached? %>" data-profile-target="uploadBarkDiv">
+              <%= bark_form.label :custom_bark, 'Upload audio' %><br>
+              <%= bark_form.file_field :custom_bark, accept: "audio/*" %>
             </div>
 
             <%= bark_form.button 'Test Bark', id: 'test-sound-button', data: {controller: "sound", action: "click->sound#test"} %>
@@ -92,9 +108,9 @@
             </div>
           <% end %>
 
-          <%= button_tag 'Add New Address', class: 'toggle-form-button', id: 'add-address-button' %>
+          <%= button_tag 'Add New Address', class: 'toggle-form-button', id: 'add-address-button', "data-action": "click->profile#hideShowAddress" %>
 
-          <div id="new-address-form" style="display: none;">
+          <div id="new-address-form" style="display: none;" data-profile-target="addressForm">
           <%= form_with(model: @new_address, url: new_address_user_path, local: true) do |new_address_form| %>
             <%= render 'shared/addressform', address_form: new_address_form, include_name: true %>
             <%= new_address_form.submit %>
@@ -116,7 +132,7 @@
     </div>
     <% end %>
 
-    <div id="dogs-tab" class="tab-content">
+    <div id="dogs-tab" class="tab-content" style="display: none;" data-profile-target="tab">
       <h2><% prefix = ownership_access ? "Your" : "#{@user.username}'s" %> 
       <%= prefix %> dogs:</h2>
 
@@ -149,7 +165,7 @@
       </div>
     </div>
     
-    <div id="dog-parks-tab" class="tab-content">
+    <div id="dog-parks-tab" class="tab-content" style="display: none;" data-profile-target="tab">
       <h2>Followed dog-parks:</h2>
 
       <div id="dog-parks followed">
@@ -168,7 +184,7 @@
       </div>
     </div>
 
-    <div id="posts-tab" class="tab-content">
+    <div id="posts-tab" class="tab-content" style="display: block;" data-profile-target="tab">
       <div class="contents">
       <h2>Content from <%= @user.username %>'s dogs:</h2>
       
@@ -177,69 +193,3 @@
     </div>
   </div>
 </div>
-
-
-<script>
-  // Hiding / showing the address form
-  document.addEventListener('turbo:load', function () {
-    const addButton = document.getElementById('add-address-button');
-    const formDiv = document.getElementById('new-address-form');
-
-    addButton.addEventListener('click', function () {
-      formDiv.style.display = 'block';
-    });
-  });
-
-  // Hiding / showing the tab contents
-  document.addEventListener('turbo:load', function() {
-    // Hide all tab contents except dogs
-    document.querySelectorAll('.tab-content').forEach(function(tabContent) {
-      if (tabContent.id == 'dogs-tab') {
-        tabContent.style.display = 'block';
-      } else {
-        tabContent.style.display = 'none';
-      }
-    });
-
-    // Handle tab link clicks
-    document.querySelectorAll('.tab-link').forEach(function(tabLink) {
-      tabLink.addEventListener('click', function(e) {
-        e.preventDefault();
-
-        // Hide all tab contents
-        document.querySelectorAll('.tab-content').forEach(function(tabContent) {
-          tabContent.style.display = 'none';
-        });
-
-        // Show the selected tab content
-        const targetTabId = this.getAttribute('href').substring(1);
-        document.getElementById(targetTabId).style.display = 'block';
-      });
-    });
-  });
-
-  // Hiding / showing the upload custom sound
-  document.addEventListener('turbo:load', function() {
-    // Function to toggle visibility of upload-sound-options
-    function toggleUploadOptions() {
-      var customSoundRadio = document.getElementById('custom_sound');
-      var uploadOptionsDiv = document.getElementById('upload-sound-options');
-
-      // Check if the custom_sound radio button is checked
-      if (customSoundRadio.checked) {
-        uploadOptionsDiv.style.display = 'block'; // Show the upload-sound-options div
-      } else {
-        uploadOptionsDiv.style.display = 'none'; // Hide the upload-sound-options div
-      }
-    }
-
-    // Initial call to set visibility based on the initial state
-    toggleUploadOptions();
-
-    // Add event listeners to the radio buttons
-    var radioButtons = document.querySelectorAll('[name="user[bark_sound]"]');
-    radioButtons.forEach(function(radioButton) {
-      radioButton.addEventListener('change', toggleUploadOptions);
-    });
-  });
-</script>

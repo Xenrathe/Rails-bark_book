@@ -11,6 +11,7 @@ body {
   display: flex;
   margin: 0px;
   max-width: 100vw;
+  padding-left: calc(100vw - 100%); //This fixes layout shifting from scrollbars
 }
 
 // used for the background
@@ -19,7 +20,7 @@ body::before {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
+  width: calc(100% + 50px);
   height: 100%;
   z-index: -1;
   background: rgba(224, 234, 241, 0);
@@ -752,3 +753,33 @@ body::before {
   }
 }
 
+.user {
+  .tab-links {
+
+    display: flex;
+    border: solid 1px black;
+    background: white;
+
+    a {
+      text-decoration: none;
+      padding: 3px;
+    }
+
+    a:not(:last-child) {
+      border-right: 1px black solid;
+    }
+
+    a:hover, a.selected {
+      background: rgb(224, 224, 224);
+    }
+
+    svg, img {
+      height: 40px;
+      width: 40px;
+    }
+
+    svg {
+      color: black;
+    }
+  }
+}
