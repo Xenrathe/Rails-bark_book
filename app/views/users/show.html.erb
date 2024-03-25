@@ -1,7 +1,7 @@
 <% ownership_access = current_user && current_user == @user ? true : false%>
 
-<div class="user core-window">
-  <div class="show transparent-bg core-content" data-controller="profile">
+<div class="user core-window" data-controller="profile">
+  <div class="show transparent-bg core-content">
     <div class="title"><%= @user.username %>'s profile</div>
     <div class="tab-links">
       <a href="#posts-tab" class="tab-link selected" data-action="profile#changeTab">
@@ -18,7 +18,9 @@
           <%= image_tag "cog" %>
         </a>
       <% end %>
-    </div>
+    </div><br>
+    <div class="title" id="tab-title" data-profile-target="tabTitle">Posts</div>
+  </div>
 
     <% if ownership_access %>
     <div id="details-tab" class="tab-content" style="display: none;" data-profile-target="tab">
@@ -133,35 +135,37 @@
     <% end %>
 
     <div id="dogs-tab" class="tab-content" style="display: none;" data-profile-target="tab">
-      <h2><% prefix = ownership_access ? "Your" : "#{@user.username}'s" %> 
-      <%= prefix %> dogs:</h2>
+      <div class="transparent-bg core-content">
+        <div class="sub-title"><% prefix = ownership_access ? "Your" : "#{@user.username}'s" %> 
+        <%= prefix %> dogs:</div>
 
-      <div id="dogs owned">
-        <% @owned_dogs.each do |dog| %>
-          <%= render dog, full_details: true, show_ownership: false, image_link: true %>
-          <% if current_user && current_user.id == @user.id %>
-            <%= link_to "Delete entry", dog, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this dog?"} %>
+        <div id="dogs-owned" class="dog-list">
+          <% @owned_dogs.each do |dog| %>
+            <div class="list-dog">
+              <%= render dog, full_details: false, show_ownership: false, image_link: true %>
+            </div>
           <% end %>
-        <% end %>
+        </div>
         <% if ownership_access %>
-          <br><br><%= button_to "New dog", new_dog_path, method: :get, data: {turbo_method: :get} %>
+          <br>
+          <div class="new">
+            <%= link_to new_dog_path, class: "action-button", method: :get, data: {turbo_method: :get} do %>
+              <%= render 'shared/plusbutton', btn_text: 'NEW' %>
+            <% end %>
+          </div>
         <% end %>
       </div>
 
-      <h2>Followed dogs:</h2>
+      <div class="transparent-bg core-content">
+        <div class="sub-title">Tracked dogs:</div>
 
-      <div id="dogs followed">
-        <%= turbo_frame_tag "followed-dogs" do %>
+        <div id="dogs-tracked" class="dog-list">
           <% @followed_dogs.each do |dog| %>
-          
-            <%= render dog, full_details: true, show_ownership: true, image_link: true %>
-            <%= link_to "View", dog, data: { turbo_frame: "_top" } %>
-            
-            <% if ownership_access %>
-              <%= link_to 'Unfollow', unfollow_dog_path(dog), method: :delete, data: {turbo_method: :delete} %>
-            <% end %>
+            <div class="list-dog">
+              <%= render dog, full_details: false, show_ownership: false, image_link: true %>
+            </div>  
           <% end %>
-        <% end %>
+        </div>
       </div>
     </div>
     
@@ -185,9 +189,7 @@
     </div>
 
     <div id="posts-tab" class="tab-content" style="display: block;" data-profile-target="tab">
-      <div class="contents">
-      <h2>Content from <%= @user.username %>'s dogs:</h2>
-      
+      <div class="user-feed">      
       <%= render 'shared/contentfeed', feed_contents: @user_content %>
       </div>
     </div>

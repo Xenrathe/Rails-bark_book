@@ -295,6 +295,47 @@ body::before {
   justify-content: space-evenly;
 }
 
+// Used in dogs#index and user#show
+.dog-list {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 5px;
+
+  .list-dog {
+    border: solid 1px black;
+    flex: 0;
+
+    .dog.partial-dog {
+      display: flex;
+      flex-direction: column;
+
+      .image {
+        img {
+          height: 200px;
+        }
+      }
+
+      .text {
+        padding: 0px 5px;
+        margin: 0px;
+        text-align: center;
+        flex: 0;
+        font-weight: bold;
+        font-size: 15px;
+      }
+    }
+  }
+
+  .list-dog.owned {
+    border: dashed 1px red;
+  }
+
+  .list-dog.followed {
+    border: dashed 1px green;
+  }
+}
+
 .user-feed, .dogs, .play-dates {
   .feed-content {
     margin-top: 8px;
@@ -462,46 +503,6 @@ body::before {
 
     hr {
       width: 75%;
-    }
-
-    .dog-list {
-      display: flex;
-      justify-content: flex-start;
-      flex-wrap: wrap;
-      gap: 5px;
-
-      .list-dog {
-        border: solid 1px black;
-        flex: 0;
-
-        .dog.partial-dog {
-          display: flex;
-          flex-direction: column;
-
-          .image {
-            img {
-              height: 200px;
-            }
-          }
-
-          .text {
-            padding: 0px 5px;
-            margin: 0px;
-            text-align: center;
-            flex: 0;
-            font-weight: bold;
-            font-size: 15px;
-          }
-        }
-      }
-
-      .list-dog.owned {
-        border: dashed 1px red;
-      }
-
-      .list-dog.followed {
-        border: dashed 1px green;
-      }
     }
   }
 
@@ -780,6 +781,12 @@ body::before {
 
     svg {
       color: black;
+    }
+  }
+
+  #dogs-tab {
+    .core-content {
+      margin-top: 8px;
     }
   }
 }

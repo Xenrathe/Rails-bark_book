@@ -2,7 +2,7 @@ import { Controller } from "@hotwired/stimulus";
 
 //Used to control the user profile in the User show view
 export default class extends Controller {
-  static targets = ["tab", "addressForm", "customBarkRadio", "uploadBarkDiv"];
+  static targets = ["tab", "addressForm", "tabTitle", "customBarkRadio", "uploadBarkDiv"];
 
   connect() {
     this.toggleUploadOptions;
@@ -30,6 +30,23 @@ export default class extends Controller {
     const targetTabId = linkElement.getAttribute('href').substring(1);
     document.getElementById(targetTabId).style.display = 'block';
     linkElement.classList.add("selected");
+
+    //Update tab title
+    switch (targetTabId) {
+      case 'dogs-tab':
+        this.tabTitleTarget.textContent = 'Dogs';
+        break;
+      case 'dog-parks-tab':
+        this.tabTitleTarget.textContent = 'Dog Parks';
+        break;
+      case 'details-tab':
+        this.tabTitleTarget.textContent = 'Details';
+        break;
+      case 'posts-tab':
+      default:
+        this.tabTitleTarget.textContent = 'Posts';
+        break;
+    } 
   }
 
   //Hides or shows the New Address form

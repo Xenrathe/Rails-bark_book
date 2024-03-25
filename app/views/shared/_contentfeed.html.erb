@@ -1,4 +1,4 @@
-<% if feed_contents.count == 0 %>
+<% if feed_contents.nil? || feed_contents.count == 0 %>
   <div class="title transparent-bg core-content">No feed content!</div>
 <% else %>
   <% feed_contents.each do |feed_content| %>

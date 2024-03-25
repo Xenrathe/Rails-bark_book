@@ -6,9 +6,9 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update make_primary destroy]
 
   def show
-    @followed_dogs = @user.followed_dogs
     @owned_dogs = @user.dogs
     @followed_dog_parks = @user.followed_dog_parks
+    @followed_dogs = @user.followed_dogs
 
     @new_address = current_user.addresses.build if @user.id == current_user.id
 
