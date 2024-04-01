@@ -190,6 +190,7 @@ $untrack-color: rgb(197, 90, 2);
 $untrack-secondary-color: rgb(216, 130, 60);
 $view-color: rgb(56, 56, 56);
 $view-secondary-color: rgb(110, 110, 110);
+$test-color: rgb(255, 174, 0);
 
 .wide-button {
   width: 100%;
@@ -197,49 +198,79 @@ $view-secondary-color: rgb(110, 110, 110);
   justify-content: center;
 }
 
-input[type="submit"].create {
-  border: 3px solid $create-color;
-}
-
-input[type="submit"].edit {
-  border: 3px solid $edit-color;
-}
-
-input[type="submit"].create, input[type="submit"].edit {
+.simple-btn {
   height: 40px;
   width: 85%;
+  font-size: 1.1em;
+
   margin: 3px auto;
   border-radius: 15px;
   transition: all 0.3s;
   cursor: pointer;
   background: white;
-  font-size: 1.1em;
   font-weight: 550;
-  //font-family: 'Montserrat', sans-serif; 
+  
+  // SIZES
+  &.small {
+    height: 25px;
+    width: 140px;
+    font-size: 0.9em;
+  }
+
+  &.tiny {
+    height: 25px;
+    width: 80px;
+    font-size: 0.9em;
+  }
+
+  // COLORS
+  &.create {
+    border: 3px solid $create-color;
+  }
+
+  &.edit {
+    border: 3px solid $edit-color;
+  }
+
+  &.delete {
+    border: 3px solid $delete-color;
+  }
+
+  &.test {
+    border: 3px solid $test-color;
+  }
 }
 
-input[type="submit"].create:hover {
-  background: $create-color;
-  color: white;
-  font-size: 1.3em;
-}
+//HOVERS AND ACTIVE
+.simple-btn {
+  &:hover {
+    color: white;
+    font-size: 1.3em;
+  }
 
-input[type="submit"].edit:hover {
-  background: $edit-color;
-  color: white;
-  font-size: 1.3em;
-}
+  &:active {
+    color: white;
+    font-size: 4em;
+  }
 
-input[type="submit"].create:active {
-  background: $create-color;
-  color: white;
-  font-size: 4em;
-}
+  //SIZE
+  &.small:hover, &.tiny:hover, &.small:active, &.tiny:active {
+    font-size: 1em;
+  }
 
-input[type="submit"].edit:active {
-  background: $edit-color;
-  color: white;
-  font-size: 4em;
+  //COLORS
+  &.create:hover, &.create:active {
+    background: $create-color;
+  }
+  &.edit:hover, &.edit:active {
+    background: $edit-color;
+  }
+  &.delete:hover, &.delete:active {
+    background: $delete-color;
+  }
+  &.test:hover, &.test:active {
+    background: $test-color;
+  }
 }
 
 a.action-button {

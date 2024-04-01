@@ -784,9 +784,51 @@ body::before {
     }
   }
 
-  #dogs-tab {
+  #dogs-tab, #dog-parks-tab, #details-tab {
     .core-content {
       margin-top: 8px;
+    }
+  }
+
+  #details-tab {
+
+    .sub-title {
+      margin-bottom: 6px;
+      margin-left: -5%;
+      font-size: 16px;
+      text-decoration: underline;
+
+      hr {
+        display: inline-block;
+        margin-top: 10px;
+        width: 25px;
+        height: 1px;
+      }
+
+      .first-letter {
+        font-size: 22px;
+      }
+    }
+
+    #user-details, #user-barks, #user-addresses {
+      align-items: start;
+      padding-left: 10%;
+    }
+
+    .single-input{
+      display: flex;
+      flex-direction: row;
+  
+      label {
+        width: 90px;
+        font-weight: bold;
+      }
+    }
+
+    .actions {
+      margin-top: 5px;
+      display: flex;
+      gap: 10px;
     }
   }
 }

@@ -6,8 +6,14 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update make_primary destroy]
 
   def show
-    @owned_dogs = @user.dogs
     @followed_dog_parks = @user.followed_dog_parks
+    if current_user
+      @followed_dog_parks = @followed_dog_parks.sort_by do |dog_park|
+        dog_park.address.distance_from(current_user.primary_address)
+      end
+    end
+
+    @owned_dogs = @user.dogs
     @followed_dogs = @user.followed_dogs
 
     @new_address = current_user.addresses.build if @user.id == current_user.id
