@@ -38,7 +38,7 @@
 
         <div id="new_dog_park_form" style="display: none;">
           <%= form.fields_for :dog_park do |dog_park_form| %>
-            <%= render 'shared/dogparkform', form: dog_park_form %>
+            <%= render 'dog_parks/dogparkform', form: dog_park_form %>
           <% end %>
         </div>
       <% end %>

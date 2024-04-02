@@ -50,7 +50,7 @@
   <div class="wide-button">
     <%= form.hidden_field 'dog_ids][]', value: '' %>
     <%= form.hidden_field :content_type, value: @content.content_type %>
-    <%= form.submit "#{mode}", "data-action": "click->forms#submitFormWithRequireDog", class: "#{mode.downcase}" %>
+    <%= form.submit "#{mode}", "data-action": "click->forms#submitFormWithRequireDog", class: "#{mode.downcase} simple-btn" %>
   </div>
 
   <%= render 'shared/errors', object: content %>

@@ -5,8 +5,6 @@
 ## Development To-do List:
 
 ### CSS and Java and other view features
-* Cookie for remembering tab?
-* Organize partials out of shared and into appropriate view folder
 * Login/logout/new account styling
 * Show/Collapse comments section
 * Auto-pagination scrolling for feed-style content (play date index, feeds, etc)
