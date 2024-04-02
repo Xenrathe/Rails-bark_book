@@ -4,17 +4,17 @@
   <div class="show transparent-bg core-content">
     <div class="title"><%= @user.username %>'s profile</div>
     <div class="tab-links">
-      <a href="#posts-tab" class="tab-link selected" data-action="profile#changeTab">
+      <a href="#posts-tab" id="posts-tab-link" class="tab-link selected" data-action="profile#changeTab">
         <%= image_tag "dog-house-1" %>
       </a>
-      <a href="#dogs-tab" class="tab-link" data-action="profile#changeTab">
+      <a href="#dogs-tab" id="dogs-tab-link" class="tab-link" data-action="profile#changeTab">
         <%= image_tag "dog-1" %>
       </a>
-      <a href="#dog-parks-tab" class="tab-link" data-action="profile#changeTab">
+      <a href="#dog-parks-tab" id="dog-parks-tab-link" class="tab-link" data-action="profile#changeTab">
         <%= image_tag "park" %>
       </a> 
       <% if ownership_access %>
-        <a href="#details-tab" class="tab-link" data-action="profile#changeTab">
+        <a href="#details-tab" id="details-tab-link" class="tab-link" data-action="profile#changeTab">
           <%= image_tag "cog" %>
         </a>
       <% end %>

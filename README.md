@@ -5,8 +5,7 @@
 ## Development To-do List:
 
 ### CSS and Java and other view features
-* Profile dog-parks, settings; cookie for remembering tab?
-* Edit/Submit have .simple-btn class
+* Cookie for remembering tab?
 * Organize partials out of shared and into appropriate view folder
 * Login/logout/new account styling
 * Show/Collapse comments section

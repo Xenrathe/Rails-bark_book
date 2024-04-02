@@ -6,9 +6,14 @@ export default class extends Controller {
 
   connect() {
     this.toggleUploadOptions;
+
+    const targetTabId = this.getCookie('profile_tab');
+    if (targetTabId) {
+      this.switchToTab(targetTabId);
+    }
   }
 
-  //Switches amongst the four tabs
+  //Called via a link, gets tab name and calls switchToTab
   changeTab(event) {
     event.preventDefault();
 
@@ -18,6 +23,13 @@ export default class extends Controller {
       linkElement = linkElement.parentElement;
     }
 
+    // Call switchToTab
+    const targetTabId = linkElement.getAttribute('href').substring(1);
+    this.switchToTab(targetTabId);
+  }
+
+  //Actually does the tab switching
+  switchToTab(targetTabId) {
     // Hide all tab contents
     this.tabTargets.forEach(function(tabContent) {
       tabContent.style.display = 'none';
@@ -25,11 +37,8 @@ export default class extends Controller {
 
     // De-select current link button
     document.querySelector('.selected').classList.remove('selected');
-
-    // Show the selected tab content and add selected to the link
-    const targetTabId = linkElement.getAttribute('href').substring(1);
     document.getElementById(targetTabId).style.display = 'block';
-    linkElement.classList.add("selected");
+    document.getElementById(`${targetTabId}-link`).classList.add("selected");
 
     //Update tab title
     switch (targetTabId) {
@@ -46,7 +55,13 @@ export default class extends Controller {
       default:
         this.tabTitleTarget.textContent = 'Posts';
         break;
-    } 
+    }
+
+    //Set a cookie to remember tab, expires in a week
+    const expirationDate = new Date();
+    expirationDate.setDate(expirationDate.getDate() + 7);
+    const expires = expirationDate.toUTCString();
+    document.cookie = `profile_tab=${targetTabId}; expires=${expires}; path=/`
   }
 
   //Hides or shows the New Address form
@@ -64,5 +79,18 @@ export default class extends Controller {
     } else {
       this.uploadBarkDivTarget.style.display = 'none'; // Hide the upload-sound-options div
     }
+  }
+
+  //A generic getCookie function
+  //may want to move this to a more universal location if we end up needing it elsewhere
+  getCookie(name) {
+    const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+    for (const cookie of cookies) {
+      const [cookieName, cookieValue] = cookie.split('=');
+      if (cookieName === name) {
+        return decodeURIComponent(cookieValue);
+      }
+    }
+    return null;
   }
 }
