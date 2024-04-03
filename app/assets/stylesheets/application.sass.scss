@@ -55,6 +55,12 @@ body::before {
   cursor: pointer;
 }
 
+.geo-warning {
+  width: 150px;
+  font-weight: bold;
+  color: rgb(182, 1, 1);
+}
+
 //.details-bar and .filter-bar for MOBILE
 @media only screen and (max-width: globalvars.$mobile-width){
   body {
@@ -830,5 +836,15 @@ body::before {
       display: flex;
       gap: 10px;
     }
+  }
+}
+
+.registrations {
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
   }
 }

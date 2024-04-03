@@ -1,7 +1,7 @@
 @use "globalvars";
 
 form {
-  .single-input{
+  .single-input, .field_with_errors {
     display: flex;
     flex-direction: row;
 
@@ -27,6 +27,13 @@ form {
     textarea {
       min-height: 100px;
     }
+
+
+  }
+
+  .text-input {
+    height: 21px;
+    width: 204px;
   }
 
   .radio-button {
@@ -200,7 +207,7 @@ $test-color: rgb(255, 174, 0);
 
 .simple-btn {
   height: 40px;
-  width: 85%;
+  width: max(85%, 290px);
   font-size: 1.1em;
 
   margin: 3px auto;

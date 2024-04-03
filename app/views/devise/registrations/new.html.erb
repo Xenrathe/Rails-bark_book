@@ -1,39 +1,37 @@
-<h2>Sign up</h2>
+<div class="core-window registrations">
+  <div class="core-content transparent-bg">
+    <div class="title">Sign up</div>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
-  <%= render "devise/shared/error_messages", resource: resource %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f| %>
 
-  <div class="field">
-    <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, required: true, autocomplete: "email" %>
+      <div class="single-input">
+        <%= f.label :email %>
+        <%= f.email_field :email, autofocus: true, required: true, class: "text-input", autocomplete: "email" %>
+      </div>
+
+        <div class="single-input">
+        <%= f.label :username, "Username" %>
+        <%= f.text_field :username, autofocus: true, required: true, class: "text-input", autocomplete: "email" %>
+      </div>
+
+      <div class="single-input">
+        <%= f.label :password %>
+        <%= f.password_field :password, required: true, class: "text-input", autocomplete: "new-password" %>
+      </div>
+
+      <div class="single-input">
+        <%= f.label :password_confirmation, "Confirm Password" %>
+        <%= f.password_field :password_confirmation, required: true, class: "text-input", autocomplete: "new-password" %>
+      </div>
+
+      <div class="single-input">
+        <%= f.label :time_zone %>
+        <%= f.select :time_zone, ActiveSupport::TimeZone.all.map { |tz| [tz.name, tz.name] }, { prompt: 'Select Time Zone' } %>
+      </div>
+
+      <%= f.submit "Sign up", class: "simple-btn create" %>
+
+      <%= render "shared/errors", object: resource %>
+    <% end %>
   </div>
-
-    <div class="field">
-    <%= f.label :username, "Username (public)" %><br />
-    <%= f.text_field :username, autofocus: true, required: true, autocomplete: "email" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password %>
-    <% if @minimum_password_length %>
-    <em>(<%= @minimum_password_length %> characters minimum)</em>
-    <% end %><br />
-    <%= f.password_field :password, required: true, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, required: true, autocomplete: "new-password" %>
-  </div>
-
-  <div class="field">
-    <%= f.label :time_zone %><br />
-    <%= f.select :time_zone, ActiveSupport::TimeZone.all.map { |tz| [tz.name, tz.name] }, { prompt: 'Select Time Zone' } %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit "Sign up" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+</div>

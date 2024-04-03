@@ -24,6 +24,8 @@
               <%= render 'shared/pagination', page: @page, total_pages: @total_pages %>
             </div>
           <% end %>
+        <% else %>
+          <div class="geo-warning">Cannot find nearby dog parks without a primary address!</div>
         <% end %>
         <div class="new">
           <%= link_to new_dog_park_path, class: "action-button", method: :get, data: {turbo_method: :get} do %>

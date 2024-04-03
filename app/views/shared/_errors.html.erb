@@ -1,6 +1,8 @@
 <% if object.errors.any? || flash[:alert] %>
   <div class="errors" style="color: red">
-    <h2>Errors prohibited this <%= object.class.name.downcase %> from being posted:</h2>
+    <% if defined?(title) && title != ''%>
+      <div class="title">Errors prohibited this <%= object.class.name.downcase %> from being posted:</div>
+    <% end %>
 
     <ul>
       <% object.errors.each do |error| %>
