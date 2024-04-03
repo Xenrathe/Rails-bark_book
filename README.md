@@ -6,7 +6,6 @@
 
 ### CSS and Java and other view features
 * Fancier, better sign-up styling/view
-* Show/Collapse comments section
 * Auto-pagination scrolling for feed-style content (play date index, feeds, etc)
 
 ### Additional features

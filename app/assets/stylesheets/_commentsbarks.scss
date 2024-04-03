@@ -48,6 +48,8 @@
 
   .comments-turbo {
     min-width: 90%;
+    display: flex;
+    margin-right: auto;
   }
 
   .comments-full { 
@@ -55,10 +57,34 @@
     max-width: 90%;
 
     .comments-title {
-      font-weight: bold;
-      text-decoration:underline;
+      display: flex;
+      gap: 4px;
       margin-bottom: 3px;
-      font-size: 17px;
+
+      .text {
+        font-weight: bold;
+        text-decoration:underline;
+        font-size: 18px;
+      }
+
+      .hide-btn, .show-btn {
+        cursor: pointer;
+        border: solid black 1px;
+        background: none;
+        padding: 0px;
+        margin: 0px;
+        height: 22px;
+        width: 22px;
+  
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+
+      .hide-btn:hover, .show-btn:hover {
+        background: rgb(218, 218, 218);
+      }
     }
 
     .comment-list {
@@ -73,6 +99,10 @@
           font-weight: bold;
         }
       }
+    }
+
+    .hidden {
+      display: none;
     }
   }
 

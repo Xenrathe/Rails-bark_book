@@ -183,6 +183,16 @@ form {
   }
 }
 
+.registrations {
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+}
+
 //BUTTONS BUTTONS BUTTONS
 $create-color: #006900;
 $edit-color: #72b900;
