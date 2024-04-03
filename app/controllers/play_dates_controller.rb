@@ -2,7 +2,7 @@ class PlayDatesController < ApplicationController
   include PaginationConcern
   helper_method :navigation_params
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: %i[show index]
   before_action :set_playdate, only: %i[ show edit update destroy attend ]
 
   def show

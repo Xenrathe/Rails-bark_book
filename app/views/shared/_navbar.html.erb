@@ -47,6 +47,21 @@
         <span class="label">Logout</span>
       <% end %>
     <% else %>
+      <%= link_to dogs_path, class: "link" do %>
+        <%= image_tag "dog-1" %>
+        <span class="label">Dogs</span>
+      <% end %>
+
+      <%= link_to play_dates_path, class: "link" do %>
+        <%= image_tag "dog-date" %>
+        <span class="label">Playdates</span>
+      <% end %>
+
+      <%= link_to dog_parks_path, class: "link" do %>
+        <%= image_tag "park" %>
+        <span class="label">Parks</span>
+      <% end %>
+
       <%= link_to new_user_session_path, class: "link" do %>
         <%= image_tag "dog-bone" %>
         <span class="label">Login</span>

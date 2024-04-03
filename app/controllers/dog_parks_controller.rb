@@ -1,6 +1,6 @@
 class DogParksController < ApplicationController
   include PaginationConcern
-  before_action :authenticate_user!, except: %i[show]
+  before_action :authenticate_user!, except: %i[show index]
   before_action :set_dogpark, only: %i[show edit update destroy follow unfollow]
 
   def show
