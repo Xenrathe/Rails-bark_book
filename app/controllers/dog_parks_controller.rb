@@ -1,5 +1,6 @@
 class DogParksController < ApplicationController
   include PaginationConcern
+  include LocationConcern
   before_action :authenticate_user!, except: %i[show index]
   before_action :set_dogpark, only: %i[show edit update destroy follow unfollow]
 
@@ -14,11 +15,16 @@ class DogParksController < ApplicationController
   def index
     distance = params[:distance].present? ? params[:distance] : '25'
     
-    if current_user && current_user.primary_address
-      @nearby_dog_parks = DogPark.nearby(current_user, distance.to_i)
-
-      @nearby_dog_parks, @total_pages = paginate_collection(@nearby_dog_parks, 10)
+    #LOCATIONATE!
+    location = get_location(current_user)
+    if location
+      @nearby_dog_parks = DogPark.nearby(location, distance.to_i)
+    else
+      @nearby_dog_parks = []
     end
+
+    #PAGINATE!
+    @nearby_dog_parks, @total_pages = paginate_collection(@nearby_dog_parks, 10)
   end
 
   def new

@@ -1,9 +1,11 @@
 <%= turbo_frame_tag "dog_list", class: "list" do %>
   <% unless dog_parks.nil?%>
-    <% dog_parks.each do |dog_park| %>
+    <% dog_parks.each do |dog_park_item| %>
+      <% dog_park = dog_park_item[0] %>
+      <% distance = dog_park_item[1] %>
       <div class="dog-park">
         <%= link_to dog_park do %>
-          <span class="details"><%= dog_park.name %> - <%= dog_park.address.distance_from(current_user.primary_address).round(1) %> mi </span>
+          <span class="details"><%= dog_park.name %> - <%= distance.round(1) %> mi </span>
         <% end %>
         <span class="actions">
           <%= link_to dog_park, class: "action-button icon-only", method: :get, data: {turbo_method: :get, turbo_frame: "_top"} do %>
@@ -16,13 +18,15 @@
               </span>
             </button>
           <% end %>
-          <% if current_user.following?(dog_park) %>
-            <%= link_to unfollow_dog_park_path(dog_park), class: "action-button icon-only", method: :delete, data: {turbo_method: :delete} do %>
-              <%= render 'shared/minusbutton', btn_text: 'UNFOLLOW' %>
-            <% end %>
-          <% else %>
-            <%= link_to follow_dog_park_path(dog_park), class: "action-button icon-only", method: :post, data: {turbo_method: :post} do %>
-              <%= render 'shared/plusbutton', btn_text: 'FOLLOW' %>
+          <% if current_user %>
+            <% if current_user.following?(dog_park) %>
+              <%= link_to unfollow_dog_park_path(dog_park), class: "action-button icon-only", method: :delete, data: {turbo_method: :delete} do %>
+                <%= render 'shared/minusbutton', btn_text: 'UNFOLLOW' %>
+              <% end %>
+            <% else %>
+              <%= link_to follow_dog_park_path(dog_park), class: "action-button icon-only", method: :post, data: {turbo_method: :post} do %>
+                <%= render 'shared/plusbutton', btn_text: 'FOLLOW' %>
+              <% end %>
             <% end %>
           <% end %>
         </span>

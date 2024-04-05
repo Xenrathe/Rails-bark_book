@@ -1,8 +1,9 @@
 <div class="play-dates index core-window">
+  <%= render 'shared/locator' %>
   <div class="filter-bar">
     <div class="title">Play Dates</div>
     <div class="filter-and-new">
-      <% if current_user && current_user.primary_address %>
+      <% if true || (current_user && current_user.primary_address) || cookies[:user_location].present? %>
         <%= form_tag(play_dates_path, method: :get) do %>
           <div class="single-input">
             <%= label_tag 'distance', 'Distance:' %>

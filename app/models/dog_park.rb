@@ -14,14 +14,20 @@ class DogPark < ApplicationRecord
 
   validates :name, :dog_size, presence: true
 
-  def self.nearby(user, distance)
-    return unless user.primary_address.present?
+  def self.nearby(location, distance)
+    return if location.nil?
 
     nearby_dogparks = []
-    user.primary_address.nearbys(distance)&.where('addressable_type = ?', 'DogPark')&.each do |address|
-      nearby_dogparks << address.addressable
+    if location.is_a?(Address)
+      location.nearbys(distance)&.where('addressable_type = ?', 'DogPark')&.each do |address|
+        nearby_dogparks << [address.addressable, address.distance_from(location)]
+      end
+    else
+      Address.near(location, distance)&.where('addressable_type = ?', 'DogPark')&.each do |address|
+        nearby_dogparks << [address.addressable, address.distance_from(location)]
+      end
     end
-
     nearby_dogparks
   end
+
 end

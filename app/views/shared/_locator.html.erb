@@ -1,0 +1,7 @@
+<div class="locator" data-controller="location">
+  <form id="locationForm" action="/set_location" method="post" data-location-target="form">
+    <%= hidden_field_tag :authenticity_token, form_authenticity_token %>
+    <input type="hidden" id="latitude" name="latitude" data-location-target="latitude">
+    <input type="hidden" id="longitude" name="longitude" data-location-target="longitude">
+  </form>
+</div>

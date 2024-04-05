@@ -6,18 +6,15 @@ export default class extends Controller {
 
   connect() {
     if (this.hasImgpreviewTarget) {
-      console.log("imagesUpload connected");
       this.fileuploadTarget.addEventListener("change", this.imagesUpload.bind(this));
     }
     else if (this.hasVideoTarget) {
-      console.log("videoResizer connected");
       this.videoResizer();
       window.addEventListener("resize", this.resizeHandler);
     }
   }
 
   disconnect() {
-    console.log("videoResizer disconnected");
     window.removeEventListener("resize", this.resizeHandler);
   }
 

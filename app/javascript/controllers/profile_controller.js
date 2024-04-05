@@ -1,4 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
+import { getCookie } from './cookies';
 
 //Used to control the user profile in the User show view
 export default class extends Controller {
@@ -7,7 +8,7 @@ export default class extends Controller {
   connect() {
     this.toggleUploadOptions;
 
-    const targetTabId = this.getCookie('profile_tab');
+    const targetTabId = getCookie('profile_tab');
     if (targetTabId) {
       this.switchToTab(targetTabId);
     }
@@ -79,18 +80,5 @@ export default class extends Controller {
     } else {
       this.uploadBarkDivTarget.style.display = 'none'; // Hide the upload-sound-options div
     }
-  }
-
-  //A generic getCookie function
-  //may want to move this to a more universal location if we end up needing it elsewhere
-  getCookie(name) {
-    const cookies = document.cookie.split(';').map(cookie => cookie.trim());
-    for (const cookie of cookies) {
-      const [cookieName, cookieValue] = cookie.split('=');
-      if (cookieName === name) {
-        return decodeURIComponent(cookieValue);
-      }
-    }
-    return null;
   }
 }

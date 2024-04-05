@@ -1,11 +1,12 @@
 <div class="dogs core-window">
+  <%= render 'shared/locator' %>
   <div class="index transparent-bg core-content">
     <div class="title">Dogs</div>
       <div class="top">
         <%= form_tag(dogs_path, method: :get) do %>
           <div class="single-input">
             <%= label_tag 'distance', 'Distance:' %>
-            <% if current_user && current_user.primary_address %>
+            <% if true || (current_user && current_user.primary_address) || cookies[:user_location].present? %>
               <% selected_distance = params[:distance].present? ? params[:distance] : '25' %>
               <%= select_tag 'distance', options_for_select(['10', '25', '50', '100', 'all'], selected: selected_distance) %>
             <% else %>

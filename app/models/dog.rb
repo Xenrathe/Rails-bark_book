@@ -22,14 +22,22 @@ class Dog < ApplicationRecord
   scope :small, -> { where('weight <= ?', 25) }
   scope :large, -> { where('weight > ?', 25) }
 
-  def self.nearby(user, distance)
-    return unless user.primary_address.present?
+  def self.nearby(user, location, distance)
+    return if location.nil?
 
-    nearby_dogs = [user.dogs]
-    user.primary_address.nearbys(distance)&.where('addressable_type = ?', 'User')&.each do |address|
-      nearby_dogs << address.addressable.dogs if User.find(address.addressable_id).primary_address.id == address.id
+    # Add user's own dogs always
+    nearby_dogs = user ? [user.dogs] : []
+
+    # Then find nearby dogs
+    if location.is_a?(Address)
+      location.nearbys(distance)&.where('addressable_type = ?', 'User')&.each do |address|
+        nearby_dogs << address.addressable.dogs if User.find(address.addressable_id).primary_address.id == address.id
+      end
+    else
+      Address.near(location, distance)&.where('addressable_type = ?', 'User')&.each do |address|
+        nearby_dogs << address.addressable.dogs if User.find(address.addressable_id).primary_address.id == address.id
+      end
     end
-
     nearby_dogs.flatten
   end
 

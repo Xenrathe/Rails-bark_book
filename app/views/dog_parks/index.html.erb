@@ -1,9 +1,10 @@
 <div class="dog-parks index core-window">
+  <%= render 'shared/locator' %>
   <div class="transparent-bg core-content">
-          <div class="title">Dog Parks</div>
+    <div class="title">Dog Parks</div>
     <div class="top">
       <div class="filter-and-new">
-        <% if current_user && current_user.primary_address %>
+        <% if true || (current_user && current_user.primary_address) || cookies[:user_location].present? %>
           <%= form_tag(dog_parks_path, method: :get) do %>
             <div class="single-input">
               <%= label_tag 'distance', 'Distance:' %>
@@ -25,7 +26,7 @@
             </div>
           <% end %>
         <% else %>
-          <div class="geo-warning">Cannot find nearby dog parks without a primary address!</div>
+          <div class="geo-warning">Allow location access or add a primary address to filter by distance!</div>
         <% end %>
         <div class="new">
           <%= link_to new_dog_park_path, class: "action-button", method: :get, data: {turbo_method: :get} do %>
@@ -35,6 +36,6 @@
       </div>
     </div>
     <hr>
-    <%= render 'dogparklist', dog_parks: @nearby_dog_parks%>
+    <%= render 'dogparklist', dog_parks: @nearby_dog_parks %>
   </div>
 </div>

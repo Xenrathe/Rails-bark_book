@@ -25,12 +25,18 @@ class PlayDate < ApplicationRecord
     attendees.include?(dog)
   end
 
-  def self.nearby(user, distance)
-    return unless user.primary_address.present?
+  def self.nearby(location, distance)
+    return if location.nil?
 
     nearby_playdates = []
-    user.primary_address.nearbys(distance)&.where('addressable_type = ?', 'DogPark')&.each do |address|
-      nearby_playdates << address.addressable.play_dates.upcoming
+    if location.is_a?(Address)
+      location.nearbys(distance)&.where('addressable_type = ?', 'DogPark')&.each do |address|
+        nearby_playdates << address.addressable.play_dates.upcoming
+      end
+    else
+      Address.near(location, distance)&.where('addressable_type = ?', 'DogPark')&.each do |address|
+        nearby_playdates << address.addressable.play_dates.upcoming
+      end
     end
 
     nearby_playdates.flatten

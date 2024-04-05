@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   include PaginationConcern
   helper_method :navigation_params
 
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: %i[set_location]
   before_action :set_user, only: %i[show edit update make_primary destroy]
 
   def show
@@ -51,7 +51,6 @@ class UsersController < ApplicationController
       render :edit, status: :unprocessable_entity
     end
   end
-
 
   def destroy
     if current_user && @user == current_user
@@ -108,6 +107,18 @@ class UsersController < ApplicationController
     
     # Pagination
     @feed_content, @total_pages = paginate_collection(@feed_content, 10)
+  end
+
+  def set_location
+    cookies[:user_location] = {
+      value: {
+        latitude: params[:latitude],
+        longitude: params[:longitude]
+      }.to_json,
+      expires: 1.hour.from_now
+    }
+    flash.now[:notice] = 'Location set.'
+    redirect_back(fallback_location: root_path)
   end
 
   private

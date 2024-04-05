@@ -1,5 +1,6 @@
 class PlayDatesController < ApplicationController
   include PaginationConcern
+  include LocationConcern
   helper_method :navigation_params
 
   before_action :authenticate_user!, except: %i[show index]
@@ -13,9 +14,14 @@ class PlayDatesController < ApplicationController
     distance = params[:distance].present? ? params[:distance] : '25'
 
     # filter by distance
-    if distance != 'all' && current_user && current_user.primary_address
-      nearby_playdates = PlayDate.nearby(current_user, distance.to_i) # Returns an array
-      @play_dates = PlayDate.upcoming.where(id: nearby_playdates.pluck(:id)) # Convert back to relation... inefficient?
+    if distance != 'all'
+      location = get_location(current_user)
+      if location
+        nearby_playdates = PlayDate.nearby(location, distance.to_i) # Returns an array
+        @play_dates = PlayDate.upcoming.where(id: nearby_playdates.pluck(:id)) # Convert back to relation... inefficient?
+      else
+        @play_dates = PlayDate.upcoming
+      end
     else
       @play_dates = PlayDate.upcoming
     end

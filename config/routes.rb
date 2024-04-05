@@ -9,6 +9,7 @@ Rails.application.routes.draw do
     end
   end
   get 'feed', to: 'users#feed'
+  post 'set_location', to: 'users#set_location'
 
   resources :dogs do
     member do

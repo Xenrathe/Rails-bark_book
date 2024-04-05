@@ -1,5 +1,6 @@
 class DogsController < ApplicationController
   include PaginationConcern
+  include LocationConcern
   helper_method :navigation_params
   
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
@@ -10,9 +11,14 @@ class DogsController < ApplicationController
     breed = params[:breed]
 
     # filter by distance
-    if distance != 'all' && current_user && current_user.primary_address
-      nearby_dogs = Dog.nearby(current_user, distance.to_i) # Returns an array
-      @dogs = Dog.where(id: nearby_dogs.pluck(:id)) # Convert back to relation... inefficient?
+    if distance != 'all'
+      location = get_location(current_user)
+      if location
+        nearby_dogs = Dog.nearby(current_user, location, distance.to_i) # Returns an array
+        @dogs = Dog.where(id: nearby_dogs.pluck(:id)) # Convert back to relation... inefficient?
+      else
+        @dogs = Dog.all
+      end
     else
       @dogs = Dog.all
     end

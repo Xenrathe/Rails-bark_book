@@ -10,7 +10,6 @@
 
 ### Additional features
 * Cookies for remembering nearby distance filter
-* Can use 'location services' rather than address
 
 ### Optimization and validation
 * Check for N+1
