@@ -5,9 +5,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_account_update_params, only: [:update]
 
   # GET /resource/sign_up
-  # def new
-  #   super
-  # end
+  def new
+    @random_dogs = Dog.order('RANDOM()').limit(4)
+    super
+  end
 
   # POST /resource
   # def create

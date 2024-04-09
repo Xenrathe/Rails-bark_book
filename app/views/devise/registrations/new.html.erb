@@ -1,4 +1,15 @@
-<div class="core-window registrations">
+<div class="core-window registrations new">
+  <div class="core-content transparent-bg top">
+    <div class="title">Join The Bark Park!</div>
+    <div class="intro-text">The Bark Park is social media for dogs and dog-lovers. Post videos of your dog. Bark at pictures of other dogs. Schedule play-dates at nearby dog parks. Join now and meet your dog's new best friend!</div>
+    <div class="dog-list">
+      <% @random_dogs.each do |dog| %>
+        <div class="list-dog">
+          <%= render 'dogs/dog', dog: dog, full_details: false, show_ownership: false, image_link: true %>
+        </div>
+      <% end %>
+    </div>
+  </div>
   <div class="core-content transparent-bg">
     <div class="title">Sign up</div>
 

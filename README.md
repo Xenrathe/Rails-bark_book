@@ -10,6 +10,7 @@
 
 ### Additional features
 * Cookies for remembering nearby distance filter
+* OmniAuth login / signup
 
 ### Optimization and validation
 * Check for N+1

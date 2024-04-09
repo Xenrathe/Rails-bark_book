@@ -301,7 +301,7 @@ body::before {
   justify-content: space-evenly;
 }
 
-// Used in dogs#index and user#show
+// Used in dogs#index and user#show and registrations#new (shows some cool dogs to meet)
 .dog-list {
   display: flex;
   justify-content: flex-start;
@@ -835,6 +835,41 @@ body::before {
       margin-top: 5px;
       display: flex;
       gap: 10px;
+    }
+  }
+}
+
+.registrations {
+  .core-content {
+    margin-bottom: 5px;
+    justify-content: center;
+  }
+
+  .top {
+    .intro-text {
+      width: 90%;
+    }
+
+    .intro-text {
+      margin-bottom: 5px;
+      padding: 5px;
+      border: solid 1px black;
+    }
+
+    .dog-list {
+      display: grid;
+      max-width: 90%;
+      grid-template-columns: 1fr 1fr;
+
+      .dog {
+        align-items: center;
+      }
+    }
+
+    @media only screen and (min-width: 1535px){
+      .dog-list {
+        grid-template-columns: 1fr 1fr 1fr 1fr;
+      }
     }
   }
 }
