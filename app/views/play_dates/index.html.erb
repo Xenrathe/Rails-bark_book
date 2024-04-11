@@ -1,4 +1,5 @@
-<div class="play-dates index core-window">
+<div class="play-dates index core-window" data-window-target="contentContainer">
+  <input type="hidden" id="current-page" value="1">
   <%= render 'shared/locator' %>
   <div class="filter-bar">
     <div class="title">Play Dates</div>
@@ -21,7 +22,6 @@
                 </span>
               </button>
             <% end %>
-            <%= render 'shared/pagination', page: @page, total_pages: @total_pages %>
           </div>
         <% end %>
       <% else %>
@@ -34,9 +34,5 @@
       </div>
     </div>
   </div>
-    <% @play_dates.each do |play_date| %>
-      <div class="feed-content transparent-bg core-content">
-        <%= render play_date, comments_mode: 'short', include_actions: false %>
-      </div>
-    <% end %>
+  <%= render 'indexpage' %>
 </div>
