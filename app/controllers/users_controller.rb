@@ -107,6 +107,15 @@ class UsersController < ApplicationController
     
     # Pagination
     @feed_content, @total_pages = paginate_collection(@feed_content, 10)
+
+    # Depending on the page / emptiness, either render the full feed view, nothing, or just the next 'page' of feed content
+    if params[:page].to_i == 1 || params[:page].nil?
+      render :feed
+    elsif @feed_content.nil? || @feed_content.empty?
+      render plain: 'Empty'
+    else
+      render partial: 'contents/contentfeed', locals: { feed_contents: @feed_content }
+    end
   end
 
   def set_location
