@@ -1,4 +1,5 @@
 <div class="user-feed core-window" data-window-target="contentContainer">
   <input type="hidden" id="current-page" value="1">
+  <%= render 'shared/locator' %>
   <%= render 'contents/contentfeed', feed_contents: @feed_content %>
 </div>

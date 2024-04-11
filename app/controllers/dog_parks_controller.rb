@@ -7,6 +7,7 @@ class DogParksController < ApplicationController
   def show
     @upcoming_play_dates = @dog_park.play_dates.upcoming.limit(10)
     @comments = @dog_park.comments
+    @location = get_location(current_user)
 
     # Used for the image gallery
     @attached_images, @total_pages = paginate_collection(@dog_park.attached_images, 3)

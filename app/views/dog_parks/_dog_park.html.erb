@@ -1,7 +1,7 @@
 <div class="title">
   <%= dog_park.name %> 
-  <% if current_user && current_user.primary_address %>
-    (<%= dog_park.address.distance_from(current_user.primary_address).round(1) %> mi away)
+  <% if distance %>
+    (<%= distance.round(1) %> mi away)
   <% end%>
 </div>
 

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   include PaginationConcern
+  include LocationConcern
   helper_method :navigation_params
 
   before_action :authenticate_user!, except: %i[set_location]
@@ -92,6 +93,7 @@ class UsersController < ApplicationController
   def feed
     dogs = current_user.followed_dogs + current_user.dogs
     @feed_content = Set.new
+    @location = get_location(current_user)
   
     dogs.each do |dog|
       content_for_dog = dog.contents

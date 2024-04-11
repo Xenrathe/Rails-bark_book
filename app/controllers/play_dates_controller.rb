@@ -8,20 +8,17 @@ class PlayDatesController < ApplicationController
 
   def show
     @barks = @play_date.barks
+    @location = get_location(current_user)
   end
 
   def index
     distance = params[:distance].present? ? params[:distance] : '25'
 
     # filter by distance
-    if distance != 'all'
-      location = get_location(current_user)
-      if location
-        nearby_playdates = PlayDate.nearby(location, distance.to_i) # Returns an array
-        @play_dates = PlayDate.upcoming.where(id: nearby_playdates.pluck(:id)) # Convert back to relation... inefficient?
-      else
-        @play_dates = PlayDate.upcoming
-      end
+    @location = get_location(current_user)
+    if distance != 'all' && @location
+      nearby_playdates = PlayDate.nearby(@location, distance.to_i) # Returns an array
+      @play_dates = PlayDate.upcoming.where(id: nearby_playdates.pluck(:id)) # Convert back to relation... inefficient?
     else
       @play_dates = PlayDate.upcoming
     end
