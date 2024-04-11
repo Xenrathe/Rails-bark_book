@@ -26,7 +26,7 @@ class PlayDatesController < ApplicationController
       @play_dates = PlayDate.upcoming
     end
 
-    @play_dates, @total_pages = paginate_collection(@play_dates, 2)
+    @play_dates, @total_pages = paginate_collection(@play_dates, 10)
 
     # Depending on the page / emptiness, either render the full index view, nothing, or just the next 'page' of play-dates
     if params[:page].to_i == 1 || params[:page].nil?

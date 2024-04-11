@@ -38,12 +38,12 @@ export default class extends Controller {
     var currentPage = parseInt(document.querySelector("#current-page").value);
 
     //Update the URL to get the next page
-    var url = window.location.href;
-    var searchParams = new URLSearchParams(url);
-    searchParams.set('page', currentPage + 1);
-    var updatedUrl = `${url.split('?')[0]}?${searchParams.toString()}`;
+    var url = new URL(window.location.href);
+    url.searchParams.set('page', currentPage + 1);
 
-    fetch(updatedUrl)
+    console.log(`url is: ${url}`);
+
+    fetch(url.toString())
       .then((response) => response.text())
       .then((data) => {
         if (data != "Empty")
