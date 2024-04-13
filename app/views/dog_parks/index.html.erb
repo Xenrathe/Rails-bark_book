@@ -7,7 +7,7 @@
         <% if true || (current_user && current_user.primary_address) || cookies[:user_location].present? %>
           <%= form_tag(dog_parks_path, method: :get) do %>
             <div class="single-input">
-              <%= label_tag 'distance', 'Distance:' %>
+              <%= label_tag 'distance', 'Distance(mi):' %>
               <% selected_distance = params[:distance].present? ? params[:distance] : '25' %>
               <%= select_tag 'distance', options_for_select(['10', '25', '50', '100'], selected: selected_distance) %>
             </div>

@@ -4,6 +4,7 @@ export default class extends Controller {
   static targets = ["imageContainer", "image", "contentContainer"];
 
   connect() {
+    this.currentPage = 1;
     if (this.hasImageContainerTarget) {
       this.imageContainerTarget.addEventListener("click", this.closeImageContainer.bind(this));
     }
@@ -23,39 +24,41 @@ export default class extends Controller {
   }
 
   //SCROLLING TO LOAD MORE CONTENT - 500ms timeout
+  //Also requires element to be visible (the User#Show has multiple tabs, only one of which should scroll)
   scrollTimer() {
     if (!this.throttleTimeout) {
       this.throttleTimeout = setTimeout(() => {
         this.throttleTimeout = null;
-        if (window.innerHeight + window.scrollY + 10 >= this.contentContainerTarget.offsetHeight) {
-          this.loadMoreContent();
+        if (window.innerHeight + window.scrollY + 10 >= this.contentContainerTarget.offsetHeight && 
+          this.isElementVisible(this.contentContainerTarget)) {
+            this.loadMoreContent();
         }
       }, 500);
     }
   }
 
   loadMoreContent() {
-    var currentPage = parseInt(document.querySelector("#current-page").value);
-
     //Update the URL to get the next page
     var url = new URL(window.location.href);
-    url.searchParams.set('page', currentPage + 1);
-
-    console.log(`url is: ${url}`);
+    url.searchParams.set('page', this.currentPage + 1);
 
     fetch(url.toString())
       .then((response) => response.text())
       .then((data) => {
         if (data != "Empty")
         {
-          currentPage += 1;
+          this.currentPage += 1;
           this.contentContainerTarget.insertAdjacentHTML('beforeend', data);
-          document.querySelector("#current-page").value = currentPage;
         }
       })
       .catch((error) => {
         console.error('Error loading more content:', error);
       });
+  }
+
+  isElementVisible(element) {
+    var computedStyle = window.getComputedStyle(element);
+    return computedStyle.display !== 'none';
   }
 
   //IMAGE WINDOW FUNCTIONS

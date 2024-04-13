@@ -9,9 +9,11 @@ class UsersController < ApplicationController
   def show
     @followed_dog_parks = @user.followed_dog_parks
     if current_user
-      @followed_dog_parks = @followed_dog_parks.sort_by do |dog_park|
-        dog_park.address.distance_from(current_user.primary_address)
-      end
+      @location = get_location(current_user)
+      @followed_dog_parks = @followed_dog_parks.map do |dog_park|
+        distance = dog_park.address.distance_from(@location)
+        [dog_park, distance]
+      end.sort_by(&:last)
     end
 
     @owned_dogs = @user.dogs
@@ -32,7 +34,16 @@ class UsersController < ApplicationController
     @user_content = @user_content.to_a
     @user_content.sort_by! { |dog_content| dog_content.created_at }.reverse!
     # Pagination
-    @user_content, @total_pages = paginate_collection(@user_content, 10)
+    @user_content, @total_pages = paginate_collection(@user_content, 2)
+
+    # Depending on the page / emptiness, either render the full feed view, nothing, or just the next 'page' of feed content
+    if params[:page].to_i == 1 || params[:page].nil?
+      render :show
+    elsif @user_content.nil? || @user_content.empty?
+      render plain: 'Empty'
+    else
+      render partial: 'contents/contentfeed', locals: { feed_contents: @user_content }
+    end
   end
 
   def edit

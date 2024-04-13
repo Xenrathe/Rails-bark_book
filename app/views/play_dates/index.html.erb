@@ -1,5 +1,4 @@
 <div class="play-dates index core-window" data-window-target="contentContainer">
-  <input type="hidden" id="current-page" value="1">
   <%= render 'shared/locator' %>
   <div class="filter-bar">
     <div class="title">Play Dates</div>
@@ -7,9 +6,9 @@
       <% if true || (current_user && current_user.primary_address) || cookies[:user_location].present? %>
         <%= form_tag(play_dates_path, method: :get) do %>
           <div class="single-input">
-            <%= label_tag 'distance', 'Distance:' %>
+            <%= label_tag 'distance', 'Distance(mi):' %>
             <% selected_distance = params[:distance].present? ? params[:distance] : '25' %>
-            <%= select_tag 'distance', options_for_select(['10', '25', '50', '100', 'all'], selected: selected_distance) %>
+            <%= select_tag 'distance', options_for_select(['10', '25', '50', '100'], selected: selected_distance) %>
           </div>
           <div class="filter-and-page">
             <%= link_to play_dates_path, class: 'action-button', data: {turbo_method: :get}, onclick: "this.closest('form').submit(); return false;" do %>

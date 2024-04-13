@@ -5,8 +5,6 @@
 ## Development To-do List:
 
 ### CSS and Java and other view features
-* Auto-pagination scrolling for feed-style content (play date index, feeds, etc)
-* Cookies for remembering nearby distance filter
 * OmniAuth login / signup
 
 ### Optimization and validation
