@@ -2,7 +2,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: [:google_oauth2]
 
   has_many :addresses, as: :addressable
   belongs_to :primary_address, class_name: 'Address', optional: true
@@ -23,6 +24,7 @@ class User < ApplicationRecord
   validates :email, :time_zone, presence: true
   validates :username, presence: true, uniqueness: true, length: { maximum: 25 }
 
+  # Follow/track either dog or dog_park
   def follow(object)
     if object.class.name.downcase == 'dog'
       followed_dogs << object unless following?(object)
@@ -31,6 +33,7 @@ class User < ApplicationRecord
     end
   end
 
+  # Unfollow/track either dog or dog_park
   def unfollow(object)
     if object.class.name.downcase == 'dog'
       followed_dogs.delete(object)
@@ -39,7 +42,34 @@ class User < ApplicationRecord
     end
   end
 
+  # Check if following either dog or dog_park
   def following?(object)
     followed_dogs.include?(object) || followed_dog_parks.include?(object)
+  end
+
+  # Omniauth stuff
+  def self.from_omniauth(auth)
+    username = auth.info.name.parameterize
+    username = generate_unique_username(username)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0, 20]
+      user.username = username
+    end
+  end
+
+  # Since username is unique, this simply adds an increasing number onto name until it's free
+  def self.generate_unique_username(username)
+    existing_user = User.find_by(username: username)
+    if existing_user
+      i = 1
+      loop do
+        new_username = "#{username}#{i}"
+        break unless User.find_by(username: new_username)
+        i += 1
+      end
+      username = "#{username}#{i}"
+    end
+    username
   end
 end

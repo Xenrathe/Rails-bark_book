@@ -5,7 +5,9 @@
 ## Development To-do List:
 
 ### CSS and Java and other view features
-* OmniAuth login / signup
+* OmniAuth conflict resolution - what if they create account with email address but then login via omniauth?
+* OmniAuth facebook integration
+* OmniAuth instagram integration
 
 ### Optimization and validation
 * Check for N+1
