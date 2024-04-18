@@ -23,6 +23,7 @@ class User < ApplicationRecord
 
   validates :email, :time_zone, presence: true
   validates :username, presence: true, uniqueness: true, length: { maximum: 25 }
+  validate :custom_bark_validations
 
   # Follow/track either dog or dog_park
   def follow(object)
@@ -65,7 +66,7 @@ class User < ApplicationRecord
         user.save
       end
     end
-    
+
     user
     #username = auth.info.name.parameterize
     #username = generate_unique_username(username)
@@ -90,5 +91,12 @@ class User < ApplicationRecord
       username = "#{username}#{i}"
     end
     username
+  end
+
+  private
+
+  def custom_bark_validations
+    errors.add(:custom_bark, ' cannot be larger than 1MB') if custom_bark.byte_size > 1.megabytes
+    errors.add(:custom_bark, ' must be an audio file') unless custom_bark.content_type.start_with?('audio/')
   end
 end

@@ -6,7 +6,7 @@ export default class extends Controller {
   static targets = ["tab", "addressForm", "tabTitle", "customBarkRadio", "uploadBarkDiv"];
 
   connect() {
-    this.toggleUploadOptions;
+    this.toggleUploadOptions();
 
     const targetTabId = getCookie('profile_tab');
     if (targetTabId) {
@@ -54,7 +54,7 @@ export default class extends Controller {
         break;
       case 'posts-tab':
       default:
-        this.tabTitleTarget.textContent = 'Posts';
+        this.tabTitleTarget.textContent = 'Your Posts';
         break;
     }
 
@@ -73,7 +73,6 @@ export default class extends Controller {
 
   //Dealing with the bark audio
   toggleUploadOptions() {
-
     // Check if the custom_sound radio button is checked
     if (this.customBarkRadioTarget.checked) {
       this.uploadBarkDivTarget.style.display = 'block'; // Show the upload-sound-options div

@@ -50,17 +50,18 @@ class UsersController < ApplicationController
   end
 
   def update
-    # Only allow users to change their own name
+    # Only allow users to change their own data
     if current_user && current_user == @user
       if @user.update(user_params)
         flash[:notice] = "User successfully edited."
         redirect_to @user
       else
-        render :edit, status: :unprocessable_entity
+        flash[:alert] = "Error updating user: " + @user.errors.full_messages.join(", ")
+        redirect_to @user
       end
     else
       flash[:alert] = "You cannot edit other user's profiles."
-      render :edit, status: :unprocessable_entity
+      redirect_to @user, status: :unprocessable_entity
     end
   end
 

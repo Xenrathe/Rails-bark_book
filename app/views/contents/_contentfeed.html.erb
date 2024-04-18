@@ -1,5 +1,22 @@
 <% if feed_contents.nil? || feed_contents.count == 0 %>
-  <div class="title transparent-bg core-content">No feed content!</div>
+  <div class="feed-content transparent-bg core-content">
+    <div class="title">No feed content!</div>
+    <div class="breadcrumb-link">
+      <% if empty_link == 'image' %>
+        <% if current_user && defined?(@user) && @user == current_user %>
+          <% if current_user.dogs.count == 0 %>
+            You haven't added any dogs yet! Try adding a <%= link_to 'dog', new_dog_path %>!
+          <% elsif !defined?(@dog) %>
+            You haven't posted anything yet! Try sharing an <%= link_to 'image', new_image_contents_path %> of <%= current_user.dogs.first.name %>
+          <% end %>
+        <% elsif current_user && defined?(@dog) && @dog.user == current_user %>
+          You haven't posted anything yet! Try sharing an <%= link_to 'image', new_image_contents_path %> of <%= @dog.name %>!
+        <% end %>
+      <% elsif empty_link == 'dogs' %>
+        Try finding some <%= link_to 'dogs', dogs_path %> to track!
+      <% end %>
+    </div>
+  </div>
 <% else %>
   <% feed_contents.each do |feed_content| %>
     <div class="feed-content transparent-bg core-content">

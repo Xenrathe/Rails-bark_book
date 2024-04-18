@@ -64,14 +64,20 @@ class DogParksController < ApplicationController
         params[:dog_park][:attached_images].each do |image|
           @dog_park.attached_images.attach(image)
         end
-        flash.now[:notice] = "Images successfully added."
-        redirect_back(fallback_location: root_path)
+
+        if @dog_park.valid?
+          flash[:notice] = "Images successfully added."
+          redirect_back(fallback_location: root_path)
+        else
+          flash[:alert] = "Error adding images: " + @dog_park.errors.full_messages.join(", ")
+          redirect_back(fallback_location: root_path, status: :unprocessable_entity)
+        end
       else
-        flash.now[:notice] = "Error adding images"
+        flash[:alert] = "Error adding images"
         redirect_back(fallback_location: root_path, status: :unprocessable_entity)
       end
     else
-      flash.now[:alert] = "Must be logged in to post images."
+      flash[:alert] = "Must be logged in to post images."
       render :edit, status: :unprocessable_entity
     end
   end

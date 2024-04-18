@@ -88,6 +88,8 @@
             <%= bark_form.submit 'Update', class: 'simple-btn edit small' %>
             <%= bark_form.button 'Test', id: 'test-sound-button', class: 'simple-btn test small', data: {controller: "sound", action: "click->sound#test"} %>
           </div>
+
+          <%= render 'shared/errors', object: @user %>
         <% end %>
       <% end %>
     </div>
@@ -187,7 +189,7 @@
 
   <div id="posts-tab" class="tab-content" style="display: block;" data-profile-target="tab" data-window-target="contentContainer">
     <div class="user-feed">      
-    <%= render 'contents/contentfeed', feed_contents: @user_content %>
+    <%= render 'contents/contentfeed', feed_contents: @user_content, empty_link: 'image' %>
     </div>
   </div>
 </div>

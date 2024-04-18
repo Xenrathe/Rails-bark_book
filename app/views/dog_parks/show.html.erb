@@ -33,42 +33,43 @@
     </div>
 
     <%= turbo_frame_tag "image-gallery" do %>
-        <div class="sub-title">Images</div>
-        <% if @dog_park.attached_images.any? %>
-          <div class="image-gallery">
-            <% if @total_pages > 1 && @page > 1 %>
-              <%= link_to({ page: @page - 1 }, class: "left") do %>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="none" class="enabled"><path d="M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z" /></svg>
-              <% end %>
-            <% else %>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="none" class="disabled left"><path d="M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z" /></svg>
+      <div class="sub-title">Images</div>
+      <% if @dog_park.attached_images.any? %>
+        <div class="image-gallery">
+          <% if @total_pages > 1 && @page > 1 %>
+            <%= link_to({ page: @page - 1 }, class: "left") do %>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="none" class="enabled"><path d="M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z" /></svg>
             <% end %>
+          <% else %>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="none" class="disabled left"><path d="M20,9V15H12V19.84L4.16,12L12,4.16V9H20Z" /></svg>
+          <% end %>
 
-            <div class="images">
-              <% @attached_images.each do |attached_image| %>
-                <%= image_tag attached_image.variant(:thumb), class: "zoomable", "data-action": "click->window#openImageContainer", "data-original-url": rails_blob_path(attached_image, only_path: true) %>
-              <% end %>
-            </div>
-
-            <% if @total_pages > 1 && @page < @total_pages %>
-              <%= link_to({ page: @page + 1 }, class: "right") do %>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="none" class="enabled"><path d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z" /></svg>
-              <% end %>
-            <% else %>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="none" class="disabled right"><path d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z" /></svg>
+          <div class="images">
+            <% @attached_images.each do |attached_image| %>
+              <%= image_tag attached_image.variant(:thumb), class: "zoomable", "data-action": "click->window#openImageContainer", "data-original-url": rails_blob_path(attached_image, only_path: true) %>
             <% end %>
           </div>
-        <% end %>
 
-        <% if current_user %>
-          <div id="new-image-form">
-            <%= form_with(model: @dog_park, local: true) do |new_image_form| %>
-              <%= new_image_form.file_field :attached_images, multiple: true %><br>
-              <%= new_image_form.submit "Upload images" %>
+          <% if @total_pages > 1 && @page < @total_pages %>
+            <%= link_to({ page: @page + 1 }, class: "right") do %>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="none" class="enabled"><path d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z" /></svg>
             <% end %>
-          </div>
-        <% end %>
+          <% else %>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" preserveAspectRatio="none" class="disabled right"><path d="M4,15V9H12V4.16L19.84,12L12,19.84V15H4Z" /></svg>
+          <% end %>
+        </div>
+      <% end %>
     <% end %>
+
+      <% if current_user %>
+        <div id="new-image-form">
+          <%= form_with(model: @dog_park) do |new_image_form| %>
+            <%= new_image_form.file_field :attached_images, accept: "image/*", multiple: true %><br>
+            <%= new_image_form.submit "Upload images" %>
+            <%= render 'shared/errors', object: @dog_park %>
+          <% end %>
+        </div>
+      <% end %>
     <hr>
     <div class="barks-comments-full">
       <%= render "shared/comments", commentable: @dog_park, comments: @comments, commentable_type: 'dog_park', comments_mode: 'full' %>

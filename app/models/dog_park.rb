@@ -13,6 +13,7 @@ class DogPark < ApplicationRecord
   end
 
   validates :name, :dog_size, presence: true
+  validate :image_validations
 
   def self.nearby(location, distance)
     return if location.nil?
@@ -28,6 +29,15 @@ class DogPark < ApplicationRecord
       end
     end
     nearby_dogparks
+  end
+
+  private
+
+  def image_validations
+    attached_images.each do |image|
+      errors.add(:attached_images, ' cannot be larger than 10MB') if image.byte_size > 10.megabytes
+      errors.add(:attached_images, ' must be image files') unless image.content_type.start_with?('image/')
+    end
   end
 
 end

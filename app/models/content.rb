@@ -28,13 +28,18 @@ class Content < ApplicationRecord
   def content_limitations
     case content_type
     when 'image'
-      puts "Image error found!"
       errors.add(:image, ' must be attached') unless attached_images.attached?
       errors.add(:caption, ' cannot be greater than 200 characters') unless body.length <= 200
       errors.add(:attached_images, ' cannot exceed 10 files') if attached_images.count > 10
+      attached_images.each do |image|
+        errors.add(:attached_images, ' cannot be larger than 10MB') if image.byte_size > 10.megabytes
+        errors.add(:attached_images, ' must be image files') unless image.content_type.start_with?('image/')
+      end
     when 'video'
       errors.add(:video, ' must be attached') unless attached_video.attached?
       errors.add(:caption, ' cannot be greater than 200 characters') unless body.length <= 200
+      errors.add(:attached_video, ' cannot be larger than 150MB') if attached_video.byte_size > 150.megabytes
+      errors.add(:attached_video, ' must be a video file') unless attached_video.content_type.start_with?('video/')
     when 'post'
       errors.add(:body, ' must be between 10 and 2000 characters') unless body.length >= 10 && body.length <= 2000
     end

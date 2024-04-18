@@ -4,10 +4,8 @@
 
 ## Development To-do List:
 
-### CSS and Java and other view features
-* OmniAuth conflict resolution - what if they create account with email address but then login via omniauth?
-* OmniAuth facebook integration
-* OmniAuth instagram integration
+### Misc
+* Better google sign in button
 
 ### Optimization and validation
 * Check for N+1
@@ -20,6 +18,8 @@
 * Upload to Fly
 
 ### Future additions
+* OmniAuth facebook integration
+* OmniAuth instagram integration
 * API access
 * Channel / websocket for feed and comments?
 * Admin functionality (see below)

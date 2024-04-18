@@ -835,6 +835,8 @@ body::before {
       margin-top: 5px;
       display: flex;
       gap: 10px;
+      width: 290px;
+      max-width: 290px;
     }
   }
 }
