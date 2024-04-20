@@ -28,18 +28,18 @@ class PlayDate < ApplicationRecord
   def self.nearby(location, distance)
     return if location.nil?
 
-    nearby_playdates = []
+    # Why this to_a in the following lines of code, you ask?
+    # Because of some strange issue I couldn't quite figure out,
+    # in which I had to FORCE the query to immediately load or the sorting by distance didn't work
+    # Some implementation of the near function within Geocoder gem?
+
     if location.is_a?(Address)
-      location.nearbys(distance)&.where('addressable_type = ?', 'DogPark')&.each do |address|
-        nearby_playdates << address.addressable.play_dates.upcoming
-      end
+      addresses = location.nearbys(distance).where(addressable_type: 'DogPark').to_a
     else
-      Address.near(location, distance)&.where('addressable_type = ?', 'DogPark')&.each do |address|
-        nearby_playdates << address.addressable.play_dates.upcoming
-      end
+      addresses = Address.near(location, distance).where(addressable_type: 'DogPark').to_a
     end
 
-    nearby_playdates.flatten
+    PlayDate.where(dog_park_id: addresses.map(&:addressable_id)).upcoming
   end
 
   private
