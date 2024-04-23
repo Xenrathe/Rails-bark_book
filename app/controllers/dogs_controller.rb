@@ -14,13 +14,12 @@ class DogsController < ApplicationController
     if distance != 'all'
       location = get_location(current_user)
       if location
-        nearby_dogs = Dog.nearby(current_user, location, distance.to_i) # Returns an array
-        @dogs = Dog.where(id: nearby_dogs.pluck(:id)) # Convert back to relation... inefficient?
+        @dogs = Dog.includes(avatar_attachment: :blob).nearby(location, distance.to_i)
       else
-        @dogs = Dog.all
+        @dogs = Dog.includes(avatar_attachment: :blob).all
       end
     else
-      @dogs = Dog.all
+      @dogs = Dog.includes(avatar_attachment: :blob).all
     end
 
     # filter by breed name
@@ -28,6 +27,9 @@ class DogsController < ApplicationController
 
     # Pagination
     @dogs, @total_pages = paginate_collection(@dogs, 10)
+
+    # Load up current user's followed dogs or make nil
+    @followed_dogs = current_user&.followed_dogs.to_a
   end
 
   def show

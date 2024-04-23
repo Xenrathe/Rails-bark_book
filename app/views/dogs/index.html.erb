@@ -37,7 +37,7 @@
     <div class="dog-list">
       <% @dogs.each do |dog| %>
         <% status = "" %>
-        <% status = " followed" if current_user && current_user.following?(dog) %>
+        <% status = " followed" if @followed_dogs && @followed_dogs.include?(dog) %>
         <% status = " owned" if current_user && current_user.id == dog.user_id %>
         <div class="list-dog<%= status %>">
           <%= render dog, full_details: false, show_ownership: false, image_link: true %>
