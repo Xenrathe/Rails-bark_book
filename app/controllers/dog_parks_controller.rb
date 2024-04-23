@@ -26,6 +26,9 @@ class DogParksController < ApplicationController
 
     #PAGINATE!
     @nearby_dog_parks, @total_pages = paginate_collection(@nearby_dog_parks, 10)
+
+    #Also load up the followed_dog_parks to reduce queries to database
+    @followed_dog_parks = current_user&.followed_dog_parks.to_a
   end
 
   def new

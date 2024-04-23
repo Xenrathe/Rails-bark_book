@@ -7,7 +7,7 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update make_primary destroy]
 
   def show
-    @followed_dog_parks = @user.followed_dog_parks
+    @followed_dog_parks = @user.followed_dog_parks.to_a
     if current_user
       @location = get_location(current_user)
       @followed_dog_parks = @followed_dog_parks.map do |dog_park|

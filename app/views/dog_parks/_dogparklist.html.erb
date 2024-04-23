@@ -19,7 +19,7 @@
             </button>
           <% end %>
           <% if current_user %>
-            <% if current_user.following?(dog_park) %>
+            <% if @followed_dog_parks.include?(dog_park) %>
               <%= link_to unfollow_dog_park_path(dog_park), class: "action-button icon-only", method: :delete, data: {turbo_method: :delete} do %>
                 <%= render 'shared/minusbutton', btn_text: 'UNFOLLOW' %>
               <% end %>

@@ -18,17 +18,15 @@ class DogPark < ApplicationRecord
   def self.nearby(location, distance)
     return if location.nil?
 
-    nearby_dogparks = []
-    if location.is_a?(Address)
-      location.nearbys(distance)&.where('addressable_type = ?', 'DogPark')&.each do |address|
-        nearby_dogparks << [address.addressable, address.distance_from(location)]
-      end
-    else
-      Address.near(location, distance)&.where('addressable_type = ?', 'DogPark')&.each do |address|
-        nearby_dogparks << [address.addressable, address.distance_from(location)]
-      end
+    addresses = if location.is_a?(Address)
+                  location.nearbys(distance)
+                else
+                  Address.near(location, distance)
+                end&.where('addressable_type = ?', 'DogPark')&.includes(:addressable).to_a
+
+    addresses.map do |address|
+      [address.addressable, address.distance_from(location)]
     end
-    nearby_dogparks
   end
 
   private
