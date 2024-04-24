@@ -27,14 +27,15 @@
       <ul>
       <% @upcoming_play_dates.each do |play_date| %>
         <% user_time_zone = current_user ? current_user.time_zone : 'UTC' %>
-        <li><%= link_to "On #{play_date.date.in_time_zone(user_time_zone).strftime("%a, %b %e @ %l:%M%P")}, with #{play_date.attendees.count} dogs", play_date %>
+        <% attendee_count = defined?(@attendee_counts) ? @attendee_counts[play_date.id] : play_date.attendees.count %>
+        <li><%= link_to "On #{play_date.date.in_time_zone(user_time_zone).strftime("%a, %b %e @ %l:%M%P")}, with #{attendee_count} dogs", play_date %>
       <% end %>
       </ul>
     </div>
 
     <%= turbo_frame_tag "image-gallery" do %>
       <div class="sub-title">Images</div>
-      <% if @dog_park.attached_images.any? %>
+      <% if @attached_images.count > 0 %>
         <div class="image-gallery">
           <% if @total_pages > 1 && @page > 1 %>
             <%= link_to({ page: @page - 1 }, class: "left") do %>

@@ -1,7 +1,7 @@
 <div class="sub-title">Select dogs</div>
 <div class="dog-list">
   <div class="list">
-  <% current_user.dogs.each do |dog| %>
+  <% @user_dogs.each do |dog| %>
     <div class="dog-checkbox" data-controller="dogselector">
       <%= check_box_tag tag_string, dog.id, dogs.include?(dog), { class: 'dog-select-checkbox', id: "#{object.id}_dog_ids_#{dog.id}", "data-dogselector-target": "checkbox" } %>
       <% label_class = dogs.include?(dog) ? "dog-select-label clicked" : "dog-select-label"%>

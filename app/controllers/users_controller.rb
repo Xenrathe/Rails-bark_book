@@ -7,37 +7,44 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update make_primary destroy]
 
   def show
-    @followed_dog_parks = @user.followed_dog_parks.to_a
-    if current_user
-      @location = get_location(current_user)
-      @followed_dog_parks = @followed_dog_parks.map do |dog_park|
-        distance = dog_park.address.distance_from(@location)
-        [dog_park, distance]
-      end.sort_by(&:last)
+    @page = params[:page].present? ? params[:page].to_i : 1
+
+    # Only load up all of this information if the page is being rendered for the first time
+    if @page == 1
+      @user = User.includes(followed_dog_parks: :address, dogs: [{ avatar_attachment: :blob }]).find(params[:id])
+
+      #Load up the followed_dog_parks to reduce queries to database
+      @followed_dog_parks = current_user&.followed_dog_parks.to_a
+      @user_dog_parks = @user.followed_dog_parks.to_a
+      if current_user
+        @location = get_location(current_user)
+        @user_dog_parks = @user_dog_parks.map do |dog_park|
+          distance = dog_park.address.distance_from(@location)
+          [dog_park, distance]
+        end.sort_by(&:last)
+      end
+
+      @owned_dogs = @user.dogs
+      @followed_dogs = @user.followed_dogs.includes(avatar_attachment: :blob)
+
+      @new_address = current_user.addresses.build if @user.id == current_user.id
     end
-
-    @owned_dogs = @user.dogs
-    @followed_dogs = @user.followed_dogs
-
-    @new_address = current_user.addresses.build if @user.id == current_user.id
 
     if params[:address_id].present?
       @edit_address = Address.find(params[:address_id])
     end
 
-    @user_content = Set.new
-  
-    @owned_dogs.each do |dog|
-      @user_content.merge(dog.contents)
-    end
-
-    @user_content = @user_content.to_a
-    @user_content.sort_by! { |dog_content| dog_content.created_at }.reverse!
-    # Pagination
-    @user_content, @total_pages = paginate_collection(@user_content, 2)
+    contents_per_page = 2
+    @user_content = @user.contents.order(:created_at).limit(contents_per_page).offset((@page - 1) * contents_per_page).includes(attached_images_attachments: :blob)
+    @comments = Comment.where(commentable_type: 'Content').where(commentable_id: @user_content )
+    @comments_counts = @comments.group(:commentable_id).count
+    @barks = Bark.where(barkable_type: 'Content').where(barkable_id: @user_content)
+    @barks_counts = @barks.group(:barkable_id).count
+    @barks_sums = @barks.group(:barkable_id).sum(:num)
+    #@user_content, @total_pages = paginate_collection(@user_content, 2)
 
     # Depending on the page / emptiness, either render the full feed view, nothing, or just the next 'page' of feed content
-    if params[:page].to_i == 1 || params[:page].nil?
+    if @page == 1
       render :show
     elsif @user_content.nil? || @user_content.empty?
       render plain: 'Empty'
@@ -103,7 +110,9 @@ class UsersController < ApplicationController
   end
 
   def feed
-    dogs = current_user.followed_dogs + current_user.dogs
+    @user_dogs = current_user.dogs
+    @followed_dogs = current_user.followed_dogs
+    dogs = @followed_dogs + @user_dogs
     @feed_content = Set.new
     @location = get_location(current_user)
   

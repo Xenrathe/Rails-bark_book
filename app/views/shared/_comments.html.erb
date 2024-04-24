@@ -1,6 +1,7 @@
 <% if comments_mode == 'short' %> <!-- This shortened version appears in the feed or index -->
   <div class='comments-num-link'>
-    <%= link_to "#{comments.count} comments", polymorphic_path(commentable) %>
+    <% comments_count = defined?(@comments_counts) ? (@comments_counts[commentable.id] || 0) : comments.count %>
+    <%= link_to "#{comments_count} comments", polymorphic_path(commentable) %>
   </div>
 <% else %> <!-- This longer version appears in the full SHOW view -->
   <%= turbo_frame_tag "comments_#{commentable.class.name}_#{commentable.id}", class: "comments-turbo" do %>

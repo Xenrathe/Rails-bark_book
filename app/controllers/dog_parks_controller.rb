@@ -2,11 +2,13 @@ class DogParksController < ApplicationController
   include PaginationConcern
   include LocationConcern
   before_action :authenticate_user!, except: %i[show index]
-  before_action :set_dogpark, only: %i[show edit update destroy follow unfollow]
+  before_action :set_dogpark, only: %i[edit update destroy follow unfollow] # show action uses a modified version
 
   def show
+    @dog_park = DogPark.includes(attached_images_attachments: :blob).find(params[:id])
     @upcoming_play_dates = @dog_park.play_dates.upcoming.limit(10)
-    @comments = @dog_park.comments
+    @attendee_counts = @upcoming_play_dates.joins(:attendees).group('play_dates.id').count
+    @comments = @dog_park.comments.includes(:user)
     @location = get_location(current_user)
 
     # Used for the image gallery

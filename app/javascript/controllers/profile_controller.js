@@ -6,7 +6,9 @@ export default class extends Controller {
   static targets = ["tab", "addressForm", "tabTitle", "customBarkRadio", "uploadBarkDiv"];
 
   connect() {
-    this.toggleUploadOptions();
+    if (this.hasCustomBarkRadioTarget) {
+      this.toggleUploadOptions();
+    }
 
     const targetTabId = getCookie('profile_tab');
     if (targetTabId) {

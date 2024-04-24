@@ -18,6 +18,8 @@
     <% end %>
   <% end %>
   <div class="count">
-    <%= barks.sum(:num) %> barks from <%= barks.count %> users
+    <% barks_count = defined?(@barks_counts) ? (@barks_counts[barkable.id] || 0) : barks.count %>
+    <% barks_sum = defined?(@barks_sums) ? (@barks_sums[barkable.id] || 0) : barks.sum(:num) %>
+    <%= barks_sum %> barks from <%= barks_count %> users
   </div>
 <% end %>

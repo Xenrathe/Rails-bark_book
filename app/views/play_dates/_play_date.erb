@@ -23,7 +23,7 @@
       <% # Other users' dog attendance %>
       <% play_date.attendees.each do |dog| %>
         <% unless current_user && dog.user_id == current_user.id %>
-          <% dog_class = current_user && current_user.followed_dogs.include?(dog) ? "followed" : "" %>
+          <% dog_class = current_user && @followed_dogs.include?(dog) ? "followed" : "" %>
           <%= link_to dog, data: { turbo_frame: "_top" } do %>
             <% if dog.avatar.attached? %>
               <%= image_tag dog.avatar.variant(:attendee), class: dog_class %><br>

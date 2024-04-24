@@ -4,9 +4,11 @@ class PlayDatesController < ApplicationController
   helper_method :navigation_params
 
   before_action :authenticate_user!, except: %i[show index]
-  before_action :set_playdate, only: %i[ show edit update destroy attend ]
+  before_action :set_playdate, only: %i[ edit update destroy attend ]
+  before_action :load_dogs, only: %i[ show index new ]
 
   def show
+    @play_date = PlayDate.includes(:dog_park, attendees: [:user, { avatar_attachment: :blob }]).find(params[:id])
     @barks = @play_date.barks
     @location = get_location(current_user)
   end
@@ -22,7 +24,7 @@ class PlayDatesController < ApplicationController
       @play_dates = PlayDate.upcoming
     end
 
-    @play_dates, @total_pages = paginate_collection(@play_dates, 10)
+    @play_dates, @total_pages = paginate_collection(@play_dates, 2)
 
     # Depending on the page / emptiness, either render the full index view, nothing, or just the next 'page' of play-dates
     if params[:page].to_i == 1 || params[:page].nil?
@@ -130,10 +132,15 @@ class PlayDatesController < ApplicationController
     @play_date = PlayDate.find(params[:id])
   end
 
+  def load_dogs
+    @followed_dogs = current_user&.followed_dogs.to_a
+    @user_dogs = current_user&.dogs&.includes(avatar_attachment: :blob).to_a
+  end
+
   def play_date_params
     permitted_params = params.require(:play_date).permit(:date, :description, :dog_park_id, :dog_size, dog_attendee_ids: [],
       dog_park_attributes: [:id, :name, :dog_size, 
-        address_attributes: %i[address_one address_two city state postal_code country]
+        { address_attributes: %i[address_one address_two city state postal_code country] }
       ]
     )
     permitted_params.except(:dog_attendee_ids)

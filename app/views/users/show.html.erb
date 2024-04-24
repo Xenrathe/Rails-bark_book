@@ -2,7 +2,8 @@
 
 <div class="user core-window" data-controller="profile">
   <div class="show transparent-bg core-content">
-    <div class="title"><%= @user.username %>'s profile</div>
+    <% user_title = ownership_access ? "Your" : "#{@user.username}'s" %>
+    <div class="title"><%= user_title %> profile</div>
     <div class="tab-links">
       <a href="#posts-tab" id="posts-tab-link" class="tab-link selected" data-action="profile#changeTab">
         <%= image_tag "dog-house-1" %>
@@ -183,7 +184,7 @@
   
   <div id="dog-parks-tab" class="tab-content" style="display: none;" data-profile-target="tab">
     <div class="dog-parks followed transparent-bg core-content">
-      <%= render 'dog_parks/dogparklist', dog_parks: @followed_dog_parks %>
+      <%= render 'dog_parks/dogparklist', dog_parks: @user_dog_parks %>
     </div>
   </div>
 
