@@ -105,6 +105,6 @@ class DogsController < ApplicationController
   end
 
   def navigation_params
-    params.permit(:distance, :breed, :page, :commit)
+    params.permit(:distance, :breed, :commit)
   end
 end
