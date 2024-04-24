@@ -7,10 +7,8 @@ class DogsController < ApplicationController
   before_action :set_dog, only: %i[ show edit update destroy follow unfollow ]
 
   def index
-    distance = params[:distance].present? ? params[:distance] : '25'
-    breed = params[:breed]
-
     # filter by distance
+    distance = params[:distance].present? ? params[:distance] : '25'
     if distance != 'all'
       location = get_location(current_user)
       if location
@@ -23,6 +21,7 @@ class DogsController < ApplicationController
     end
 
     # filter by breed name
+    breed = params[:breed]
     @dogs = @dogs.where('LOWER(breed) LIKE ?', "%#{breed.downcase}%") if breed.present?
 
     # Pagination
@@ -106,6 +105,6 @@ class DogsController < ApplicationController
   end
 
   def navigation_params
-    params.permit(:distance, :commit)
+    params.permit(:distance, :breed, :page, :commit)
   end
 end

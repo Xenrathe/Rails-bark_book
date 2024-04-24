@@ -1,5 +1,4 @@
 class PlayDatesController < ApplicationController
-  include PaginationConcern
   include LocationConcern
   helper_method :navigation_params
 
@@ -10,13 +9,13 @@ class PlayDatesController < ApplicationController
   def show
     @play_date = PlayDate.includes(:dog_park, attendees: [:user, { avatar_attachment: :blob }]).find(params[:id])
     @barks = @play_date.barks
+    @comments = @play_date.comments.includes(:user)
     @location = get_location(current_user)
   end
 
   def index
-    distance = params[:distance].present? ? params[:distance] : '25'
-
     # filter by distance
+    distance = params[:distance].present? ? params[:distance] : '25'
     @location = get_location(current_user)
     if distance != 'all' && @location
       @play_dates = PlayDate.nearby(@location, distance.to_i)
@@ -24,10 +23,18 @@ class PlayDatesController < ApplicationController
       @play_dates = PlayDate.upcoming
     end
 
-    @play_dates, @total_pages = paginate_collection(@play_dates, 2)
+    # paginate
+    @page = params[:page].present? ? params[:page].to_i : 1
+    per_page = 10
+    @play_dates = @play_dates.limit(per_page).offset((@page - 1) * per_page).includes(:barks, dog_park: :address, comments: :user, attendees: { avatar_attachment: :blob })
+    @comments = Comment.where(commentable_type: 'PlayDate').where(commentable_id: @play_dates )
+    @comments_counts = @comments.group(:commentable_id).count
+    @barks = Bark.where(barkable_type: 'PlayDate').where(barkable_id: @play_dates)
+    @barks_counts = @barks.group(:barkable_id).count
+    @barks_sums = @barks.group(:barkable_id).sum(:num)
 
     # Depending on the page / emptiness, either render the full index view, nothing, or just the next 'page' of play-dates
-    if params[:page].to_i == 1 || params[:page].nil?
+    if @page == 1
       render :index
     elsif @play_dates.nil? || @play_dates.empty?
       render plain: 'Empty'

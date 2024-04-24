@@ -41,7 +41,6 @@ class UsersController < ApplicationController
     @barks = Bark.where(barkable_type: 'Content').where(barkable_id: @user_content)
     @barks_counts = @barks.group(:barkable_id).count
     @barks_sums = @barks.group(:barkable_id).sum(:num)
-    #@user_content, @total_pages = paginate_collection(@user_content, 2)
 
     # Depending on the page / emptiness, either render the full feed view, nothing, or just the next 'page' of feed content
     if @page == 1

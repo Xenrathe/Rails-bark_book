@@ -43,7 +43,7 @@
 
   <div class="barks-comments-<%= comments_mode %>">
     <%= render "shared/barks", barks: play_date.barks, barkable: play_date %> <% unless comments_mode == 'full'%> | <% end %> 
-    <%= render "shared/comments", commentable: play_date, commentable_type: 'play_date', comments: play_date.comments, comments_mode: comments_mode %>
+    <%= render "shared/comments", comments: play_date.comments, commentable: play_date, commentable_type: 'play_date', comments_mode: comments_mode %>
   </div>
 
   <% if current_user && current_user.id == play_date.user_id && include_actions %>
