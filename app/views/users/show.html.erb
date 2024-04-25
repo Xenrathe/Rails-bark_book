@@ -188,8 +188,8 @@
     </div>
   </div>
 
-  <div id="posts-tab" class="tab-content" style="display: block;" data-profile-target="tab" data-window-target="contentContainer">
-    <div class="user-feed">      
+  <div id="posts-tab" class="tab-content" style="display: block;" data-profile-target="tab">
+    <div class="user-feed" data-window-target="contentContainer">      
     <%= render 'contents/contentfeed', feed_contents: @user_content, empty_link: 'image' %>
     </div>
   </div>

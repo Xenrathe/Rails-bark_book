@@ -35,7 +35,7 @@ class UsersController < ApplicationController
     end
 
     contents_per_page = 2
-    @user_content = @user.contents.order(:created_at).limit(contents_per_page).offset((@page - 1) * contents_per_page).includes(attached_images_attachments: :blob)
+    @user_content = @user.contents.order(created_at: :desc).limit(contents_per_page).offset((@page - 1) * contents_per_page).includes(attached_images_attachments: :blob)
     @comments = Comment.where(commentable_type: 'Content').where(commentable_id: @user_content )
     @comments_counts = @comments.group(:commentable_id).count
     @barks = Bark.where(barkable_type: 'Content').where(barkable_id: @user_content)
@@ -109,26 +109,26 @@ class UsersController < ApplicationController
   end
 
   def feed
-    @user_dogs = current_user.dogs
-    @followed_dogs = current_user.followed_dogs
-    dogs = @followed_dogs + @user_dogs
-    @feed_content = Set.new
     @location = get_location(current_user)
-  
-    dogs.each do |dog|
-      content_for_dog = dog.contents
-      @feed_content.merge(content_for_dog)
-    end
 
-    current_user.followed_dog_parks.each do |dog_park|
-      @feed_content.merge(dog_park.play_dates)
-    end
+    # I use the .to_a to force the query to run
+    # Otherwise, the @comments, etc block ends up running first, which doubles query time
+    # Probably a more elegant way to do it
+    @page = params[:page].present? ? params[:page].to_i : 1
+    contents_per_page = 10
+    @followed_dogs = current_user.followed_dogs
+    @feed_content = Content.joins(:dogs).where(dogs: @followed_dogs)
+                            .or(Content.where(user: current_user))
+                            .order(created_at: :desc)
+                            .limit(contents_per_page)
+                            .offset((@page - 1) * contents_per_page)
+                            .includes(attached_images_attachments: :blob).to_a #see? forced into memory
 
-    @feed_content = @feed_content.to_a
-    @feed_content.sort_by! { |dog_content| dog_content.created_at }.reverse!
-    
-    # Pagination
-    @feed_content, @total_pages = paginate_collection(@feed_content, 10)
+    @comments = Comment.where(commentable_type: 'Content').where(commentable_id: @feed_content)
+    @comments_counts = @comments.group(:commentable_id).count
+    @barks = Bark.where(barkable_type: 'Content').where(barkable_id: @feed_content)
+    @barks_counts = @barks.group(:barkable_id).count
+    @barks_sums = @barks.group(:barkable_id).sum(:num)
 
     # Depending on the page / emptiness, either render the full feed view, nothing, or just the next 'page' of feed content
     if params[:page].to_i == 1 || params[:page].nil?

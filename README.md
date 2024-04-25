@@ -4,11 +4,8 @@
 
 ## Development To-do List:
 
-### Misc
-* Better google sign in button
-
-### Optimization and validation
-* Check for N+1
+### More stuffs
+* Adjust PlayDates filtering so it has a 'only tracked DogParks' option
 
 ### Production
 * Implement a real mailer and mailer views
@@ -21,6 +18,7 @@
 * API access
 * Channel / websocket for feed and comments?
 * Admin functionality (see below)
+* Better optimization on some of the nearby filtering (dogparks, playdates)
 
 ### Admin
 * Add admin functionality, dog_parks can be added by ANYONE but only edited or deleted by admins
