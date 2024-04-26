@@ -4,9 +4,6 @@
 
 ## Development To-do List:
 
-### More stuffs
-* Adjust PlayDates filtering so it has a 'only tracked DogParks' option
-
 ### Production
 * Implement a real mailer and mailer views
 * Add cloud storage via google/amazon/microsoft

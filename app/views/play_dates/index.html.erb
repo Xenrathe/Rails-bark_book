@@ -6,9 +6,29 @@
       <% if true || (current_user && current_user.primary_address) || cookies[:user_location].present? %>
         <%= form_tag(play_dates_path, method: :get) do %>
           <div class="single-input">
-            <%= label_tag 'distance', 'Distance(mi):' %>
+            <%= label_tag 'distance', 'Distance(mi):', class: 'longer' %>
             <% selected_distance = params[:distance].present? ? params[:distance] : '25' %>
             <%= select_tag 'distance', options_for_select(['10', '25', '50', '100'], selected: selected_distance) %>
+          </div>
+          <div class="single-input">
+            <%= label_tag 'tracked', 'Tracked parks:', class: 'longer' %>
+            <% all_playdates = params[:tracked].present? && params[:tracked] == 'tracked' ? false : true %>
+            <span class="radio-button">
+              <% if all_playdates %>
+                <%= radio_button_tag 'tracked', 'tracked' %>
+              <% else %>
+                <%= radio_button_tag 'tracked', 'tracked', checked: true %>
+              <% end %>
+              <%= label_tag 'tracked_tracked', 'Tracked', class: 'shorter' %>
+            </span>
+            <span class="radio-button">
+              <% if all_playdates %>
+                <%= radio_button_tag 'tracked', 'all', checked: true %>
+              <% else %>
+                <%= radio_button_tag 'tracked', 'all' %>
+              <% end %>
+              <%= label_tag 'tracked_all', 'All', class: 'shorter' %>
+            </span>
           </div>
           <div class="filter-and-page">
             <%= link_to play_dates_path, class: 'action-button', data: {turbo_method: :get}, onclick: "this.closest('form').submit(); return false;" do %>

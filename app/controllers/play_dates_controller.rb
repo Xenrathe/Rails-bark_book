@@ -14,13 +14,21 @@ class PlayDatesController < ApplicationController
   end
 
   def index
+    # filter by tracked
+    tracked_only = params[:tracked].present? ? params[:tracked] : 'all'
+    if tracked_only == 'tracked' && current_user
+      @play_dates = PlayDate.where(dog_park_id: current_user.followed_dog_parks).upcoming
+    else
+      @play_dates = PlayDate.all.upcoming
+    end
+
+    puts "PLAY_DATES STEP ONE COUNT: #{@play_dates.count}"
+
     # filter by distance
     distance = params[:distance].present? ? params[:distance] : '25'
     @location = get_location(current_user)
     if distance != 'all' && @location
-      @play_dates = PlayDate.nearby(@location, distance.to_i)
-    else
-      @play_dates = PlayDate.upcoming
+      @play_dates = @play_dates.nearby(@location, distance.to_i)
     end
 
     # paginate
@@ -154,6 +162,6 @@ class PlayDatesController < ApplicationController
   end
 
   def navigation_params
-    params.permit(:distance, :commit)
+    params.permit(:distance, :tracked, :commit)
   end
 end

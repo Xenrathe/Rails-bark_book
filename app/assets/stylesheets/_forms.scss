@@ -1,6 +1,7 @@
 @use "globalvars";
 
 form {
+  margin-left: 5px;
   .single-input, .field_with_errors {
     display: flex;
     flex-direction: row;
@@ -8,6 +9,14 @@ form {
     label {
       width: 95px;
       font-weight: bold;
+    }
+
+    label.longer {
+      width: 115px;
+    }
+
+    label.shorter {
+      width: 75px;
     }
 
     .longer-input {
