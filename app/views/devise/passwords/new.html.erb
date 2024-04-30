@@ -11,11 +11,9 @@
       
       <%= f.submit "Reset Password", class: "simple-btn small test" %>
 
+      <%= link_to "Resend confirmation email?", new_confirmation_path(resource_name) %>
+      <%= link_to "Back to login", new_session_path(resource_name) %>
       <%= render "shared/errors", object: resource %>
     <% end %>
-    <br>
-    <div class="links">
-      <%= render "devise/shared/links" %>
-    </div>
   </div>
 </div>
