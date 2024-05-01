@@ -96,7 +96,9 @@ class User < ApplicationRecord
   private
 
   def custom_bark_validations
-    errors.add(:custom_bark, ' cannot be larger than 1MB') if custom_bark.byte_size > 1.megabytes
-    errors.add(:custom_bark, ' must be an audio file') unless custom_bark.content_type.start_with?('audio/')
+    if custom_bark.attached?
+      errors.add(:custom_bark, ' cannot be larger than 1MB') if custom_bark.byte_size > 1.megabytes
+      errors.add(:custom_bark, ' must be an audio file') unless custom_bark.content_type.start_with?('audio/')
+    end
   end
 end
