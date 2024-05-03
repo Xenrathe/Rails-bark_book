@@ -1,13 +1,15 @@
 # README
 
-## TheBarkPark, a social media app just for dogs
+## BarkPups, a social media app just for dogs
 
 ## Development To-do List:
 
 ### Production
-* Implement a real mailer and mailer views
 * Add cloud storage via google/amazon/microsoft
+* Rename BarkPark to BarkPups
+* BarkPups logo
 * Upload to Fly
+* Google maps API application restriction
 
 ### Future additions
 * OmniAuth facebook integration
