@@ -9,14 +9,14 @@
         <%= image_tag "dog-house-1" %>
       </a>
       <a href="#dogs-tab" id="dogs-tab-link" class="tab-link" data-action="profile#changeTab">
-        <%= image_tag "dog-1" %>
+        <%= image_tag asset_path("dog-1.svg") %>
       </a>
       <a href="#dog-parks-tab" id="dog-parks-tab-link" class="tab-link" data-action="profile#changeTab">
-        <%= image_tag "park" %>
+        <%= image_tag asset_path("park.svg") %>
       </a> 
       <% if ownership_access %>
         <a href="#details-tab" id="details-tab-link" class="tab-link" data-action="profile#changeTab">
-          <%= image_tag "cog" %>
+          <%= image_tag asset_path("cog.svg") %>
         </a>
       <% end %>
     </div><br>
