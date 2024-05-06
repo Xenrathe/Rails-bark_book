@@ -5,9 +5,6 @@
 ## Development To-do List:
 
 ### Production
-* Add cloud storage via google/amazon/microsoft
-* Rename BarkPark to BarkPups
-* BarkPups logo
 * Upload to Fly
 * Google maps API application restriction
 
