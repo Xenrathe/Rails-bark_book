@@ -3,67 +3,67 @@
   <div class="links">
     <% if current_user %>
       <%= link_to feed_path, class: "link" do %>
-        <%= image_tag "dog-house-1" %>
+        <%= image_tag asset_path("dog-house-1.svg") %>
         <span class="label">Home</span>
       <% end %>
 
       <%= link_to dogs_path, class: "link" do %>
-        <%= image_tag "dog-1" %>
+        <%= image_tag asset_path("dog-1.svg") %>
         <span class="label">Dogs</span>
       <% end %>
 
       <%= link_to new_post_contents_path, class: "link" do %>
-        <%= image_tag "dog-post" %>
+        <%= image_tag asset_path("dog-post.svg") %>
         <span class="label">Post</span>
       <% end %>
 
       <%= link_to new_image_contents_path, class: "link" do %>
-        <%= image_tag "dog-image" %>
+        <%= image_tag asset_path("dog-image.svg") %>
         <span class="label">Image</span>
       <% end %>
 
       <%= link_to new_video_contents_path, class: "link" do %>
-        <%= image_tag "dog-video" %>
+        <%= image_tag asset_path("dog-video.svg") %>
         <span class="label">Video</span>
       <% end %>
 
       <%= link_to play_dates_path, class: "link" do %>
-        <%= image_tag "dog-date" %>
+        <%= image_tag asset_path("dog-date.svg") %>
         <span class="label">Playdates</span>
       <% end %>
 
       <%= link_to dog_parks_path, class: "link" do %>
-        <%= image_tag "park" %>
+        <%= image_tag asset_path("park.svg") %>
         <span class="label">Parks</span>
       <% end %>
 
       <%= link_to user_path(current_user), class: "link" do %>
-        <%= image_tag "dog-human-1" %>
+        <%= image_tag asset_path("dog-human-1.svg") %>
         <span class="label">Profile</span>
       <% end %>
 
       <%= link_to destroy_user_session_path, class: "link", method: :delete, data: {turbo_method: :delete} do %>
-        <%= image_tag "dog-bones-x" %>
+        <%= image_tag asset_path("dog-bones-x.svg") %>
         <span class="label">Logout</span>
       <% end %>
     <% else %>
       <%= link_to dogs_path, class: "link" do %>
-        <%= image_tag "dog-1" %>
+        <%= image_tag asset_path("dog-1.svg") %>
         <span class="label">Dogs</span>
       <% end %>
 
       <%= link_to play_dates_path, class: "link" do %>
-        <%= image_tag "dog-date" %>
+        <%= image_tag asset_path("dog-date.svg") %>
         <span class="label">Playdates</span>
       <% end %>
 
       <%= link_to dog_parks_path, class: "link" do %>
-        <%= image_tag "park" %>
+        <%= image_tag asset_path("park.svg") %>
         <span class="label">Parks</span>
       <% end %>
 
       <%= link_to new_user_session_path, class: "link" do %>
-        <%= image_tag "dog-bone" %>
+        <%= image_tag asset_path("dog-bone.svg") %>
         <span class="label">Login</span>
       <% end %>
     <% end %>
