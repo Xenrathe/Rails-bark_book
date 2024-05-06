@@ -36,6 +36,7 @@ test:
 
 production:
   <<: *default
-  database: Rails_bark_book_production
-  username: Rails_bark_book
-  password: <%= ENV["RAILS_BARK_BOOK_DATABASE_PASSWORD"] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  url: <%= ENV['DATABASE_URL'] || 'postgres://postgres:5eX2Y2r0YCYBsPB@pzd-db.flycast:5432' %>
