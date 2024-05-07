@@ -13,7 +13,7 @@
       <% end %>
 
       <%= button_to(url, method: :post, form: { class: "btn btn-primary" }, remote: true) do %>
-        <%= image_tag("bark.png", alt: "Bark Image") %>
+        <%= image_tag asset_path("bark.png"), alt: "Bark Image" %>
       <% end %>
     <% end %>
   <% end %>
