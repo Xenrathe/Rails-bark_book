@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-import { getCookie } from './cookies';
+import { getCookie } from 'controllers/cookies';
 
 //Used to control the user profile in the User show view
 export default class extends Controller {

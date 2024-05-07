@@ -1,5 +1,5 @@
 import { Controller } from "@hotwired/stimulus";
-import { getCookie } from './cookies';
+import { getCookie } from 'controllers/cookies';
 
 export default class extends Controller {
   static targets = ["latitude", "longitude", "form"];
