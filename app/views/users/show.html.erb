@@ -50,7 +50,9 @@
 
           <div class="actions">
             <%= edit_user_form.submit 'Update', class: 'simple-btn edit small' %>
-            <%= button_to "DELETE", @user, class: "simple-btn delete small", method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete account? All associated content will be destroyed and cannot be recovered."}%>
+            <%= link_to @user, method: :delete, data: {turbo_method: :delete, turbo_confirm: "Are you sure you want to delete account? All associated content will be destroyed and cannot be recovered."} do %>
+              <%= button_tag "DELETE", class: "simple-btn delete small" %>
+            <% end %>
           </div>
         <% end %>
       <% end %>
