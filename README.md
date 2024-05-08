@@ -5,8 +5,10 @@
 ## Development To-do List:
 
 ### Production
-* Upload to Fly
+* Remove or clarify confirmable?
+* Finalize README
 * Google maps API application restriction
+* Better messages for account updating, email confirmation, etc
 
 ### Future additions
 * OmniAuth facebook integration

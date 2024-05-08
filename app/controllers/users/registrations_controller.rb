@@ -3,16 +3,16 @@
 class Users::RegistrationsController < Devise::RegistrationsController
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
+  before_action :set_random_dogs, only: [:new, :create]
 
   # GET /resource/sign_up
-  def new
-    @random_dogs = Dog.order('RANDOM()').limit(4)
-    super
-  end
+  # def new
+  #  super
+  # end
 
   # POST /resource
   # def create
-  #   super
+  #  super
   # end
 
   # GET /resource/edit
@@ -38,6 +38,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # def cancel
   #   super
   # end
+
+  private
+
+  def set_random_dogs
+    @random_dogs = Dog.order('RANDOM()').limit(4)
+  end
 
   # protected
 
