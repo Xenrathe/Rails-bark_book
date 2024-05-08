@@ -7,8 +7,13 @@ class UsersController < ApplicationController
   before_action :set_user, only: %i[show edit update make_primary destroy]
 
   def show
-    @page = params[:page].present? ? params[:page].to_i : 1
 
+    if params[:mode].present?
+      @mode = params[:mode]
+      puts "MODE IS #{@mode}"
+    end
+
+    @page = params[:page].present? ? params[:page].to_i : 1
     # Only load up all of this information if the page is being rendered for the first time
     if @page == 1
       @user = User.includes(followed_dog_parks: :address, dogs: [{ avatar_attachment: :blob }]).find(params[:id])
@@ -56,18 +61,22 @@ class UsersController < ApplicationController
   end
 
   def update
+    # User#show view (which is where user#update is called) has multiple error displays/update buttons
+    # So we need to determine under WHICH button to display the error
+    @mode = (params[:user][:username].present? || params[:user][:time_zone].present?) ? 'personal' : 'bark'
+
     # Only allow users to change their own data
     if current_user && current_user == @user
       if @user.update(user_params)
         flash[:notice] = "User successfully edited."
-        redirect_to @user
+        redirect_to user_path(@user, mode: @mode)
       else
         flash[:alert] = "Error updating user: " + @user.errors.full_messages.join(", ")
-        redirect_to @user
+        redirect_to user_path(@user, mode: @mode)
       end
     else
       flash[:alert] = "You cannot edit other user's profiles."
-      redirect_to @user, status: :unprocessable_entity
+      redirect_to user_path(@user, status: :unprocessable_entity, mode: @mode)
     end
   end
 
