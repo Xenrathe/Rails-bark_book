@@ -1,10 +1,19 @@
 <div class="navbar">
   <span class="logo"></span>
   <div class="links">
+    <% paw_num = 0 %>
     <% if current_user %>
       <%= link_to feed_path, class: "link" do %>
         <%= image_tag asset_path("dog-house-1.svg") %>
         <span class="label">Home</span>
+      <% end %>
+
+      <% if paw_num != 0 %>
+        <div class="paw-line">
+          <% paw_num.times do %>
+            <%= image_tag asset_path("paw.svg"), class: "paw" %>
+          <% end %>
+        </div>
       <% end %>
 
       <%= link_to dogs_path, class: "link" do %>
@@ -12,9 +21,25 @@
         <span class="label">Dogs</span>
       <% end %>
 
+      <% if paw_num != 0 %>
+        <div class="paw-line">
+          <% paw_num.times do %>
+            <%= image_tag asset_path("paw.svg"), class: "paw" %>
+          <% end %>
+        </div>
+      <% end %>
+
       <%= link_to new_post_contents_path, class: "link" do %>
         <%= image_tag asset_path("dog-post.svg") %>
         <span class="label">Post</span>
+      <% end %>
+
+      <% if paw_num != 0 %>
+        <div class="paw-line">
+          <% paw_num.times do %>
+            <%= image_tag asset_path("paw.svg"), class: "paw" %>
+          <% end %>
+        </div>
       <% end %>
 
       <%= link_to new_image_contents_path, class: "link" do %>
@@ -22,9 +47,25 @@
         <span class="label">Image</span>
       <% end %>
 
+      <% if paw_num != 0 %>
+        <div class="paw-line">
+          <% paw_num.times do %>
+            <%= image_tag asset_path("paw.svg"), class: "paw" %>
+          <% end %>
+        </div>
+      <% end %>
+
       <%= link_to new_video_contents_path, class: "link" do %>
         <%= image_tag asset_path("dog-video.svg") %>
         <span class="label">Video</span>
+      <% end %>
+
+      <% if paw_num != 0 %>
+        <div class="paw-line">
+          <% paw_num.times do %>
+            <%= image_tag asset_path("paw.svg"), class: "paw" %>
+          <% end %>
+        </div>
       <% end %>
 
       <%= link_to play_dates_path, class: "link" do %>
@@ -32,14 +73,37 @@
         <span class="label">Playdates</span>
       <% end %>
 
+      <% if paw_num != 0 %>
+        <div class="paw-line">
+          <% paw_num.times do %>
+            <%= image_tag asset_path("paw.svg"), class: "paw" %>
+          <% end %>
+        </div>
+      <% end %>
+
       <%= link_to dog_parks_path, class: "link" do %>
         <%= image_tag asset_path("park.svg") %>
         <span class="label">Parks</span>
       <% end %>
 
+      <% if paw_num != 0 %>
+        <div class="paw-line">
+          <% paw_num.times do %>
+            <%= image_tag asset_path("paw.svg"), class: "paw" %>
+          <% end %>
+        </div>
+      <% end %>
+
       <%= link_to user_path(current_user), class: "link" do %>
         <%= image_tag asset_path("dog-human-1.svg") %>
         <span class="label">Profile</span>
+      <% end %>
+      <% if paw_num != 0 %>
+        <div class="paw-line">
+          <% paw_num.times do %>
+            <%= image_tag asset_path("paw.svg"), class: "paw" %>
+          <% end %>
+        </div>
       <% end %>
 
       <%= link_to destroy_user_session_path, class: "link", method: :delete, data: {turbo_method: :delete} do %>
@@ -52,14 +116,38 @@
         <span class="label">Dogs</span>
       <% end %>
 
+      <% if paw_num != 0 %>
+        <div class="paw-line">
+          <% paw_num.times do %>
+            <%= image_tag asset_path("paw.svg"), class: "paw" %>
+          <% end %>
+        </div>
+      <% end %>
+
       <%= link_to play_dates_path, class: "link" do %>
         <%= image_tag asset_path("dog-date.svg") %>
         <span class="label">Playdates</span>
       <% end %>
 
+      <% if paw_num != 0 %>
+        <div class="paw-line">
+          <% paw_num.times do %>
+            <%= image_tag asset_path("paw.svg"), class: "paw" %>
+          <% end %>
+        </div>
+      <% end %>
+
       <%= link_to dog_parks_path, class: "link" do %>
         <%= image_tag asset_path("park.svg") %>
         <span class="label">Parks</span>
+      <% end %>
+
+      <% if paw_num != 0 %>
+        <div class="paw-line">
+          <% paw_num.times do %>
+            <%= image_tag asset_path("paw.svg"), class: "paw" %>
+          <% end %>
+        </div>
       <% end %>
 
       <%= link_to new_user_session_path, class: "link" do %>

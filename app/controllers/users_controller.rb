@@ -10,7 +10,6 @@ class UsersController < ApplicationController
 
     if params[:mode].present?
       @mode = params[:mode]
-      puts "MODE IS #{@mode}"
     end
 
     @page = params[:page].present? ? params[:page].to_i : 1
@@ -39,7 +38,7 @@ class UsersController < ApplicationController
       @edit_address = Address.find(params[:address_id])
     end
 
-    contents_per_page = 2
+    contents_per_page = 10
     @user_content = @user.contents.order(created_at: :desc).limit(contents_per_page).offset((@page - 1) * contents_per_page).includes(attached_images_attachments: :blob)
     @comments = Comment.where(commentable_type: 'Content').where(commentable_id: @user_content )
     @comments_counts = @comments.group(:commentable_id).count

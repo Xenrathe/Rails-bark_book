@@ -1,4 +1,4 @@
-<%= turbo_frame_tag "barks_#{barkable.class.name}_#{barkable.id}", class: "barks" do %>
+<%= turbo_frame_tag "barks_#{barkable.class.name}_#{barkable.id}", class: "barks", data: {controller: "bark"} do %>
   <% if current_user && current_user.id != barkable.user_id %>
     <%= form_with(model: Bark, id: "new_bark_form_#{barkable.class.name}_#{barkable.id}", remote: true) do |form| %>
       <%= form.hidden_field :barkable_type, value: barkable.class.name.downcase %>
@@ -12,14 +12,15 @@
         <% url = asset_path(current_user.bark_sound) %>
       <% end %>
 
-      <%= button_to(url, method: :post, form: { class: "btn btn-primary" }, remote: true) do %>
+      <%= button_tag(type: 'submit', class: 'btn btn-primary', data: {action: "click->bark#bark", url: url }) do %>
         <%= image_tag asset_path("bark.png"), alt: "Bark Image" %>
       <% end %>
     <% end %>
   <% end %>
-  <div class="count">
-    <% barks_count = defined?(@barks_counts) ? (@barks_counts[barkable.id] || 0) : barks.count %>
-    <% barks_sum = defined?(@barks_sums) ? (@barks_sums[barkable.id] || 0) : barks.sum(:num) %>
+
+  <% barks_count = defined?(@barks_counts) ? (@barks_counts[barkable.id] || 0) : barks.count %>
+  <% barks_sum = defined?(@barks_sums) ? (@barks_sums[barkable.id] || 0) : barks.sum(:num) %>
+  <div class="count" data-bark-target="count" data-users=<%= barks_count %> data-total=<%= barks_sum %> data-count=<%= current_user ? barks.where(user_id: current_user.id).first&.num : nil %>>
     <%= barks_sum %> barks from <%= barks_count %> users
   </div>
 <% end %>

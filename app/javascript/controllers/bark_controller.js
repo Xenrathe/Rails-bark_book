@@ -1,11 +1,36 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
+  static targets = ["count"];
 
   // When pressing the 'bark' button outside of settings menu (e.g. at content or dog)
-  bark() {
+  bark(event) {
     const bark_url = this.element.dataset.url;
+    let barkcount = Number(this.countTarget.dataset.count);
+
+    // Max barks is 50 per user. So for performance-sake simply prevent form submission 
+    if (barkcount >= 50) {
+      event.preventDefault();
+    }
+    //Otherwise update the counts CLIENT-SIDE, so that the server doesn't have to render any new views
+    else {
+      let totalbarks = Number(this.countTarget.dataset.total);
+      let totalusers = Number(this.countTarget.dataset.users);
+
+      if (barkcount == 0){
+        totalusers += 1;
+      }
+      totalbarks += 1;
+      barkcount += 1;
+
+      // Update the HTML element
+      this.countTarget.dataset.count = barkcount;
+      this.countTarget.dataset.total = totalbarks;
+      this.countTarget.dataset.users = totalusers;
+      this.countTarget.innerHTML = `${totalbarks} barks from ${totalusers} users`
+    }
     
+    // Play the bark sound unless the user has muted it
     if (bark_url == 'mute') {
       return;
     }

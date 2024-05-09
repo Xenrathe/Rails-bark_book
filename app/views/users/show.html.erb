@@ -89,7 +89,7 @@
 
             <div class="actions">
               <%= bark_form.submit 'Update', class: 'simple-btn edit small' %>
-              <%= bark_form.button 'Test', id: 'test-sound-button', class: 'simple-btn test small', data: {controller: "sound", action: "click->sound#test"} %>
+              <%= bark_form.button 'Test', id: 'test-sound-button', class: 'simple-btn test small', data: {controller: "bark", action: "click->bark#test"} %>
             </div>
 
             <% if @mode == 'bark'%>

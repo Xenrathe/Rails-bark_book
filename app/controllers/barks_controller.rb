@@ -4,31 +4,23 @@ class BarksController < ApplicationController
   def create
     if current_user
       @barkable = find_barkable
-      @bark = Bark.where(barkable_id: @barkable.id).where(barkable_type: @barkable.class.name).where(user_id: current_user.id).first
-      if @barkable.nil?
-        flash.now[:alert] = 'Error barking'
-        head :no_content
-      elsif @bark.nil? #CREATE NEW BARK IF NONE EXIST
-        @bark = @barkable.barks.new(bark_params)
-        @bark.user_id = current_user.id
-
-        if @bark.save
-          redirect_back(fallback_location: root_path)
-        else
-          flash.now[:alert] = 'Error barking'
-          head :no_content
-        end
-      elsif @bark.num < 50 # ADD TO CURRENT BARK
-
-        if @bark.update(num: @bark.num + 1)
-          redirect_back(fallback_location: root_path)
-        else
-          flash.now[:alert] = 'Error barking'
-          head :no_content
-        end
+      @bark = Bark.find_or_initialize_by(barkable_id: @barkable.id, barkable_type: @barkable.class.name, user_id: current_user.id)
+      
+      if @bark.new_record?
+        @bark.num = 1
+      elsif @bark.num < 50
+        @bark.num += 1
       else
-        flash.now[:alert] = 'Cannot bark more!'
-        redirect_back(fallback_location: root_path)
+        return
+      end
+
+      if @bark.save
+        head :no_content
+        return
+        #render turbo_stream: turbo_stream.replace("barks_#{@barkable.class.name}_#{@barkable.id}", partial: 'shared/barks', locals: { barks: @barkable.barks, barkable: @barkable })
+      else
+        head :no_content
+        return
       end
     else
       flash[:alert] = 'Must be logged in to bark'

@@ -5,10 +5,13 @@
 ## Development To-do List:
 
 ### Production
-* Remove or clarify confirmable?
-* Finalize README
+* Make password visible
+* Rework barks so it's not re-rendering the turbo frame unnecessarily. Only update DB but then everything else (sound, increment) is client-side.
+* Barks and Comments should be destroyed when the barkable or commentable is destroyed
+* Some bug with window controller
+* Flash messages for login aren't being displayed right away so appear in weird spots
 * Google maps API application restriction
-* Better messages for account updating, email confirmation, etc
+* Finalize README
 
 ### Future additions
 * OmniAuth facebook integration
