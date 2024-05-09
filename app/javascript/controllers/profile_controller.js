@@ -38,6 +38,12 @@ export default class extends Controller {
       tabContent.style.display = 'none';
     });
 
+    // Make sure targetTabId exists:
+    // It may not in the case that the user has looked at their own user#show details tab
+    // But then switches to another user's user#show, which will not have the details tab
+    if (document.getElementById(targetTabId) == null) {
+      targetTabId = 'posts-tab'
+    }
     // De-select current link button
     document.querySelector('.selected').classList.remove('selected');
     document.getElementById(targetTabId).style.display = 'block';
