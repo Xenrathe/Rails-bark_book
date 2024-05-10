@@ -32,12 +32,28 @@ class DogsController < ApplicationController
   end
 
   def show
-    @bark_count = @dog.barks.sum(:num)
-    @bark_user_count = @dog.barks.count
-    @did_user_bark = @dog.barks.where(user: current_user).exists?
-    @dog_feed = @dog.contents.to_a.sort_by!(&:created_at).reverse!
+    @page = params[:page].present? ? params[:page].to_i : 1
 
-    @dog_feed, @total_pages = paginate_collection(@dog_feed, 10)
+    contents_per_page = 10
+    @dog_feed = @dog.contents.order(created_at: :desc).limit(contents_per_page).offset((@page - 1) * contents_per_page).includes(attached_images_attachments: :blob)
+
+    # If necessary, pre-load all these database queries
+    unless @dog_feed.nil? || @dog_feed.empty?
+      @comments = Comment.where(commentable_type: 'Content').where(commentable_id: @dog_feed )
+      @comments_counts = @comments.group(:commentable_id).count
+      @barks = Bark.where(barkable_type: 'Content').where(barkable_id: @dog_feed)
+      @barks_counts = @barks.group(:barkable_id).count
+      @barks_sums = @barks.group(:barkable_id).sum(:num)
+    end
+
+    # Depending on the page / emptiness, either render the full feed view, nothing, or just the next 'page' of feed content
+    if @page == 1
+      render :show
+    elsif @dog_feed.nil? || @dog_feed.empty?
+      render plain: 'Empty'
+    else
+      render partial: 'contents/contentfeed', locals: { feed_contents: @dog_feed }
+    end
   end
 
   def new

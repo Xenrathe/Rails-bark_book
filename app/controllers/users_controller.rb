@@ -40,11 +40,15 @@ class UsersController < ApplicationController
 
     contents_per_page = 10
     @user_content = @user.contents.order(created_at: :desc).limit(contents_per_page).offset((@page - 1) * contents_per_page).includes(attached_images_attachments: :blob)
-    @comments = Comment.where(commentable_type: 'Content').where(commentable_id: @user_content )
-    @comments_counts = @comments.group(:commentable_id).count
-    @barks = Bark.where(barkable_type: 'Content').where(barkable_id: @user_content)
-    @barks_counts = @barks.group(:barkable_id).count
-    @barks_sums = @barks.group(:barkable_id).sum(:num)
+    
+    # If necessary, pre-load all these database queries
+    unless @user_content.nil? || @user_content.empty?
+      @comments = Comment.where(commentable_type: 'Content').where(commentable_id: @user_content )
+      @comments_counts = @comments.group(:commentable_id).count
+      @barks = Bark.where(barkable_type: 'Content').where(barkable_id: @user_content)
+      @barks_counts = @barks.group(:barkable_id).count
+      @barks_sums = @barks.group(:barkable_id).sum(:num)
+    end
 
     # Depending on the page / emptiness, either render the full feed view, nothing, or just the next 'page' of feed content
     if @page == 1
@@ -132,11 +136,14 @@ class UsersController < ApplicationController
                             .offset((@page - 1) * contents_per_page)
                             .includes(attached_images_attachments: :blob).to_a #see? forced into memory
 
-    @comments = Comment.where(commentable_type: 'Content').where(commentable_id: @feed_content)
-    @comments_counts = @comments.group(:commentable_id).count
-    @barks = Bark.where(barkable_type: 'Content').where(barkable_id: @feed_content)
-    @barks_counts = @barks.group(:barkable_id).count
-    @barks_sums = @barks.group(:barkable_id).sum(:num)
+    # If necessary, pre-load all these database queries
+    unless @feed_content.nil? || @feed_content.empty?
+      @comments = Comment.where(commentable_type: 'Content').where(commentable_id: @feed_content)
+      @comments_counts = @comments.group(:commentable_id).count
+      @barks = Bark.where(barkable_type: 'Content').where(barkable_id: @feed_content)
+      @barks_counts = @barks.group(:barkable_id).count
+      @barks_sums = @barks.group(:barkable_id).sum(:num)
+    end
 
     # Depending on the page / emptiness, either render the full feed view, nothing, or just the next 'page' of feed content
     if params[:page].to_i == 1 || params[:page].nil?
