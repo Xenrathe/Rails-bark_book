@@ -11,8 +11,8 @@ class Content < ApplicationRecord
 
   has_one_attached :attached_video
 
-  has_many :comments, as: :commentable
-  has_many :barks, as: :barkable
+  has_many :comments, as: :commentable, dependent: :destroy
+  has_many :barks, as: :barkable, dependent: :destroy
 
   validate :content_limitations, on: %i[create update]
   validate :at_least_one_dog_selected, on: %i[create update]

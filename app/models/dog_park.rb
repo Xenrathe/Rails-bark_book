@@ -5,7 +5,7 @@ class DogPark < ApplicationRecord
   has_many :dog_park_followings, dependent: :destroy
   has_one :address, as: :addressable, dependent: :destroy
   accepts_nested_attributes_for :address
-  has_many :comments, as: :commentable
+  has_many :comments, as: :commentable, dependent: :destroy
 
   has_many_attached :attached_images do |attachable|
     attachable.variant :thumb, resize_to_limit: [200, 200]

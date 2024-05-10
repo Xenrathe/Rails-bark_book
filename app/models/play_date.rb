@@ -5,8 +5,8 @@ class PlayDate < ApplicationRecord
   accepts_nested_attributes_for :dog_park
   belongs_to :user
   has_and_belongs_to_many :attendees, class_name: 'Dog', join_table: 'dogs_play_dates'
-  has_many :comments, as: :commentable
-  has_many :barks, as: :barkable
+  has_many :comments, as: :commentable, dependent: :destroy
+  has_many :barks, as: :barkable, dependent: :destroy
 
   validate :at_least_one_dog_attendee, on: :create
   validates :date, comparison: { greater_than: DateTime.now }
