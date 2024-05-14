@@ -5,6 +5,7 @@
 ## Development To-do List:
 
 ### Production
+* Dogs index filter isn't lined up / distance (mi) is too short
 * Make password visible
 * Some bug with window controller
 * Flash messages for login aren't being displayed right away so appear in weird spots

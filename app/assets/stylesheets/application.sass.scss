@@ -299,6 +299,11 @@ body::before {
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-evenly;
+  align-items: center;
+
+  .new {
+    margin-left: 10px;
+  }
 }
 
 // Used in dogs#index and user#show and registrations#new (shows some cool dogs to meet)
@@ -484,10 +489,15 @@ body::before {
       width: 100%;
       display: flex;
       gap: 10px;
-      margin-left: 25%;
+      padding-left: 2%;
+
+      //Tablet and PC
+      @media only screen and (min-width: calc(globalvars.$mobile-width + 1px)){
+        padding-left: 13%;
+      }
 
       form {
-        width: min(75%, 400px);
+        width: min(100%, 400px);
         display: flex;
         flex-direction: column;
         gap: 1px;
@@ -699,7 +709,13 @@ body::before {
     width: 100%;
     display: flex;
     gap: 10px;
-    margin-left: 25%;
+    padding-left: 2%;
+
+    //Tablet and PC
+    @media only screen and (min-width: calc(globalvars.$mobile-width + 1px)){
+      padding-left: 13%;
+    }
+
 
     form {
       display: flex;

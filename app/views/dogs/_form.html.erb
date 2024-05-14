@@ -12,14 +12,15 @@
       </div>
 
       <div class="single-input">
-        <%= form.label :breed, style: "display: block" %>
-        <%= form.text_field :breed, required: true %>
-      </div>
-
-      <div class="single-input">
         <%= form.label :weight, style: "display: block" %>
         <%= form.number_field :weight, required: true %>
       </div>
+
+      <div class="single-input">
+        <%= form.label "breed(s)", for: "dog_breed", style: "display: block" %>
+        <%= form.text_field :breed, required: true, placeholder: "Labradoor poodle ..." %>
+      </div>
+
     </div>
 
     <div class="avatar" data-controller="imgupdater">

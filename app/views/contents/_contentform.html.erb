@@ -1,15 +1,15 @@
 <%= form_with(model: content, html: {"data-controller": "forms"}) do |form| %>
   <div class="single-input">
-    <%= form.label :title %>
+    <%= form.label :title, class: "shorter" %>
     <%= form.text_field :title, class: "longer-input" %>
   </div>
 
   <div class="single-input">
     <% if type == 'post'%>
-      <%= form.label :body, style: "display: block" %>
+      <%= form.label :body, class: "shorter", style: "display: block" %>
       <%= form.text_area :body, minlength: 10, maxlength: 2000, class: "longer-input"  %>
     <% else %>
-      <%= form.label :body, "Caption", style: "display: block" %>
+      <%= form.label :body, "Caption", class: "shorter", style: "display: block" %>
       <%= form.text_field :body, maxlength: 200, class: "longer-input"  %>
     <% end %>
   </div>
