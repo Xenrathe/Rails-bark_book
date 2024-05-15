@@ -19,6 +19,10 @@ form {
       width: 75px;
     }
 
+    label.shortest {
+      width: 40px;
+    }
+
     .longer-input {
       width: 250px;
       max-width: min(60vw, 250px);

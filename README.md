@@ -5,49 +5,43 @@
 ## Development To-do List:
 
 ### Production
-* Dogs index filter isn't lined up / distance (mi) is too short
+* Remove unnecessary 'filter' button from dog parks and play dates
 * Make password visible
 * Some bug with window controller
 * Flash messages for login aren't being displayed right away so appear in weird spots
 * Google maps API application restriction
 * Finalize README
 
+### Primary
+BarkPups is a social-media website focused on dogs, allowing users to make posts with text, images, and videos. Additionally, it can be used to schedule play-dates at local dog parks.
+
+BarkPups is hosted on fly.io, via a custom domain: https://www.barkpups.com
+
+![Screenshot of Sign-up](https://github.com/Xenrathe/Rails-bark_book/blob/main/GitIntro.jpg?raw=true)
+
+### Web-dev Features
+* Responsive design, with breakpoints for mobile, tablet, and PC
+* CSS via Dart SASS
+* Smart validations and security across all models, with the expectation of malicious actors
+* Scalable-design with optimizations to minimize database queries, unnecessary requests to server
+* Integration of Google Cloud Storage, for storing and retrieving media
+* Integration of Google Maps API, geocoder gem, and JS navigator, to find 'nearby' parks and dogs
+* geocoder uses JS navigator (unless user declines to share location) -> primary address (unless user has none) -> IP address
+* Integration of OmniAuth 2.0 (currently only Google)
+* Integration of Twilio SendGrid for mailing password resets, etc
+  
+![Screenshot of responsive design](https://github.com/Xenrathe/Rails-bark_book/blob/main/GitResponsive.jpg?raw=true)
+
 ### Future additions
-* OmniAuth facebook integration
-* OmniAuth instagram integration
+* Additional OmniAuth integration
 * API access
 * Channel / websocket for feed and comments?
-* Admin functionality (see below)
+* Additional admin functionality
 * Better optimization on some of the nearby filtering (dogparks, playdates)
 
-### Admin
-* Add admin functionality, dog_parks can be added by ANYONE but only edited or deleted by admins
-* Admins can see who created a dog_park
-* Admins can see who uploaded a dog_park image
-* Admins have full access to edit / delete / etc
-* Admins can ban users
-* Users can flag content, which admins can see
-
-### Primary:
-
-TheBarkPark is a social-media website JUST for dogs, allowing users to make posts with text, images, and videos. Additionally, it can be used to schedule play-dates at local dog parks.
-
-BarkBook is active on fly.io: (LINK)
-
-![Screenshot of X](LINK)
-
-### Features:
-* User registration, login via Devise gem
-* List of features
-  
-![Screenshot of X](LINK)
-
-### Future to-do list
-* list o stuff
-
-### Image Attribution
+### Image attribution
 -Bark Icon by Gregor Cresnar from <a href="https://thenounproject.com/browse/icons/term/bark/" target="_blank" title="bark Icons">Noun Project</a> (CC BY 3.0)
 -Park Background by <a href="https://unsplash.com/@megindoors?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Meg</a> on <a href="https://unsplash.com/photos/a-picnic-table-in-the-middle-of-a-field-of-flowers-3hyfMlJJ8rU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
   
 
-![Screenshot of the X](LINK)
+![Screenshot of a Dog Feed](https://github.com/Xenrathe/Rails-bark_book/blob/main/GitResponsive.jpg?raw=true)
