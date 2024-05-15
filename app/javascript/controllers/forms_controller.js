@@ -1,6 +1,11 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
+  static targets = ["passwordInput", "passwordImage"];
+  static values = {
+    pawurl: String,
+    pawoffurl: String
+  }
 
   connect() {
     if (document.getElementById('new_dog_park_form')) {
@@ -38,6 +43,16 @@ export default class extends Controller {
     if (!atLeastOneChecked) {
       event.preventDefault();
       alert("Please select at least one dog.");
+    }
+  }
+
+  toggleHideShowPassword() {
+    if (this.passwordInputTarget.type === "password") {
+      this.passwordInputTarget.type = "text";
+      this.passwordImageTarget.src = this.pawoffurlValue;
+    } else {
+      this.passwordInputTarget.type = "password";
+      this.passwordImageTarget.src = this.pawurlValue;
     }
   }
 }

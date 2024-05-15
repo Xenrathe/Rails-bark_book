@@ -621,9 +621,13 @@ body::before {
     width: 100%;
 
     .title {
-      font-size: 20px;
+      font-size: clamp(15px, calc(14px + 0.5vw), 20px);
       font-weight: bold;
       margin: 4px auto;
+
+      a {
+        text-decoration: none;
+      }
     }
 
     .body {

@@ -1,6 +1,20 @@
 <div class="content">
-  <% if content.title != ''%>
-    <div class="title"> <%= content.title %> </div>
+  <% if comments_mode != 'full' #i.e. contents#show %>
+    <% if content.title != ''%>
+      <div class="title"> <%= content.title %> </div>
+    <% end %>
+  <% else %>
+    <% title_text = content.title != '' ? content.title : 'Untitled' %>
+    <div class="title"> 
+      <%= content.title %> by <%= link_to content.user.username %> feat. 
+      <% content.dogs.each_with_index do |dog, index| %>
+        <% if index != 0 # FIRST DOG %>
+          - <%= link_to dog.name, dog %>
+        <% else %>
+          <%= link_to dog.name, dog %>
+        <% end %>
+      <% end %>
+    </div>
   <% end %>
   <% if type == 'video' %>
     <div class="video-container" data-controller="contents">

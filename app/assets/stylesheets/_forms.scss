@@ -206,6 +206,18 @@ form {
   }
 }
 
+.registrations, .sessions {
+  form {
+    .password-icon {
+      position: absolute;
+      margin-left: -21px;
+      margin-top: 2px;
+      width: 18px;
+      height: 18px;
+    }
+  }
+}
+
 //BUTTONS BUTTONS BUTTONS
 $create-color: #006900;
 $edit-color: #72b900;

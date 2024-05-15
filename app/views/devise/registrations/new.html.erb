@@ -26,14 +26,20 @@
         <%= f.text_field :username, autofocus: true, required: true, class: "text-input", autocomplete: "email" %>
       </div>
 
-      <div class="single-input">
+      <div class="single-input" data-controller="forms" data-forms-pawurl-value="<%= asset_path("paw.svg")%>" data-forms-pawoffurl-value="<%= asset_path("paw-off.svg") %>">
         <%= f.label :password %>
-        <%= f.password_field :password, required: true, class: "text-input", autocomplete: "new-password" %>
+        <%= f.password_field :password, required: true, class: "text-input", autocomplete: "new-password", "data-forms-target": "passwordInput" %>
+        <span class="password-toggle" data-action="click->forms#toggleHideShowPassword">
+          <%= image_tag(asset_path("paw.svg"), class: "password-icon", alt: "Show Password", "data-forms-target": "passwordImage" ) %>
+        </span>
       </div>
 
-      <div class="single-input">
+      <div class="single-input" data-controller="forms" data-forms-pawurl-value="<%= asset_path("paw.svg")%>" data-forms-pawoffurl-value="<%= asset_path("paw-off.svg") %>">
         <%= f.label :password_confirmation, "Confirm Password" %>
-        <%= f.password_field :password_confirmation, required: true, class: "text-input", autocomplete: "new-password" %>
+        <%= f.password_field :password_confirmation, required: true, class: "text-input", autocomplete: "new-password", "data-forms-target": "passwordInput" %>
+        <span class="password-toggle" data-action="click->forms#toggleHideShowPassword">
+          <%= image_tag(asset_path("paw.svg"), class: "password-icon", alt: "Show Password", "data-forms-target": "passwordImage" ) %>
+        </span>
       </div>
 
       <div class="single-input">

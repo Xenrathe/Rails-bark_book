@@ -11,9 +11,12 @@
         <%= f.email_field :email, autofocus: true, autocomplete: "email", required: true %>
       </div>
 
-      <div class="single-input">
+      <div class="single-input" data-controller="forms" data-forms-pawurl-value="<%= asset_path("paw.svg")%>" data-forms-pawoffurl-value="<%= asset_path("paw-off.svg") %>">
         <%= f.label :password %><br />
-        <%= f.password_field :password, autocomplete: "current-password", required: true %>
+        <%= f.password_field :password, autocomplete: "current-password", required: true, "data-forms-target": "passwordInput" %>
+        <span class="password-toggle" data-action="click->forms#toggleHideShowPassword">
+          <%= image_tag(asset_path("paw.svg"), class: "password-icon", alt: "Show Password", "data-forms-target": "passwordImage" ) %>
+        </span>
       </div>
 
       <% if devise_mapping.rememberable? %>
