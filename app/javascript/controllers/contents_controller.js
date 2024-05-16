@@ -5,7 +5,7 @@ export default class extends Controller {
   resizeHandler = this.videoResizer.bind(this);
 
   connect() {
-    if (this.hasImgpreviewTarget) {
+    if (this.hasImgpreviewTarget && this.hasFileUploadTarget) {
       this.fileuploadTarget.addEventListener("change", this.imagesUpload.bind(this));
     }
     else if (this.hasVideoTarget) {

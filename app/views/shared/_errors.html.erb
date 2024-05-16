@@ -1,12 +1,14 @@
-<% if object.errors.any? || flash[:alert] %>
+<% if (defined?(object) && object.errors.any?) || flash[:alert] %>
   <div class="errors" style="color: red">
-    <% if defined?(title) && title != ''%>
+    <% if defined?(title) && title != '' && defined?(object) %>
       <div class="title">Errors prohibited this <%= object.class.name.downcase %> from being posted:</div>
     <% end %>
 
     <ul>
-      <% object.errors.each do |error| %>
-        <li><%= error.full_message %></li>
+      <% if defined?(object) %>
+        <% object.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
       <% end %>
       <% flash.each do |key, value| %>
         <div class="flash flash-<%= key %>">

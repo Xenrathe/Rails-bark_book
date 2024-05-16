@@ -3,8 +3,9 @@ class PlayDatesController < ApplicationController
   helper_method :navigation_params
 
   before_action :authenticate_user!, except: %i[show index]
-  before_action :set_playdate, only: %i[ edit update destroy attend ]
-  before_action :load_dogs, only: %i[ show index new ]
+  before_action :set_playdate, only: %i[edit update destroy attend]
+  before_action :load_dogs, only: %i[show index new]
+  before_action :reset_flash, only: %i[show index]
 
   def show
     @play_date = PlayDate.includes(:dog_park, attendees: [:user, { avatar_attachment: :blob }]).find(params[:id])
@@ -21,8 +22,6 @@ class PlayDatesController < ApplicationController
     else
       @play_dates = PlayDate.all.upcoming
     end
-
-    puts "PLAY_DATES STEP ONE COUNT: #{@play_dates.count}"
 
     # filter by distance
     distance = params[:distance].present? ? params[:distance] : '25'
@@ -90,7 +89,6 @@ class PlayDatesController < ApplicationController
     end
 
     if @play_date.save
-      flash[:notice] = 'Play Date was successfully created.'
       current_user.follow(@play_date.dog_park)
       redirect_to @play_date
     else
@@ -105,7 +103,6 @@ class PlayDatesController < ApplicationController
   # that will be changed in create and via show only
   def update
     if @play_date.update(play_date_params)
-      flash[:notice] = 'Play Date successfully updated.'
       redirect_to @play_date
     else
       render :new, status: :unprocessable_entity
@@ -116,7 +113,7 @@ class PlayDatesController < ApplicationController
     if current_user && @play_date.user_id == current_user.id
       if @play_date.attendees.all? { |dog| dog.user == current_user }
         @play_date.destroy
-        redirect_to play_dates_url, notice: 'Play date removed.'
+        redirect_to play_dates_url
       else
         flash.now[:alert] = 'Cannot remove play-dates with other dogs.'
         render :show, status: :unprocessable_entity, alert: "Cannot remove play-dates with other people's dogs."
@@ -137,14 +134,16 @@ class PlayDatesController < ApplicationController
         @play_date.unattend(user_dog)
       end
     end
-
-    #redirect_back(fallback_location: root_path)
   end
 
   private
 
   def set_playdate
     @play_date = PlayDate.find(params[:id])
+  end
+
+  def reset_flash
+    flash.clear
   end
 
   def load_dogs

@@ -5,7 +5,7 @@ class BarksController < ApplicationController
     if current_user
       @barkable = find_barkable
       @bark = Bark.find_or_initialize_by(barkable_id: @barkable.id, barkable_type: @barkable.class.name, user_id: current_user.id)
-      
+
       if @bark.new_record?
         @bark.num = 1
       elsif @bark.num < 50
@@ -14,16 +14,8 @@ class BarksController < ApplicationController
         return
       end
 
-      if @bark.save
-        head :no_content
-        return
-        #render turbo_stream: turbo_stream.replace("barks_#{@barkable.class.name}_#{@barkable.id}", partial: 'shared/barks', locals: { barks: @barkable.barks, barkable: @barkable })
-      else
-        head :no_content
-        return
-      end
+      @bark.save
     else
-      flash[:alert] = 'Must be logged in to bark'
       redirect_to new_user_session, status: :unprocessable_entity
     end
   end

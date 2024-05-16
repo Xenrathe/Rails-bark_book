@@ -1,7 +1,8 @@
 class ContentsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_content, only: %i[ show edit update destroy ]
-  before_action :set_dogs, only: %i[ new new_post new_image new_video edit ]
+  before_action :set_dogs, only: %i[new new_post new_image new_video edit]
+  before_action :reset_flash, only: %i[show]
 
   def show
     @comments = @content.comments.includes(:user)
@@ -90,6 +91,10 @@ class ContentsController < ApplicationController
     # Why only includes attached_images and not attached_video? 
     # Because at most there's only one attached_video and therefore no N+1 issue will occur
     @content = Content.includes(attached_images_attachments: :blob).find(params[:id])
+  end
+
+  def reset_flash
+    flash.clear
   end
 
   def set_dogs

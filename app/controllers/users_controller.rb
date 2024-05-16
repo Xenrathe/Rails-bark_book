@@ -5,6 +5,7 @@ class UsersController < ApplicationController
 
   before_action :authenticate_user!, except: %i[set_location]
   before_action :set_user, only: %i[show edit update make_primary destroy]
+  before_action :reset_flash, only: %i[feed]
 
   def show
 
@@ -171,6 +172,10 @@ class UsersController < ApplicationController
 
   def set_user
     @user = User.find(params[:id])
+  end
+
+  def reset_flash
+    flash.clear
   end
 
   def address_params

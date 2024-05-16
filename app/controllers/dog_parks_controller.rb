@@ -3,6 +3,7 @@ class DogParksController < ApplicationController
   include LocationConcern
   before_action :authenticate_user!, except: %i[show index]
   before_action :set_dogpark, only: %i[edit update destroy follow unfollow] # show action uses a modified version
+  before_action :reset_flash, only: %i[show index]
 
   def show
     @dog_park = DogPark.includes(attached_images_attachments: :blob).find(params[:id])
@@ -106,6 +107,10 @@ class DogParksController < ApplicationController
 
   def set_dogpark
     @dog_park = DogPark.find(params[:id])
+  end
+
+  def reset_flash
+    flash.clear
   end
 
   def dog_park_params

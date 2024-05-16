@@ -5,6 +5,7 @@ class DogsController < ApplicationController
   
   before_action :authenticate_user!, only: [:new, :create, :edit, :update, :destroy]
   before_action :set_dog, only: %i[ show edit update destroy follow unfollow ]
+  before_action :reset_flash, only: %i[show index]
 
   def index
     # filter by distance
@@ -114,6 +115,10 @@ class DogsController < ApplicationController
 
   def set_dog
     @dog = Dog.find(params[:id])
+  end
+
+  def reset_flash
+    flash.clear
   end
 
   def dog_params

@@ -2,5 +2,6 @@
   <div class="show transparent-bg core-content">
     <%= render "contentshow", content: @content, type: @content.content_type, barks: @barks, media_size: :midsize, comments: @comments, comments_mode: 'full' %>
     <%= render "contentactions", content: @content, type: @content.content_type %>
+    <%= render 'shared/errors' %>
   </div>
 </div>

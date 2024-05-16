@@ -6,7 +6,7 @@
   <% else %>
     <% title_text = content.title != '' ? content.title : 'Untitled' %>
     <div class="title"> 
-      <%= content.title %> by <%= link_to content.user.username %> feat. 
+      <%= content.title %> by <%= link_to content.user.username, content.user %> feat. 
       <% content.dogs.each_with_index do |dog, index| %>
         <% if index != 0 # FIRST DOG %>
           - <%= link_to dog.name, dog %>
