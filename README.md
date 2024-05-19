@@ -6,7 +6,9 @@
 
 ### Production
 * Remove unnecessary 'filter' button from dog parks and play dates
-* Some bug with window controller
+* Extra spaces around dog details??
+* User model stores lat / longitude (which is updated from other location services) -> Used for dog locating
+* Adjust navbar fonts
 
 ### Primary
 BarkPups is a social-media website focused on dogs, allowing users to make posts with text, images, and videos. Additionally, it can be used to schedule play-dates at local dog parks.

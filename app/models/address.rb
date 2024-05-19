@@ -27,9 +27,9 @@ class Address < ApplicationRecord
     self.latitude = nil
     self.longitude = nil
 
-    puts "GEOCODE CASCADING CALLED"
     address = Geocoder.search(full_address).first
     if address
+      puts "GEOCODE ADDRESS FOUND"
       self.latitude = address.latitude
       self.longitude = address.longitude
     end

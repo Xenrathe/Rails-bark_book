@@ -32,7 +32,7 @@
     </div>
   <% elsif type == 'video' %>
     <div class="attachments single-input">
-      <% if content.attached_video.attached? %>
+      <% if content.attached_video.attached? && mode != 'Create' %>
         <div class="video-container" data-controller="contents">
           <% metadata = content.attached_video.blob.metadata %>
           <% aspect_ratio = metadata[:width].to_f / metadata[:height].to_f %>

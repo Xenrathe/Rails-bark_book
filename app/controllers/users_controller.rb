@@ -24,9 +24,9 @@ class UsersController < ApplicationController
       if current_user
         @location = get_location(current_user)
         @user_dog_parks = @user_dog_parks.map do |dog_park|
-          distance = dog_park.address.distance_from(@location)
+          distance = dog_park.address.distance_from(@location) # This will be NIL if geocoding failed
           [dog_park, distance]
-        end.sort_by(&:last)
+        end.sort_by { |_, distance| distance || Float::INFINITY } # To account for NIL values
       end
 
       @owned_dogs = @user.dogs

@@ -643,10 +643,19 @@ body::before {
   }
 
   .video-container {
-    margin: 3px auto;
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    overflow: hidden;
 
     display: flex;
     justify-content: center;
+  }
+  
+  .video-container video {
+    width: 100%;
+    height: auto;
+    margin: 0px auto;
   }
 }
 

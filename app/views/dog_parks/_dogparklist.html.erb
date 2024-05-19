@@ -5,7 +5,7 @@
       <% distance = dog_park_item[1] %>
       <div class="dog-park">
         <%= link_to dog_park, data: {turbo_frame: "_top" } do %>
-          <span class="details"><%= dog_park.name %> - <%= distance.round(1) %> mi </span>
+          <span class="details"><%= dog_park.name %> - <%= distance ? distance.round(1) : '??' %> mi </span>
         <% end %>
         <span class="actions">
           <%= link_to dog_park, class: "action-button icon-only", method: :get, data: {turbo_method: :get, turbo_frame: "_top"} do %>

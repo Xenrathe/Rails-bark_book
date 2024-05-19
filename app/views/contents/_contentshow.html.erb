@@ -18,9 +18,13 @@
   <% end %>
   <% if type == 'video' %>
     <div class="video-container" data-controller="contents">
-      <% metadata = content.attached_video.blob.metadata %>
-      <% aspect_ratio = metadata[:width].to_f / metadata[:height].to_f %>
-      <%= video_tag rails_blob_path(content.attached_video, only_path: true), controls: true, data: {contents_target: "video", aspect_ratio: aspect_ratio } %>
+      <% if content.attached_video.present? %>
+        <% metadata = content.attached_video.blob.metadata %>
+        <% aspect_ratio = metadata[:width].to_f / metadata[:height].to_f if metadata[:width] && metadata[:height] %>
+        <%= video_tag rails_blob_path(content.attached_video, only_path: true), controls: true, data: { contents_target: "video", aspect_ratio: aspect_ratio }, width: "100%" %>
+      <% else %>
+        <p>No video available</p>
+      <% end %>
     </div>
   <% elsif type == 'image' %>
     <% content.attached_images.each do |attached_image| %>
