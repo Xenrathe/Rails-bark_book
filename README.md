@@ -5,6 +5,8 @@
 ## Development To-do List:
 
 ### Production
+* Turbo / content not found on deleting address, if there's no address left?
+* Bug related to deleting your only address causing user#show to be unable to load
 * Bug related to proper IP not being found?
 * Remove unnecessary 'filter' button from dog parks and play dates
 * Extra spaces around dog details??
