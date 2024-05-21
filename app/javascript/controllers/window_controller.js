@@ -13,13 +13,14 @@ export default class extends Controller {
     // Has a 500 ms timeout
     if (this.hasContentContainerTarget) {
       this.throttleTimeout = null;
-      window.addEventListener("scroll", this.scrollTimer.bind(this));
+      this.boundScrollTimer = this.scrollTimer.bind(this);
+      window.addEventListener("scroll", this.boundScrollTimer);
     }
   }
 
   disconnect() {
     if (this.hasContentContainerTarget) {
-      window.removeEventListener("scroll", this.scrollTimer.bind(this));
+      window.removeEventListener("scroll", this.boundScrollTimer);
     }
   }
 

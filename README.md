@@ -5,9 +5,11 @@
 ## Development To-do List:
 
 ### Production
+* Bug related to proper IP not being found?
 * Remove unnecessary 'filter' button from dog parks and play dates
 * Extra spaces around dog details??
 * User model stores lat / longitude (which is updated from other location services) -> Used for dog locating
+* UseLocation button to re-prompt 'share location'?
 * Adjust navbar fonts
 
 ### Primary
