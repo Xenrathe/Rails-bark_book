@@ -1,5 +1,12 @@
 @use "globalvars";
 
+@font-face {
+  font-family: 'Sniglet';
+  src: url('Sniglet-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .navbar {
   background-color: white;
   padding: 10px;
@@ -15,7 +22,9 @@
   flex-direction: column;
 
   $image-size: calc(100vw / 11);
-  font-family: "Arial Black", "Arial Bold", sans-serif;
+  font-family: 'Sniglet', sans-serif;
+  font-size: 18px;
+  //font-family: "Arial Black", "Arial Bold", sans-serif;
 
   .logo {
     font-weight: bold;
@@ -112,7 +121,7 @@
 
     .logo::after {
       content: 'BP';
-      font-size: 20px;
+      font-size: 21px;
     }
 
     .links {      
@@ -150,7 +159,7 @@
 
     .logo:after {
       content: 'BarkPups';
-      font-size: 20px;
+      font-size: 21px;
     }
 
     .links {

@@ -6,13 +6,11 @@
 
 ### Production
 * Turbo / content not found on deleting address, if there's no address left?
-* Bug related to deleting your only address causing user#show to be unable to load
-* Warning on DogPark#index if the current_user has an @location that cannot be geocoded (and maybe make cookie for lat/lon?)
+* Session cookie lasts longer
 * Remove unnecessary 'filter' button from dog parks and play dates
 * Extra spaces around dog details??
 * User model stores lat / longitude (which is updated from other location services) -> Used for dog locating
 * UseLocation button to re-prompt 'share location'?
-* Adjust navbar fonts
 
 ### Primary
 BarkPups is a social-media website focused on dogs, allowing users to make posts with text, images, and videos. Additionally, it can be used to schedule play-dates at local dog parks.
