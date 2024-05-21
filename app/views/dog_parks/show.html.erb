@@ -1,8 +1,7 @@
 <% ownership_access = false # EVENTUALLY ADMIN ACCESS %>
 <div class="dog-parks core-window">
   <div class="show transparent-bg core-content">
-    <% distance = @location.nil? ? nil : @dog_park.address.distance_from(@location) %>
-    <%= render @dog_park, dog_park: @dog_park, distance: distance, include_size: true %>
+    <%= render @dog_park, dog_park: @dog_park, distance: @distance, include_size: true %>
 
     <div class="actions">
       <%= turbo_frame_tag "follow-unfollow-dog_park" do %>

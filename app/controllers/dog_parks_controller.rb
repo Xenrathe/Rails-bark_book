@@ -12,6 +12,13 @@ class DogParksController < ApplicationController
     @comments = @dog_park.comments.includes(:user)
     @location = get_location(current_user)
 
+    begin
+      @distance = @dog_park.address.distance_from(@location) # Will return nil if dog_park.address geocoding failed
+      @distance = nil if distance.nan? # Will return NaN in certain situations
+    rescue NoMethodError
+      @distance = nil # This situation occurs if the @location geocoding fails
+    end
+
     # Used for the image gallery
     @attached_images, @total_pages = paginate_collection(@dog_park.attached_images, 3)
   end

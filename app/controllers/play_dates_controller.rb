@@ -11,7 +11,14 @@ class PlayDatesController < ApplicationController
     @play_date = PlayDate.includes(:dog_park, attendees: [:user, { avatar_attachment: :blob }]).find(params[:id])
     @barks = @play_date.barks
     @comments = @play_date.comments.includes(:user)
+    
     @location = get_location(current_user)
+    begin
+      @distance = @dog_park.address.distance_from(@location) # Will return nil if dog_park.address geocoding failed
+      @distance = nil if distance.nan? # Will return NaN in certain situations
+    rescue NoMethodError
+      @distance = nil # This situation occurs if the @location geocoding fails
+    end
   end
 
   def index

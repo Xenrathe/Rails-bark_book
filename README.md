@@ -7,7 +7,7 @@
 ### Production
 * Turbo / content not found on deleting address, if there's no address left?
 * Bug related to deleting your only address causing user#show to be unable to load
-* Bug related to proper IP not being found?
+* Warning on DogPark#index if the current_user has an @location that cannot be geocoded (and maybe make cookie for lat/lon?)
 * Remove unnecessary 'filter' button from dog parks and play dates
 * Extra spaces around dog details??
 * User model stores lat / longitude (which is updated from other location services) -> Used for dog locating

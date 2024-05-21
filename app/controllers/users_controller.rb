@@ -24,7 +24,12 @@ class UsersController < ApplicationController
       if current_user
         @location = get_location(current_user)
         @user_dog_parks = @user_dog_parks.map do |dog_park|
-          distance = dog_park.address.distance_from(@location) # This will be NIL if geocoding failed
+          begin
+            distance = dog_park.address.distance_from(@location) # Will return nil if dog_park.address geocoding failed
+            distance = nil if distance.nan? # Will return NaN in certain situations
+          rescue NoMethodError
+            distance = nil # This situation occurs if the @location geocoding fails
+          end
           [dog_park, distance]
         end.sort_by { |_, distance| distance || Float::INFINITY } # To account for NIL values
       end

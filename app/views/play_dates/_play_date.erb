@@ -14,8 +14,7 @@
     <% end %>
   </div>
 
-  <% distance = @location.nil? ? nil : play_date.dog_park.address.distance_from(@location) %>
-  <%= render play_date.dog_park, distance: distance, include_size: false %>
+  <%= render play_date.dog_park, distance: @distance, include_size: false %>
 
   <%= turbo_frame_tag "play_date-#{play_date.id}-attendees", class: "dog-attendance" do %>
     <div class="title">Attendees</div>
