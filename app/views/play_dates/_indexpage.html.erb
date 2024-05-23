@@ -1,5 +1,5 @@
 <% @play_dates.each do |play_date| %>
   <div class="feed-content transparent-bg core-content">
-    <%= render play_date, comments_mode: 'short', include_actions: false %>
+    <%= render play_date, comments_mode: 'short', park_distance: @distances[play_date.dog_park_id], include_actions: false %>
   </div>
 <% end %>

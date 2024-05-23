@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["passwordInput", "passwordImage"];
+  static targets = ["passwordInput", "passwordImage", "distance", "tracked"];
   static values = {
     pawurl: String,
     pawoffurl: String
@@ -13,6 +13,7 @@ export default class extends Controller {
     }
   }
 
+  // Used with playdate#new mostly, in instances when a user is ALSO creating a new dogpark
   addNewAddressEvent() {
     const dogParkRadioBtns = document.querySelectorAll('.dog-park-radio');
     const newDogParkForm = document.getElementById('new_dog_park_form');
@@ -30,6 +31,12 @@ export default class extends Controller {
     })
   }
 
+  // Used with playdate#index and dogpark#index to auto-submit forms if filters are changed
+  submitForm() {
+    this.element.submit();
+  }
+
+  // Used with various cases in which the user must have a dog selected (e.g. new Content)
   submitFormWithRequireDog(event) {
     const checkboxes = document.querySelectorAll("input[type='checkbox']");
     let atLeastOneChecked = checkboxes.length == 0; // Allows the EDIT button to still work
@@ -46,6 +53,7 @@ export default class extends Controller {
     }
   }
 
+  // Used with registrations or sessions to hide/show passwords
   toggleHideShowPassword() {
     if (this.passwordInputTarget.type === "password") {
       this.passwordInputTarget.type = "text";

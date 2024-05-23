@@ -14,8 +14,8 @@ class PlayDatesController < ApplicationController
     
     @location = get_location(current_user)
     begin
-      @distance = @dog_park.address.distance_from(@location) # Will return nil if dog_park.address geocoding failed
-      @distance = nil if distance.nan? # Will return NaN in certain situations
+      @distance = @play_date.dog_park.address.distance_from(@location) # Will return nil if dog_park.address geocoding failed
+      @distance = nil if @distance.nan? # Will return NaN in certain situations
     rescue NoMethodError
       @distance = nil # This situation occurs if the @location geocoding fails
     end
@@ -41,6 +41,23 @@ class PlayDatesController < ApplicationController
     @page = params[:page].present? ? params[:page].to_i : 1
     per_page = 10
     @play_dates = @play_dates.limit(per_page).offset((@page - 1) * per_page).includes(:barks, dog_park: :address, comments: :user, attendees: { avatar_attachment: :blob })
+    
+    # Create a hash of distances from dog-parks, organized according to dog_park.id
+    @distances = Hash.new
+    @play_dates.each do |play_date|
+      unless @distances[play_date.dog_park_id]
+        begin
+          distance = play_date.dog_park.address.distance_from(@location) # Will return nil if dog_park.address geocoding failed
+          distance = nil if distance.nan? # Will return NaN in certain situations
+        rescue NoMethodError
+          distance = nil # This situation occurs if the @location geocoding fails
+        end
+        @distances[play_date.dog_park_id] = distance
+      end
+    end
+
+    puts "@DISTANCES: #{@distances}"
+    
     @comments = Comment.where(commentable_type: 'PlayDate').where(commentable_id: @play_dates )
     @comments_counts = @comments.group(:commentable_id).count
     @barks = Bark.where(barkable_type: 'PlayDate').where(barkable_id: @play_dates)
