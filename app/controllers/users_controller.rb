@@ -72,11 +72,29 @@ class UsersController < ApplicationController
   def update
     # User#show view (which is where user#update is called) has multiple error displays/update buttons
     # So we need to determine under WHICH button to display the error
-    @mode = (params[:user][:username].present? || params[:user][:time_zone].present?) ? 'personal' : 'bark'
+    if params[:user][:location_permission].present?
+      @mode = 'permission'
+    elsif params[:user][:username].present? || params[:user][:time_zone].present?
+      @mode = 'personal'
+    elsif params[:user][:bark_sound].present?
+      @mode = 'bark'
+    end
 
     # Only allow users to change their own data
     if current_user && current_user == @user
       if @user.update(user_params)
+        if @mode == 'permission'
+          if @user.location_permission
+            if @user.primary_address
+              @user.update(latitude: @user.primary_address.latitude, longitude: @user.primary_address.longitude )
+            else
+              get_location(current_user)
+            end
+          else
+            @user.update(latitude: nil, longitude: nil)
+          end
+        end
+        
         flash[:notice] = "User successfully edited."
         redirect_to user_path(@user, mode: @mode)
       else
@@ -103,7 +121,13 @@ class UsersController < ApplicationController
     @address = Address.find(params[:address_id])
 
     if @user && @address && current_user == @user
-      @user.update(primary_address: @address)
+
+      if @address.latitude.nil?
+        @user.update(primary_address: @address)
+      else
+        @user.update(primary_address: @address, longitude: @address.longitude, latitude: @address.latitude)
+      end
+
       flash[:notice] = 'Address set as primary successfully'
       redirect_back(fallback_location: root_path)
     else
@@ -115,8 +139,15 @@ class UsersController < ApplicationController
   def new_address
     @new_address = current_user.addresses.build(address_params)
 
-    if @new_address.save 
-      current_user.update(primary_address: @new_address) if current_user.primary_address.nil?
+    if @new_address.save
+
+      if current_user.primary_address.nil?
+        if @new_address.latitude.nil?
+          current_user.update(primary_address: @new_address)
+        else
+          current_user.update(primary_address: @new_address, latitude: @new_address.latitude, longitude: @new_address.longitude)
+        end
+      end
 
       flash.now[:notice] = 'Created new address.'
       redirect_back(fallback_location: root_path)
@@ -188,7 +219,7 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit(:username, :time_zone, :bark_sound, :custom_bark)
+    params.require(:user).permit(:username, :time_zone, :bark_sound, :custom_bark, :location_permission)
   end
 
   def navigation_params

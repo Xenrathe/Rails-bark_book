@@ -3,6 +3,9 @@ module PaginationConcern
 
   def paginate_collection(collection, per_page = 10)
     @page = params[:page].present? ? params[:page].to_i : 1
+    
+    return [[], 0] if collection.nil?
+
     total_pages = (collection.size.to_f / per_page).ceil
 
     if collection.is_a?(ActiveRecord::Base)

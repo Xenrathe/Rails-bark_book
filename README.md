@@ -6,8 +6,6 @@
 
 ### Production
 * Extra spaces around dog details??
-* User model stores lat / longitude (which is updated from other location services) -> Used for dog locating
-* Info in user#show for own profile about location access and dog location
 
 ### Primary
 BarkPups is a social-media website focused on dogs, allowing users to make posts with text, images, and videos. Additionally, it can be used to schedule play-dates at local dog parks.

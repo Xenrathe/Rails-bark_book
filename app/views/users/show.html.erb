@@ -98,6 +98,73 @@
           <% end %>
         <% end %>
       </div>
+
+      <div id="user-location" class="transparent-bg core-content">
+        <div class="sub-title"><span class="first-letter">L</span>ocation <span class="first-letter">S</span>ettings</div>
+        <%= turbo_frame_tag "location-settings" do %>
+          <%= form_with(model: @user) do |location_form| %>
+            <span>Store location data and allow other users to find your dog via proximity?</span>
+            <div class="single-input">
+              <span class="radio-button">
+                <%= location_form.radio_button :location_permission, true, onchange: "this.form.submit();" %>
+                <%= location_form.label :location_permission_true, 'Yes', value: true, class: 'shorter' %>
+              </span>
+              <span class="radio-button">
+                <%= location_form.radio_button :location_permission, false, onchange: "this.form.submit();" %>
+                <%= location_form.label :location_permission_false, 'No', value: false, class: 'shorter' %>
+              </span>
+            </div>
+          <% end %>
+        <% end %>
+
+        <br>
+        <div class="dog-location">
+          <strong><%= label_tag "Dog Location:" %></strong>
+          <span>
+          <% if @user.latitude.nil? %>
+            <% if @user.location_permission %>
+              No location found (try adding an address)
+            <% else %>
+              Dog location blocked
+            <% end %>
+          <% else %>
+            <% if @user.primary_address %>
+              (via address)
+            <% elsif cookies[:user_location] %>
+              (via browser)
+            <% else %>
+              (via IP)
+            <% end %>
+            <%= link_to "View on Google Maps", "https://www.google.com/maps/search/?api=1&query=#{@user.latitude},#{@user.longitude}", target: "_blank", rel: "noopener" %>
+          <% end %>
+          </span>
+        </div>
+        <div class="user-location">
+          <strong><%= label_tag "User location:" %></strong>
+          <span>
+          <% if @location.nil? %>
+            No location found (try giving browser location permission)
+          <% else %>
+            <% result = Geocoder.search(@location).first %>
+            <% if result.nil? || result.latitude.nil? %>
+              <% if @location = @user.primary_address %>
+                <% result = @location %>
+                (via address) <%= link_to "View on Google Maps", "https://www.google.com/maps/search/?api=1&query=#{result.latitude},#{result.longitude}", target: "_blank", rel: "noopener" %>
+              <% else %>
+                (error finding location)
+              <% end %>
+            <% else %> 
+              <% if cookies[:user_location] %>
+                (via browser)
+              <% else %>
+                (via IP)
+              <% end %>
+              <%= link_to "View on Google Maps", "https://www.google.com/maps/search/?api=1&query=#{result.latitude},#{result.longitude}", target: "_blank", rel: "noopener" %>
+            <% end %>
+          <% end %>
+          </span>
+        </div>
+      </div>
       
       <div id="user-addresses" class="transparent-bg core-content">
         <div class="sub-title"><span class="first-letter">A</span>ddresses</div>

@@ -25,8 +25,30 @@ class Dog < ApplicationRecord
   def self.nearby(location, distance)
     return if location.nil?
 
-    addresses = location.is_a?(Address) ? location.nearbys(distance).where('addressable_type = ?', 'User').to_a : Address.near(location, distance).where('addressable_type = ?', 'User').to_a
-    Dog.joins(user: :addresses).where('addresses.id = users.primary_address_id AND users.id IN (?)', addresses.pluck(:addressable_id))  
+    #addresses = location.is_a?(Address) ? location.nearbys(distance).where('addressable_type = ?', 'User').to_a : Address.near(location, distance).where('addressable_type = ?', 'User').to_a
+    #Dog.joins(user: :addresses).where('addresses.id = users.primary_address_id AND users.id IN (?)', addresses.pluck(:addressable_id))
+    
+    loc_lat, loc_lon = case location
+                        when Address
+                          [location.latitude, location.longitude]
+                        when Array
+                          [location[0], location[1]]
+                        when String
+                          # Geocode the IP address
+                          result = Geocoder.search(location).first
+                          result ? [result.latitude, result.longitude] : [nil, nil]
+                        else
+                          [nil, nil]
+                       end
+
+    return if loc_lat.nil? || loc_lon.nil?
+
+    # Fetch users within the specified distance
+    nearby_users = User.where.not(latitude: nil, longitude: nil).select do |user|
+      Geocoder::Calculations.distance_between([loc_lat, loc_lon], [user.latitude, user.longitude]) <= distance
+    end
+
+    Dog.where(user_id: nearby_users.map(&:id))
   end
 
   private

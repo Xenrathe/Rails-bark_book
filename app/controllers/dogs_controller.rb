@@ -23,7 +23,7 @@ class DogsController < ApplicationController
 
     # filter by breed name
     breed = params[:breed]
-    @dogs = @dogs.where('LOWER(breed) LIKE ?', "%#{breed.downcase}%") if breed.present?
+    @dogs = @dogs.where('LOWER(breed) LIKE ?', "%#{breed.downcase}%") if breed.present? && !@dogs.nil?
 
     # Pagination
     @dogs, @total_pages = paginate_collection(@dogs, 10)
