@@ -30,8 +30,8 @@ BarkPups is hosted on fly.io, via a custom domain: https://www.barkpups.com
 * Better optimization on some of the nearby filtering (dogparks, playdates)
 
 ### Image attribution
--Bark Icon by Gregor Cresnar from <a href="https://thenounproject.com/browse/icons/term/bark/" target="_blank" title="bark Icons">Noun Project</a> (CC BY 3.0)
--Park Background by <a href="https://unsplash.com/@megindoors?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Meg</a> on <a href="https://unsplash.com/photos/a-picnic-table-in-the-middle-of-a-field-of-flowers-3hyfMlJJ8rU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
+* Bark Icon by Gregor Cresnar from <a href="https://thenounproject.com/browse/icons/term/bark/" target="_blank" title="bark Icons">Noun Project</a> (CC BY 3.0)
+* Park Background by <a href="https://unsplash.com/@megindoors?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Meg</a> on <a href="https://unsplash.com/photos/a-picnic-table-in-the-middle-of-a-field-of-flowers-3hyfMlJJ8rU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
   
 
 ![Screenshot of a Dog Feed](https://github.com/Xenrathe/Rails-bark_book/blob/main/GitDog.jpg?raw=true)
