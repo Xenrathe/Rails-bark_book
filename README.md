@@ -2,11 +2,6 @@
 
 ## BarkPups, a social media app just for dogs
 
-## Development To-do List:
-
-### Production
-* Extra spaces around dog details??
-
 ### Primary
 BarkPups is a social-media website focused on dogs, allowing users to make posts with text, images, and videos. Additionally, it can be used to schedule play-dates at local dog parks.
 
