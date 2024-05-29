@@ -39,4 +39,4 @@ BarkPups is hosted on fly.io, via a custom domain: https://www.barkpups.com
 -Park Background by <a href="https://unsplash.com/@megindoors?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Meg</a> on <a href="https://unsplash.com/photos/a-picnic-table-in-the-middle-of-a-field-of-flowers-3hyfMlJJ8rU?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>
   
 
-![Screenshot of a Dog Feed](https://github.com/Xenrathe/Rails-bark_book/blob/main/GitResponsive.jpg?raw=true)
+![Screenshot of a Dog Feed](https://github.com/Xenrathe/Rails-bark_book/blob/main/GitDog.jpg?raw=true)
