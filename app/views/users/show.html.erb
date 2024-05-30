@@ -70,8 +70,8 @@
 
               <% (1..5).each do |num|%>
                 <span class="radio-button">
-                  <%= bark_form.radio_button :bark_sound, "bark_#{num}", checked: @user.bark_sound == "bark_#{num}", id: "bark_#{num}", data: {soundurl: "#{asset_path("bark_#{num}.wav")}", action: "click->profile#toggleUploadOptions"} %>
-                  <%= bark_form.label "bark_#{num}", "Bark #{num}", for: "bark_#{num}" %>
+                  <%= bark_form.radio_button :bark_sound, "bark_#{num}.wav", checked: @user.bark_sound == "bark_#{num}.wav", id: "bark_#{num}.wav", data: {soundurl: "#{asset_path("bark_#{num}.wav")}", action: "click->profile#toggleUploadOptions"} %>
+                  <%= bark_form.label "bark_#{num}", "Bark #{num}", for: "bark_#{num}.wav" %>
                 </span>
               <% end %>
       

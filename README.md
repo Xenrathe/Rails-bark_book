@@ -2,6 +2,13 @@
 
 ## BarkPups, a social media app just for dogs
 
+### To-do:
+* Fix issue with bark sounds
+* Browser location is never automatic (button push for the various indices)
+* Dog location opt-in part of sign-up -> google oauth account creation redirects to a 'finish signing up' page
+* More hints at sharing dog location
+* Update/test/? buttons need a better 'active' state CSS
+
 ### Primary
 BarkPups is a social-media website focused on dogs, allowing users to make posts with text, images, and videos. Additionally, it can be used to schedule play-dates at local dog parks.
 

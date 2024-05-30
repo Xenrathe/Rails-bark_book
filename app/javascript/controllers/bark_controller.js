@@ -1,11 +1,11 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["count"];
+  static targets = ["count", "clicker"];
 
   // When pressing the 'bark' button outside of settings menu (e.g. at content or dog)
   bark(event) {
-    const bark_url = this.element.dataset.url;
+    const bark_url = this.clickerTarget.dataset.url;
     let barkcount = Number(this.countTarget.dataset.count);
 
     // Max barks is 50 per user. So for performance-sake simply prevent form submission 

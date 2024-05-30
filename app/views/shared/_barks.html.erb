@@ -12,7 +12,7 @@
         <% url = asset_path(current_user.bark_sound) %>
       <% end %>
 
-      <%= button_tag(type: 'submit', class: 'btn btn-primary', data: {action: "click->bark#bark", url: url }) do %>
+      <%= button_tag(type: 'submit', class: 'btn btn-primary', data: {bark_target: "clicker", action: "click->bark#bark", url: url }) do %>
         <%= image_tag asset_path("bark.png"), alt: "Bark Image" %>
       <% end %>
     <% end %>
