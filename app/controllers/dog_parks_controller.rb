@@ -14,7 +14,7 @@ class DogParksController < ApplicationController
 
     begin
       @distance = @dog_park.address.distance_from(@location) # Will return nil if dog_park.address geocoding failed
-      @distance = nil if distance.nan? # Will return NaN in certain situations
+      @distance = nil if @distance.nan? # Will return NaN in certain situations
     rescue NoMethodError
       @distance = nil # This situation occurs if the @location geocoding fails
     end

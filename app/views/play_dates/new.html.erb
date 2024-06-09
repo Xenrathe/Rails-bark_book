@@ -1,7 +1,10 @@
 <div class="play-dates core-window">
   <div class="new transparent-bg core-content">
     <div class="title">New Play Date</div>
-
-    <%= render 'form', play_date: @play_date, mode: 'Create' %>
+    <% if defined?(@user_dogs) && !@user_dogs.nil? && @user_dogs.count > 0 %>
+      <%= render 'form', play_date: @play_date, mode: 'Create' %>
+    <% else %>
+      <div>You need to have a dog to start a playdate! Try adding a <%= link_to 'dog', new_dog_path %>!</div>
+    <% end %>
   </div>
 </div>

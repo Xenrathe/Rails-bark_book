@@ -1,7 +1,7 @@
 <div class="play-date transparent-bg">
   
   <div class="title-section">
-    <div class="title"><%= link_to "Upcoming play date!", play_date %></div>
+    <div class="title"><%= link_to "Upcoming play date!", play_date, data: { turbo_frame: "_top" } %></div>
   </div>
 
   <% user_time_zone = current_user ? current_user.time_zone : 'UTC' %>

@@ -1,7 +1,10 @@
 <div class="contents core-window">
   <div class="new transparent-bg core-content">
     <h1>New <%= @content.content_type %></h1>
-
-    <%= render "contentform", content: @content, type: @content.content_type, mode: 'Create' %>
+    <% if defined?(@user_dogs) && !@user_dogs.nil? && @user_dogs.count > 0 %>
+      <%= render "contentform", content: @content, type: @content.content_type, mode: 'Create' %>
+    <% else %>
+      <div>You need to have a dog to post content! Try adding a <%= link_to 'dog', new_dog_path %>!</div>
+    <% end %>
   </div>
 </div>

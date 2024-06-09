@@ -1,12 +1,14 @@
 <div class="sub-title">Select dogs</div>
 <div class="dog-list">
   <div class="list">
-  <% @user_dogs.each do |dog| %>
-    <div class="dog-checkbox" data-controller="dogselector">
-      <%= check_box_tag tag_string, dog.id, dogs.include?(dog), { class: 'dog-select-checkbox', id: "#{object.id}_dog_ids_#{dog.id}", "data-dogselector-target": "checkbox" } %>
-      <% label_class = dogs.include?(dog) ? "dog-select-label clicked" : "dog-select-label"%>
-      <%= label_tag "#{object.id}_dog_ids_#{dog.id}", image_tag(dog.avatar.variant(:thumb), class: "dog-select"), class: label_class, data: { action: "click->dogselector##{action}" } %>
-    </div>
+  <% if defined?(@user_dogs) && !@user_dogs.nil? %>
+    <% @user_dogs.each do |dog| %>
+      <div class="dog-checkbox" data-controller="dogselector">
+        <%= check_box_tag tag_string, dog.id, dogs.include?(dog), { class: 'dog-select-checkbox', id: "#{object.id}_dog_ids_#{dog.id}", "data-dogselector-target": "checkbox" } %>
+        <% label_class = dogs.include?(dog) ? "dog-select-label clicked" : "dog-select-label"%>
+        <%= label_tag "#{object.id}_dog_ids_#{dog.id}", image_tag(dog.avatar.variant(:thumb), class: "dog-select"), class: label_class, data: { action: "click->dogselector##{action}" } %>
+      </div>
+    <% end %>
   <% end %>
   </div>
 </div>
