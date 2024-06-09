@@ -6,6 +6,7 @@ class PlayDatesController < ApplicationController
   before_action :set_playdate, only: %i[edit update destroy attend]
   before_action :load_dogs, only: %i[show index new]
   before_action :reset_flash, only: %i[show index]
+  around_action :set_time_zone, if: :current_user
 
   def show
     @play_date = PlayDate.includes(:dog_park, attendees: [:user, { avatar_attachment: :blob }]).find(params[:id])
@@ -161,6 +162,10 @@ class PlayDatesController < ApplicationController
   end
 
   private
+
+  def set_time_zone(&block)
+    Time.use_zone(current_user.time_zone, &block)
+  end
 
   def set_playdate
     @play_date = PlayDate.find(params[:id])
