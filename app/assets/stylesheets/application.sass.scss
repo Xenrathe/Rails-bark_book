@@ -283,6 +283,15 @@ body::before {
     align-items: center;
     padding: 10px;
   }
+
+    //mobile
+  @media only screen and (max-width: globalvars.$mobile-width){
+    .has-bottom-navbar {
+      margin-bottom: 60px;
+      background: none;
+      border: none;
+    }
+  }
 }
 
 .title {
@@ -538,7 +547,7 @@ body::before {
       flex-direction: row;
 
       label {
-        width: 70px;
+        width: 80px;
         font-weight: bold;
       }
 
@@ -575,15 +584,6 @@ body::before {
 
     .avatar-image {
       max-width: 250px;
-    }
-  }
-
-  //mobile
-  @media only screen and (max-width: globalvars.$mobile-width){
-    .show {
-      margin-bottom: 60px;
-      background: none;
-      border: none;
     }
   }
 

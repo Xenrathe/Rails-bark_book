@@ -105,6 +105,8 @@ form {
 
     .list {
       display: flex;
+      justify-content: flex-start;
+      flex-wrap: wrap;
       margin-bottom: 5px;
       gap: 5px;
 

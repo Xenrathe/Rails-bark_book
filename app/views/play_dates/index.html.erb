@@ -34,7 +34,12 @@
       </div>
     </div>
   </div>
-  <%= turbo_frame_tag 'play-dates-frame' do %>
+  <% if current_user && current_user.time_zone == 'UTC'%>
+    <div class="timezone-warning core-content transparent-bg">
+      <span>Your time-zone is currently set to UTC. To adjust check your <%= link_to 'profile', current_user %>.</span>
+    </div>
+  <% end %>
+  <%= turbo_frame_tag 'play-dates-frame', class: 'has-bottom-navbar' do %>
     <%= render 'indexpage' %>
   <% end %>
 </div>
