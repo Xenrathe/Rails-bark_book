@@ -339,6 +339,7 @@ body::before {
     .dog.partial-dog {
       display: flex;
       flex-direction: column;
+      overflow-x: hidden;
 
       .image {
         img {
@@ -900,16 +901,18 @@ body::before {
     .dog-list {
       display: grid;
       max-width: 90%;
-      grid-template-columns: 1fr 1fr;
+      grid-template-rows: repeat(2, 223px);
+      grid-template-columns: repeat(2, minmax(152px, 1fr));
 
       .dog {
         align-items: center;
       }
     }
 
-    @media only screen and (min-width: 1535px){
+    @media only screen and (min-width: 1700px){
       .dog-list {
-        grid-template-columns: 1fr 1fr 1fr 1fr;
+        grid-template-rows: 223px;
+        grid-template-columns: repeat(4, 152px);
       }
     }
   }

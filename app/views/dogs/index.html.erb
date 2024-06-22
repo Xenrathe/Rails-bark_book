@@ -7,7 +7,7 @@
           <div class="single-input">
             <%= label_tag 'distance', 'Distance:' %>
             <% if true || (current_user && current_user.primary_address) || cookies[:user_location].present? %>
-              <% selected_distance = params[:distance].present? ? params[:distance] : '25' %>
+              <% selected_distance = params[:distance].present? ? params[:distance] : 'all' %>
               <%= select_tag 'distance', options_for_select(['10', '25', '50', '100', 'all'], selected: selected_distance) %>
             <% else %>
               <%= select_tag 'distance', options_for_select(['all'], selected: 'all') %>

@@ -43,5 +43,14 @@ Rails.application.routes.draw do
   resources :address, only: %i[update destroy]
 
   # Defines the root path route ("/")
-  root 'users#feed'
+  devise_scope :user do 
+    authenticated :user do
+      root 'users#feed'
+    end
+    unauthenticated do
+      root 'dogs#index', as: :unauthenticated_root
+    end
+  end
+  #root to: 'users#feed', constraints: { user_logged_in?: true }
+  #root to: 'dogs#index'
 end

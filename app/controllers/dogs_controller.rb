@@ -9,7 +9,7 @@ class DogsController < ApplicationController
 
   def index
     # filter by distance
-    distance = params[:distance].present? ? params[:distance] : '25'
+    distance = params[:distance].present? ? params[:distance] : 'all'
     if distance != 'all'
       location = get_location(current_user)
       if location
