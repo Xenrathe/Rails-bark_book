@@ -1,5 +1,5 @@
 class ContentsController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: %i[ show ]
   before_action :set_content, only: %i[ show edit update destroy ]
   before_action :set_dogs, only: %i[new create new_post new_image new_video edit]
   before_action :reset_flash, only: %i[show]
