@@ -31,7 +31,7 @@
         <img src="#" class="avatar-image" style="display: none">
         <div class="single-input">
           <%= form.label :avatar, style: "display: block" %>
-          <%= form.file_field :avatar, accept: "image/*", data: { action: "change->imgupdater#change" } %>
+          <%= form.file_field :avatar, accept: "image/*", required: mode == 'Create', data: { action: "change->imgupdater#change" } %>
         </div>
       <% end %>
     </div>

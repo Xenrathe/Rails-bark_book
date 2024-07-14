@@ -55,6 +55,7 @@ class Dog < ApplicationRecord
 
   def avatar_presence
     errors.add(:avatar, " must be attached") unless avatar.attached?
+    return unless avatar.attached?
     errors.add(:avatar, ' cannot be larger than 10MB') if avatar.byte_size > 10.megabytes
     errors.add(:avatar, ' must be an image file') unless avatar.content_type.start_with?('image/')
   end
