@@ -2,7 +2,8 @@
 
 form {
   margin-left: 5px;
-  .single-input, .field_with_errors {
+  .single-input,
+  .field_with_errors {
     display: flex;
     flex-direction: row;
 
@@ -40,8 +41,6 @@ form {
     textarea {
       min-height: 100px;
     }
-
-
   }
 
   .text-input {
@@ -98,7 +97,6 @@ form {
   }
 
   .dog-list {
-
     .sub-title {
       margin-bottom: 5px;
     }
@@ -115,7 +113,7 @@ form {
         cursor: pointer;
       }
 
-      input[type="checkbox"]{
+      input[type="checkbox"] {
         display: none;
       }
 
@@ -131,7 +129,8 @@ form {
   }
 }
 
-.contents, .feed-content{
+.contents,
+.feed-content {
   form {
     display: flex;
     flex-direction: column;
@@ -141,8 +140,7 @@ form {
 
     .attachments {
       max-width: 400px;
-      
-  
+
       .preview-images {
         display: flex;
         gap: 5px;
@@ -150,7 +148,7 @@ form {
         max-width: 75%;
         width: 75%;
         margin: 2px;
-    
+
         img {
           max-height: 100px;
           height: 100px;
@@ -158,7 +156,7 @@ form {
       }
     }
 
-    input[type="file"]{
+    input[type="file"] {
       max-width: 200px;
     }
   }
@@ -183,14 +181,15 @@ form {
 }
 
 .play-dates {
-  .edit, .new {
+  .edit,
+  .new {
     form {
       display: flex;
       gap: 5px;
       flex-direction: column;
       align-items: flex-start;
       width: 95%;
-  
+
       .single-input textarea {
         width: 205px;
       }
@@ -208,7 +207,8 @@ form {
   }
 }
 
-.registrations, .sessions {
+.registrations,
+.sessions {
   form {
     .password-icon {
       position: absolute;
@@ -254,7 +254,7 @@ $test-color: rgb(255, 174, 0);
   cursor: pointer;
   background: white;
   font-weight: 550;
-  
+
   // SIZES
   &.small {
     height: 25px;
@@ -299,21 +299,28 @@ $test-color: rgb(255, 174, 0);
   }
 
   //SIZE
-  &.small:hover, &.tiny:hover, &.small:active, &.tiny:active {
+  &.small:hover,
+  &.tiny:hover,
+  &.small:active,
+  &.tiny:active {
     font-size: 1em;
   }
 
   //COLORS
-  &.create:hover, &.create:active {
+  &.create:hover,
+  &.create:active {
     background: $create-color;
   }
-  &.edit:hover, &.edit:active {
+  &.edit:hover,
+  &.edit:active {
     background: $edit-color;
   }
-  &.delete:hover, &.delete:active {
+  &.delete:hover,
+  &.delete:active {
     background: $delete-color;
   }
-  &.test:hover, &.test:active {
+  &.test:hover,
+  &.test:active {
     background: $test-color;
   }
 }
@@ -342,17 +349,18 @@ a.action-button {
     height: 20px;
     font-size: 13px;
   }
-   
-  button, button span {
+
+  button,
+  button span {
     transition: 200ms;
   }
-   
+
   button .text {
     margin-left: 10px;
     color: white;
     font-weight: bold;
   }
-   
+
   button .icon {
     position: absolute;
     margin-left: calc(55px + 1.5vw);
@@ -372,7 +380,7 @@ a.action-button {
     margin-left: 80px;
     width: 30px;
   }
-   
+
   button svg {
     width: 20px;
     min-width: 20px;
@@ -397,11 +405,11 @@ a.action-button {
   &.icon-only {
     @include svg-sizing;
   }
-   
+
   button:hover .text {
     color: transparent;
   }
-   
+
   button:hover .icon {
     position: absolute;
     margin: 0px;
@@ -414,7 +422,8 @@ a.action-button {
       justify-content: center;
     }
 
-    button:not(.filter), button:not(.filter) span {
+    button:not(.filter),
+    button:not(.filter) span {
       transition: 0ms;
     }
 
@@ -435,12 +444,12 @@ a.action-button {
   }
 
   // Tablets and mobile
-  @media only screen and (max-width: globalvars.$midscreen-width){
+  @media only screen and (max-width: globalvars.$midscreen-width) {
     @include collapsed-styling;
   }
 
   //Desktop
-  @media only screen and (min-width: calc(globalvars.$midscreen-width + 1px)){
+  @media only screen and (min-width: calc(globalvars.$midscreen-width + 1px)) {
     button:hover .icon {
       width: calc(70px + 3vw);
     }
@@ -453,11 +462,11 @@ a.action-button {
   button.filter:hover .icon {
     width: 120px;
   }
-   
+
   button:focus {
     outline: none;
   }
-   
+
   button:active .icon svg {
     transform: scale(0.8);
   }
@@ -563,7 +572,7 @@ a.action-button.wide {
     }
   }
 
-  @media only screen and (max-width: globalvars.$midscreen-width){
+  @media only screen and (max-width: globalvars.$midscreen-width) {
     button .icon {
       margin-left: 0px;
       border-left: none !important;
@@ -575,20 +584,44 @@ a.action-button.icon-only {
   width: 50px;
 }
 
+.nav-and-filter,
+.form-and-locator {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+}
+
+.navigation-btn {
+  padding: 0;
+  min-width: 40px;
+  min-height: 44px;
+  background: none;
+  border: none;
+  cursor: pointer;
+
+  svg {
+    width: 40px;
+  }
+
+  svg:hover {
+    fill: rgb(80, 80, 80);
+  }
+
+  svg:active {
+    width: 35px;
+  }
+}
+
 //NO MORE BUTTONS BUTTONS BUTTONS
 
 //MOBILE SCREENS
-@media only screen and (max-width: globalvars.$mobile-width){
-  
+@media only screen and (max-width: globalvars.$mobile-width) {
 }
 
 //MIDDLE-SIZED SCREEN
-@media only screen and (min-width: calc(globalvars.$mobile-width + 1px)) and (max-width: globalvars.$midscreen-width){
-  
+@media only screen and (min-width: calc(globalvars.$mobile-width + 1px)) and (max-width: globalvars.$midscreen-width) {
 }
 
 //LARGEST SCREEN
-@media only screen and (min-width: calc(globalvars.$midscreen-width + 1px)){
-  
+@media only screen and (min-width: calc(globalvars.$midscreen-width + 1px)) {
 }
-

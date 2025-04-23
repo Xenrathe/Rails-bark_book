@@ -1,29 +1,31 @@
 <div class="play-dates index core-window" data-window-target="contentContainer">
-  <%= render 'shared/locator' %>
   <div class="filter-bar">
     <div class="title">Play Dates</div>
     <div class="filter-and-new">
       <% if true || (current_user && current_user.primary_address) || cookies[:user_location].present? %>
-        <%= form_tag(play_dates_path, method: :get ) do %>
-          <div class="single-input">
-            <%= label_tag 'distance', 'Distance:' %>
-            <% selected_distance = params[:distance].present? ? params[:distance] : '25' %>
-            <%= select_tag 'distance', options_for_select(['10', '25', '50', '100'], selected: selected_distance), onchange: "this.form.submit();" %>
-            <span class="units">(mi)</span>
-          </div>
-          <div class="single-input">
-            <%= label_tag 'tracked', 'Parks:' %>
-            <% all_playdates = params[:tracked].present? && params[:tracked] == 'tracked' ? false : true %>
-            <span class="radio-button">
-              <%= radio_button_tag 'tracked', 'tracked', !all_playdates, onchange: "this.form.submit();" %>
-              <%= label_tag 'tracked_tracked', 'Tracked', class: 'shorter' %>
-            </span>
-            <span class="radio-button">
-              <%= radio_button_tag 'tracked', 'all', all_playdates, onchange: "this.form.submit();" %>
-              <%= label_tag 'tracked_all', 'All', class: 'shortest' %>
-            </span>
-          </div>
-        <% end %>
+        <div class="form-and-locator">
+          <%= render 'shared/locator' %>
+          <%= form_tag(play_dates_path, method: :get ) do %>
+            <div class="single-input">
+              <%= label_tag 'distance', 'Distance:' %>
+              <% selected_distance = params[:distance].present? ? params[:distance] : '25' %>
+              <%= select_tag 'distance', options_for_select(['10', '25', '50', '100'], selected: selected_distance), onchange: "this.form.submit();" %>
+              <span class="units">(mi)</span>
+            </div>
+            <div class="single-input">
+              <%= label_tag 'tracked', 'Parks:' %>
+              <% all_playdates = params[:tracked].present? && params[:tracked] == 'tracked' ? false : true %>
+              <span class="radio-button">
+                <%= radio_button_tag 'tracked', 'tracked', !all_playdates, onchange: "this.form.submit();" %>
+                <%= label_tag 'tracked_tracked', 'Tracked', class: 'shorter' %>
+              </span>
+              <span class="radio-button">
+                <%= radio_button_tag 'tracked', 'all', all_playdates, onchange: "this.form.submit();" %>
+                <%= label_tag 'tracked_all', 'All', class: 'shortest' %>
+              </span>
+            </div>
+          <% end %>
+        </div>
       <% else %>
         <div class="geo-warning">Cannot filter play dates by distance without a primary address!</div>
       <% end %>
