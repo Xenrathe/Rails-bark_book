@@ -4,31 +4,33 @@ export default class extends Controller {
   static targets = ["passwordInput", "passwordImage", "distance", "tracked"];
   static values = {
     pawurl: String,
-    pawoffurl: String
-  }
+    pawoffurl: String,
+  };
 
   connect() {
-    if (document.getElementById('new_dog_park_form')) {
+    if (document.getElementById("new_dog_park_form")) {
       this.addNewAddressEvent();
     }
   }
 
   // Used with playdate#new mostly, in instances when a user is ALSO creating a new dogpark
   addNewAddressEvent() {
-    const dogParkRadioBtns = document.querySelectorAll('.dog-park-radio');
-    const newDogParkForm = document.getElementById('new_dog_park_form');
+    const dogParkRadioBtns = document.querySelectorAll(".dog-park-radio");
+    const newDogParkForm = document.getElementById("new_dog_park_form");
 
     // The 'required' fields should not be required if this sub-form isn't even visible
     // But should be, if the field is visible!
-    const requireToggles = document.querySelectorAll('.require-toggle');
-    requireToggles.forEach((field) => field.required = false);
+    const requireToggles = document.querySelectorAll(".require-toggle");
+    requireToggles.forEach((field) => (field.required = false));
 
-    dogParkRadioBtns.forEach(radio => {
-      radio.addEventListener('change', function() {
-        newDogParkForm.style.display = this.value === 'new' ? 'block' : 'none';
-        requireToggles.forEach((field) => field.required = this.value === 'new' ? 'true' : false);
+    dogParkRadioBtns.forEach((radio) => {
+      radio.addEventListener("change", function () {
+        newDogParkForm.style.display = this.value === "new" ? "block" : "none";
+        requireToggles.forEach(
+          (field) => (field.required = this.value === "new" ? "true" : false)
+        );
       });
-    })
+    });
   }
 
   // Used with playdate#index and dogpark#index to auto-submit forms if filters are changed
@@ -41,7 +43,7 @@ export default class extends Controller {
     const checkboxes = document.querySelectorAll("input[type='checkbox']");
     let atLeastOneChecked = checkboxes.length == 0; // Allows the EDIT button to still work
 
-    checkboxes.forEach(checkbox => {
+    checkboxes.forEach((checkbox) => {
       if (checkbox.checked) {
         atLeastOneChecked = true;
       }
@@ -50,6 +52,11 @@ export default class extends Controller {
     if (!atLeastOneChecked) {
       event.preventDefault();
       alert("Please select at least one dog.");
+    } else {
+      // Show overlay manually
+      const overlay = document.getElementById("uploadOverlay");
+      overlay?.classList.remove("hidden");
+      document.body.classList.add("upload-blocked");
     }
   }
 
