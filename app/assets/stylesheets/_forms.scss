@@ -163,20 +163,6 @@ form {
   display: none !important;
 }
 
-@keyframes loading {
-  0% {
-    transform: translateX(-100%);
-    background-color: #fef08a;
-  }
-  50% {
-    background-color: #fde68a;
-  }
-  100% {
-    transform: translateX(100%);
-    background-color: #fef08a;
-  }
-}
-
 .contents,
 .feed-content {
   form {
@@ -298,7 +284,7 @@ $test-color: rgb(255, 174, 0);
 
   margin: 3px auto;
   border-radius: 15px;
-  transition: all 0.3s;
+  transition: all 0.2s ease;
   cursor: pointer;
   background: white;
   font-weight: 550;
@@ -317,20 +303,18 @@ $test-color: rgb(255, 174, 0);
   }
 
   // COLORS
-  &.create {
-    border: 3px solid $create-color;
-  }
-
-  &.edit {
-    border: 3px solid $edit-color;
-  }
-
-  &.delete {
-    border: 3px solid $delete-color;
-  }
-
-  &.test {
-    border: 3px solid $test-color;
+  @each $type,
+    $color
+      in (
+        create: $create-color,
+        edit: $edit-color,
+        delete: $delete-color,
+        test: $test-color
+      )
+  {
+    &.#{$type} {
+      border: 3px solid $color;
+    }
   }
 
   //disabled
@@ -341,7 +325,7 @@ $test-color: rgb(255, 174, 0);
 }
 
 //HOVERS AND ACTIVE
-.simple-btn:NOT(:disabled) {
+.simple-btn:not(:disabled) {
   &:hover {
     color: white;
     font-size: 1.3em;
@@ -349,7 +333,8 @@ $test-color: rgb(255, 174, 0);
 
   &:active {
     color: white;
-    font-size: 4em;
+    transform: scale(0.97); /* slight shrink */
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.8); /* inset shadow */
   }
 
   //SIZE
@@ -361,21 +346,22 @@ $test-color: rgb(255, 174, 0);
   }
 
   //COLORS
-  &.create:hover,
-  &.create:active {
-    background: $create-color;
-  }
-  &.edit:hover,
-  &.edit:active {
-    background: $edit-color;
-  }
-  &.delete:hover,
-  &.delete:active {
-    background: $delete-color;
-  }
-  &.test:hover,
-  &.test:active {
-    background: $test-color;
+  @each $type,
+    $color
+      in (
+        create: $create-color,
+        edit: $edit-color,
+        delete: $delete-color,
+        test: $test-color
+      )
+  {
+    &.#{$type}:hover {
+      background: $color;
+    }
+
+    &.#{$type}:active {
+      background: darken($color, 4%);
+    }
   }
 }
 
