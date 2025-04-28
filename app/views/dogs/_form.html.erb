@@ -1,4 +1,4 @@
-<%= form_with(model: dog) do |form| %>
+<%= form_with(model: dog, html: {"data-controller": "forms"}) do |form| %>
   <div class="inputs">
     <div class="details">
       <div class="single-input">
@@ -26,12 +26,12 @@
     <div class="avatar" data-controller="imgupdater">
       <% if dog.avatar.attached? %>
         <%= image_tag dog.avatar.variant(:thumb), class: "avatar-image" %>
-        <%= form.file_field :avatar, accept: "image/*", data: { action: "change->imgupdater#change" } %>
+        <%= form.file_field :avatar, accept: "image/*", direct_upload: true, data: { forms_target: "fileupload", action: "change->imgupdater#change" } %>
       <% else %>
         <img src="#" class="avatar-image" style="display: none">
         <div class="single-input">
           <%= form.label :avatar, style: "display: block" %>
-          <%= form.file_field :avatar, accept: "image/*", required: mode == 'Create', data: { action: "change->imgupdater#change" } %>
+          <%= form.file_field :avatar, accept: "image/*", required: mode == 'Create', direct_upload: true, data: { forms_target: "fileupload", action: "change->imgupdater#change" } %>
         </div>
       <% end %>
     </div>
