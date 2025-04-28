@@ -19,7 +19,7 @@
       <div class="single-input">
         <%= form.label :attached_images, style: "display: block" %>
         <% if mode != 'Edit' # Cannot alter attached images via editing %>
-          <%= form.file_field :attached_images, multiple: true, accept: "image/*", data: { maxFiles: 10, contents_target: "fileupload" } %>
+          <%= form.file_field :attached_images, multiple: true, direct_upload: true, accept: "image/*", data: { maxFiles: 10, forms_target: "fileupload", contents_target: "fileupload" } %>
         <% end %>
       </div>
       <div class="preview-images" data-contents-target="imgpreview">
@@ -40,7 +40,7 @@
         </div>
       <% else %>
         <%= form.label :attached_video, style: "display: block" %>
-        <%= form.file_field :attached_video, accept: "video/*" %>
+        <%= form.file_field :attached_video, direct_upload: true, data: {forms_target: "fileupload"}, accept: "video/*,.mov,.quicktime" %>
       <% end %>
     </div>
   <% end %>

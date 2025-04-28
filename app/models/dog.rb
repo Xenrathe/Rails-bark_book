@@ -19,6 +19,8 @@ class Dog < ApplicationRecord
   validates :weight, comparison: { greater_than: 0 }
   validate :avatar_presence, on: %i[create update]
 
+  after_destroy :purge_avatar
+
   scope :small, -> { where('weight <= ?', 25) }
   scope :large, -> { where('weight > ?', 25) }
 
@@ -58,5 +60,9 @@ class Dog < ApplicationRecord
     return unless avatar.attached?
     errors.add(:avatar, ' cannot be larger than 10MB') if avatar.byte_size > 10.megabytes
     errors.add(:avatar, ' must be an image file') unless avatar.content_type.start_with?('image/')
+  end
+
+  def purge_avatar
+    avatar.purge if avatar.attached?
   end
 end

@@ -21,6 +21,12 @@ google:
   credentials: <%= Rails.root.join("config/secrets/barkpark-gcloud.json") %>
   bucket: bark_pups_bucket
 
+google_dev:
+  service: GCS
+  project: barkpark-411620
+  credentials: <%= Rails.root.join("config/secrets/gcloud-dev.json") %>
+  bucket: bark_pups_bucket
+
 # Use bin/rails credentials:edit to set the Azure Storage secret (as azure_storage:storage_access_key)
 # microsoft:
 #   service: AzureStorage

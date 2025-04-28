@@ -33,7 +33,6 @@ class ContentsController < ApplicationController
   end
 
   def create
-    sleep 5 if Rails.env.development?
     @content = current_user.contents.build(content_params) if current_user
 
     # Validate that content_type actually matches

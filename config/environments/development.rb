@@ -34,7 +34,7 @@ Rails.application.configure do
   end
 
   # Store uploaded files on local (see config/storage.yml for options).
-  config.active_storage.service = :local
+  config.active_storage.service = :google_dev
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = true

@@ -20,10 +20,17 @@ class Content < ApplicationRecord
   #validate :validate_codec, on: %i[create update]
   validate :at_least_one_dog_selected, on: %i[create update]
 
+  after_destroy :purge_attachments
+
   private
 
   def at_least_one_dog_selected
     errors.add(:base, "Content must be about at least one dog.") if dogs.none?
+  end
+
+  def purge_attachments
+    attached_images.each(&:purge)
+    attached_video.purge if attached_video.attached?
   end
 
   def process_video

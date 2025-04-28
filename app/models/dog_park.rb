@@ -15,6 +15,8 @@ class DogPark < ApplicationRecord
   validates :name, :dog_size, presence: true
   validate :image_validations
 
+  after_destroy :purge_attached_images
+
   def self.nearby(location, distance)
     return if location.nil?
 
@@ -36,6 +38,10 @@ class DogPark < ApplicationRecord
       errors.add(:attached_images, ' cannot be larger than 10MB') if image.byte_size > 10.megabytes
       errors.add(:attached_images, ' must be image files') unless image.content_type.start_with?('image/')
     end
+  end
+
+  def purge_attached_images
+    attached_images.purge
   end
 
 end

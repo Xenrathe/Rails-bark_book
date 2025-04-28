@@ -140,11 +140,16 @@ form {
   justify-content: center;
   align-items: center;
 
-  .loading-bar {
+  .loading-bar-wrapper {
     width: 60%;
     height: 6px;
     background: #fff;
-    animation: loading 2s infinite linear;
+
+    .loading-bar {
+      height: 6px;
+      width: 0%;
+      background: rgb(124, 176, 255);
+    }
   }
 }
 
@@ -327,10 +332,16 @@ $test-color: rgb(255, 174, 0);
   &.test {
     border: 3px solid $test-color;
   }
+
+  //disabled
+  &:disabled {
+    border: 3px solid grey;
+    cursor: not-allowed;
+  }
 }
 
 //HOVERS AND ACTIVE
-.simple-btn {
+.simple-btn:NOT(:disabled) {
   &:hover {
     color: white;
     font-size: 1.3em;
