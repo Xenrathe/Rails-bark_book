@@ -2,7 +2,7 @@
   <div class="index transparent-bg core-content">
     <div class="title">Dogs</div>
       <div class="top">
-        <%= render 'shared/locator' %>
+        <%= render 'shared/locator', include_button: true %>
         <%= form_tag(dogs_path, method: :get) do %>
           <div class="single-input">
             <%= label_tag 'distance', 'Distance:' %>

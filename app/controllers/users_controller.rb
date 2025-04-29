@@ -88,6 +88,7 @@ class UsersController < ApplicationController
             if @user.primary_address
               @user.update(latitude: @user.primary_address.latitude, longitude: @user.primary_address.longitude )
             else
+              flash[:location_request] = true #trigger a navigator browser request
               get_location(current_user)
             end
           else

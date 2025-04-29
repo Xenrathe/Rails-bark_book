@@ -2,14 +2,25 @@ import { Controller } from "@hotwired/stimulus";
 import { getCookie } from "controllers/cookies";
 
 export default class extends Controller {
-  static targets = ["latitude", "longitude", "form"];
+  static targets = ["latitude", "longitude", "form", "button"];
 
   connect() {
-    // No longer automatically ask
-    /*const locationCookie = getCookie('user_location');
-    if (locationCookie == null) {
-      this.getUserLocationAndSubmitForm();
-    }*/
+
+    // used for automatically requesting location if user turns 'share location' to on
+    const locationRequestFlag = document.getElementById('location-request-flag');
+    if (locationRequestFlag) {
+      const locationCookie = getCookie('user_location');
+      if (locationCookie == null) {
+        this.getUserLocationAndSubmitForm();
+      }
+    }
+
+    // only reveal button if user hasn't already given permissions
+    navigator.permissions.query({ name: 'geolocation' }).then((result) => {
+      if (result.state !== 'granted') {
+        this.buttonTarget.style.display = '';
+      }
+    });
   }
 
   getUserLocationAndSubmitForm() {

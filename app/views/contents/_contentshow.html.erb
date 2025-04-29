@@ -1,7 +1,7 @@
 <div class="content">
   <% if comments_mode != 'full' #i.e. contents#show %>
     <% if content.title != ''%>
-      <div class="title"> <%= content.title %> </div>
+      <div class="title"> <%= link_to content.title, content, data: { turbo_frame: "_top" } %> </div>
     <% end %>
   <% else %>
     <% title_text = content.title != '' ? content.title : 'Untitled' %>

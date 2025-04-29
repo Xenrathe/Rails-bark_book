@@ -4,7 +4,7 @@
     <div class="filter-and-new">
       <% if true || (current_user && current_user.primary_address) || cookies[:user_location].present? %>
         <div class="form-and-locator">
-          <%= render 'shared/locator' %>
+          <%= render 'shared/locator', include_button: true %>
           <%= form_tag(play_dates_path, method: :get ) do %>
             <div class="single-input">
               <%= label_tag 'distance', 'Distance:' %>

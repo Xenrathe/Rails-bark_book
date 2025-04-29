@@ -102,8 +102,9 @@
       <div id="user-location" class="transparent-bg core-content">
         <div class="sub-title"><span class="first-letter">L</span>ocation <span class="first-letter">S</span>ettings</div>
         <%= turbo_frame_tag "location-settings" do %>
+          <%= render 'shared/locator', locals: { include_button: false } %>
           <%= form_with(model: @user) do |location_form| %>
-            <span>Store location data and allow other users to find your dog via proximity?</span>
+            <span>Store location data to allow other users to find your dog via distance filters? Other users can never directly access this location information or your addresses.</span>
             <div class="single-input">
               <span class="radio-button">
                 <%= location_form.radio_button :location_permission, true, onchange: "this.form.submit();" %>

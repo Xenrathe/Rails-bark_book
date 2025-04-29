@@ -381,7 +381,7 @@ a.action-button {
     border: none;
     border-radius: 5px;
     box-shadow: 1px 1px 3px #00000026;
-    font-size: calc(2px + 0.8vw);
+    font-size: clamp(14px, calc(2px + 0.8vw), 18px);
     padding: 1px 0px;
   }
 
