@@ -6,7 +6,6 @@
 
 - Dog location opt-in part of sign-up -> google oauth account creation redirects to a 'finish signing up' page
 - More hints at sharing dog location
-- Update/test/? buttons need a better 'active' state CSS
 - More impressive BARK button (3d stuff?)
 - Accessibility audit
 
