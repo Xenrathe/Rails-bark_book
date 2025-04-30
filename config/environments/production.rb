@@ -62,6 +62,9 @@ Rails.application.configure do
   # config.active_job.queue_adapter     = :resque
   # config.active_job.queue_name_prefix = "Rails_bark_book_production"
 
+  # force synchronous analyzing - this is not a scalable solution. will add a real worker if necessary.
+  config.active_storage.queues.analyze = nil
+
   config.action_mailer.perform_caching = false
 
   # Ignore bad email addresses and do not raise email delivery errors.
