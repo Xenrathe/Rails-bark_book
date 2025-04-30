@@ -24,15 +24,19 @@ class Content < ApplicationRecord
 
   def aspect_ratio
     return unless attached_video.attached?
-
+  
     blob = attached_video.blob
-
-    unless blob.metadata["width"] && blob.metadata["height"]
-      blob.analyze unless blob.analyzed?
-      return nil # this is the same as assuming a 'tall' video, which is most likely; will work next load
+  
+    if blob.metadata["width"].blank? || blob.metadata["height"].blank?
+      blob.analyze
     end
 
-    blob.metadata["width"].to_f / blob.metadata["height"].to_f
+    width = blob.metadata["width"]
+    height = blob.metadata["height"]
+
+    return unless width.present? && height.present?
+  
+    width.to_f / height.to_f
   end
 
   private

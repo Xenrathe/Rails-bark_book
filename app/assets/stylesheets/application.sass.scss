@@ -683,6 +683,7 @@ body::before {
 
   .video-container video {
     width: 100%;
+    max-width: calc(250px + 25vw);
     height: auto;
     margin: 0px auto;
   }
