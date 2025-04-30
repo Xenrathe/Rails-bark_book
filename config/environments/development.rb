@@ -34,8 +34,8 @@ Rails.application.configure do
   end
 
   # Switch to google_dev if you need to test google cloud interface in a dev environment
-  #config.active_storage.service = :google_dev
-  config.active_storage.service = :local
+  config.active_storage.service = :google_dev
+  #config.active_storage.service = :local
 
   # Don't care if the mailer can't send.
   config.action_mailer.raise_delivery_errors = true

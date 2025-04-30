@@ -22,6 +22,19 @@ class Content < ApplicationRecord
 
   after_destroy :purge_attachments
 
+  def aspect_ratio
+    return unless attached_video.attached?
+
+    blob = attached_video.blob
+
+    unless blob.metadata["width"] && blob.metadata["height"]
+      blob.analyze unless blob.analyzed?
+      return nil # this is the same as assuming a 'tall' video, which is most likely; will work next load
+    end
+
+    blob.metadata["width"].to_f / blob.metadata["height"].to_f
+  end
+
   private
 
   def at_least_one_dog_selected
@@ -31,20 +44,6 @@ class Content < ApplicationRecord
   def purge_attachments
     attached_images.each(&:purge)
     attached_video.purge if attached_video.attached?
-  end
-
-  def process_video
-    return unless attached_video.attached?
-
-    # Download the video data and pass it to the service
-    video_data = attached_video.download
-    processed_path = VideoProcessingService.process(video_data)
-
-    # Attach the processed video
-    attached_video.attach(io: File.open(processed_path), filename: File.basename(processed_path))
-
-    # Clean up the temporary file
-    File.delete(processed_path) if File.exist?(processed_path)
   end
 
   def content_limitations
@@ -67,6 +66,22 @@ class Content < ApplicationRecord
     end
   end
 
+  # CURRENTLY UNUSED
+  def process_video
+    return unless attached_video.attached?
+
+    # Download the video data and pass it to the service
+    video_data = attached_video.download
+    processed_path = VideoProcessingService.process(video_data)
+
+    # Attach the processed video
+    attached_video.attach(io: File.open(processed_path), filename: File.basename(processed_path))
+
+    # Clean up the temporary file
+    File.delete(processed_path) if File.exist?(processed_path)
+  end
+
+  # CURRENTLY UNUSED
   def validate_codec
     return unless attached_video.attached? && attached_video.content_type.in?(%w(video/mp4 video/webm video/ogg))
 
