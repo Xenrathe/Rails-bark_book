@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Users::RegistrationsController < Devise::RegistrationsController
+  include LocationConcern
   # before_action :configure_sign_up_params, only: [:create]
   # before_action :configure_account_update_params, only: [:update]
   before_action :set_random_dogs, only: [:new, :create]
@@ -11,9 +12,25 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #  super
-  # end
+  def create
+    if params[:nickname].present? || params[:user][:time_zone] == "BotLand"
+      BotTrapLog.create!(
+        ip: get_properIP,
+        user_agent: request.user_agent,
+        reason: params[:nickname].present? ? "registration honeypot" : "botland",
+        metadata: {
+          email: params[:user][:email],
+          time_zone: params[:user][:time_zone]
+        }
+      )
+  
+      sleep(rand(3..6))
+      head :ok
+      return
+    end
+  
+    super
+  end
 
   # GET /resource/edit
   # def edit

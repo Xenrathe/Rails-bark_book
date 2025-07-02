@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class Users::PasswordsController < Devise::PasswordsController
+  include LocationConcern
   # GET /resource/password/new
   # def new
   #   super
@@ -10,7 +11,14 @@ class Users::PasswordsController < Devise::PasswordsController
   def create
     # A hidden honeypot field to catch bots
     if params[:nickname].present?
-      Rails.logger.info "Honeypot triggered on password reset by IP #{request.remote_ip}"
+      BotTrapLog.create!(
+        ip: get_properIP,
+        user_agent: request.user_agent,
+        reason: "pwreset honeypot",
+        metadata: {
+          email: params[:user][:email]
+        }
+      )
       flash[:notice] = "If this email address is linked to an account, an email with instructions will arrive in a few minutes."
       redirect_to new_session_path(resource_name) and return
     end
@@ -22,7 +30,14 @@ class Users::PasswordsController < Devise::PasswordsController
       super
       flash[:notice] = "If this email address is linked to an account, an email with instructions will arrive in a few minutes."
     else
-      Rails.logger.info "Non-existent email request from IP #{request.remote_ip}"
+      BotTrapLog.create!(
+        ip: get_properIP,
+        user_agent: request.user_agent,
+        reason: "pwreset non-existent email",
+        metadata: {
+          email: params[:user][:email]
+        }
+      )
       flash[:notice] = "If this email address is linked to an account, an email with instructions will arrive in a few minutes."
       redirect_to new_session_path(resource_name) and return
     end

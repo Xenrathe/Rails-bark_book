@@ -4,6 +4,7 @@
 
 ### To-do:
 
+- clicking title takes user to the individual post
 - Dog location opt-in part of sign-up -> google oauth account creation redirects to a 'finish signing up' page
 - More hints at sharing dog location
 - More impressive BARK button (3d stuff?)
@@ -22,7 +23,7 @@ BarkPups is hosted on fly.io, via a custom domain: https://www.barkpups.com
 - Responsive design, with breakpoints for mobile, tablet, and PC
 - CSS via Dart SASS
 - Smart validations and security across all models, with the expectation of malicious actors
-- Scalable-design with optimizations to minimize database queries, unnecessary requests to server
+- Scalable-design with optimizations to minimize database queries, unnecessary requests to server, and direct upload
 - Integration of Google Cloud Storage, for storing and retrieving media
 - Integration of Google Maps API, geocoder gem, and JS navigator, to find 'nearby' parks and dogs
 - geocoder uses JS navigator (unless user declines to share location) -> primary address (unless user has none) -> IP address

@@ -1,0 +1,2 @@
+class BotTrapLog < ApplicationRecord
+end

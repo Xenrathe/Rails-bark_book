@@ -2,6 +2,33 @@ module LocationConcern
   extend ActiveSupport::Concern
   require 'ipaddr'
 
+  def get_properIP
+    # Retrieve the IP address from the Fly-Client-IP header
+    fly_client_ip = request.headers['HTTP_FLY_CLIENT_IP']
+    remote_ip = fly_client_ip || request.remote_ip
+    ip_address = IPAddr.new(remote_ip) rescue nil
+
+    # Ensure we have a valid IP address
+    if ip_address
+      if ip_address.ipv4?
+        proper_ip = remote_ip
+      elsif ip_address.ipv6?
+        if ip_address.ipv4_mapped? # Handle IPv4-mapped IPv6 addresses
+          proper_ip = ip_address.native.to_s
+        else
+          proper_ip = remote_ip # Return the IPv6 address as-is if not IPv4-mapped
+        end
+      else
+        proper_ip = nil
+      end
+    else
+      proper_ip = nil
+    end
+
+    puts "PROPER IP: #{proper_ip}"
+    proper_ip
+  end
+
   def get_location(user)
     location_cookie = cookies[:user_location]
   
@@ -14,31 +41,8 @@ module LocationConcern
     elsif user&.primary_address
       location = user.primary_address
     else
-      # Retrieve the IP address from the Fly-Client-IP header
-      fly_client_ip = request.headers['HTTP_FLY_CLIENT_IP']
-      remote_ip = fly_client_ip || request.remote_ip
-      ip_address = IPAddr.new(remote_ip) rescue nil
-  
-      # Ensure we have a valid IP address
-      if ip_address
-        if ip_address.ipv4?
-          proper_ip = remote_ip
-        elsif ip_address.ipv6?
-          if ip_address.ipv4_mapped? # Handle IPv4-mapped IPv6 addresses
-            proper_ip = ip_address.native.to_s
-          else
-            proper_ip = remote_ip # Return the IPv6 address as-is if not IPv4-mapped
-          end
-        else
-          proper_ip = nil
-        end
-      else
-        proper_ip = nil
-      end
-  
-      puts "PROPER IP: #{proper_ip}"
       
-      location = proper_ip
+      location = get_properIP
     end
 
     update_user_loc(user, location)
