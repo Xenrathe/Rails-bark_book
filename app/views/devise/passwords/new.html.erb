@@ -8,6 +8,11 @@
         <%= f.label :email %><br />
         <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
       </div>
+
+      <div style="display: none;">
+        <%= label_tag :nickname %>
+        <%= text_field_tag :nickname, nil %>
+      </div>
       
       <%= f.submit "Reset Password", class: "simple-btn small test" %>
 
