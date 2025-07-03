@@ -35,7 +35,7 @@ class DogsController < ApplicationController
   def show
     @page = params[:page].present? ? params[:page].to_i : 1
 
-    contents_per_page = 10
+    contents_per_page = 4
     @dog_feed = @dog.contents.order(created_at: :desc).limit(contents_per_page).offset((@page - 1) * contents_per_page).includes(attached_images_attachments: :blob)
 
     # If necessary, pre-load all these database queries

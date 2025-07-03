@@ -44,7 +44,7 @@ class UsersController < ApplicationController
       @edit_address = Address.find(params[:address_id])
     end
 
-    contents_per_page = 10
+    contents_per_page = 5
     @user_content = @user.contents.order(created_at: :desc).limit(contents_per_page).offset((@page - 1) * contents_per_page).includes(attached_images_attachments: :blob)
     
     # If necessary, pre-load all these database queries
@@ -165,7 +165,7 @@ class UsersController < ApplicationController
     # Otherwise, the @comments, etc block ends up running first, which doubles query time
     # Probably a more elegant way to do it
     @page = params[:page].present? ? params[:page].to_i : 1
-    contents_per_page = 10
+    contents_per_page = 5
     @followed_dogs = current_user.followed_dogs
     @feed_content = Content.joins(:dogs).where(dogs: @followed_dogs)
                             .or(Content.where(user: current_user))
