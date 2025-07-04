@@ -6,6 +6,7 @@
 
 - Dog location opt-in part of sign-up -> google oauth account creation redirects to a 'finish signing up' page
 - Additional oauth options
+- For mobile, more clear info / org for navbar icons
 - Better loading / UX for various feed loading
 - More impressive BARK button (3d stuff?)
 - Accessibility audit
