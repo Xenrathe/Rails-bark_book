@@ -4,9 +4,9 @@
 
 ### To-do:
 
-- clicking title takes user to the individual post
 - Dog location opt-in part of sign-up -> google oauth account creation redirects to a 'finish signing up' page
-- More hints at sharing dog location
+- Additional oauth options
+- Better loading / UX for various feed loading
 - More impressive BARK button (3d stuff?)
 - Accessibility audit
 
