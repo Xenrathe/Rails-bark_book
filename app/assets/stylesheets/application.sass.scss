@@ -93,7 +93,7 @@ body::before {
     width: 100vw;
     max-height: 70px;
     height: 70px;
-    padding-bottom: 10px;
+    padding-bottom: env(safe-area-inset-bottom, 0);
     position: fixed;
     left: 0;
     bottom: 0;
