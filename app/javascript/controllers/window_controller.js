@@ -1,14 +1,19 @@
 import { Controller } from "@hotwired/stimulus";
 
 export default class extends Controller {
-  static targets = ["imageContainer", "image", "contentContainer"];
+  static targets = ["imageContainer", "image", "contentContainer", "loading"];
 
   connect() {
     this.currentPage = 1;
+    this.isLoading = false;
+
     if (this.hasImageContainerTarget) {
-      this.imageContainerTarget.addEventListener("click", this.closeImageContainer.bind(this));
+      this.imageContainerTarget.addEventListener(
+        "click",
+        this.closeImageContainer.bind(this)
+      );
     }
-      
+
     // Pagination - load more of X whenever user scrolls to the bottom
     // Has a 500 ms timeout
     if (this.hasContentContainerTarget) {
@@ -30,36 +35,64 @@ export default class extends Controller {
     if (!this.throttleTimeout) {
       this.throttleTimeout = setTimeout(() => {
         this.throttleTimeout = null;
-        if (window.innerHeight + window.scrollY + 10 >= this.contentContainerTarget.offsetHeight && 
-          this.isElementVisible(this.contentContainerTarget)) {
-            this.loadMoreContent();
+        if (
+          window.innerHeight + window.scrollY + 10 >=
+            this.contentContainerTarget.offsetHeight &&
+          this.isElementVisible(this.contentContainerTarget)
+        ) {
+          this.loadMoreContent();
         }
       }, 500);
     }
   }
 
+  delay(ms) {
+    return new Promise((resolve) => setTimeout(resolve, ms));
+  }
+
   loadMoreContent() {
+    if (this.loading) return;
+    this.loading = true;
+
     //Update the URL to get the next page
     var url = new URL(window.location.href);
-    url.searchParams.set('page', this.currentPage + 1);
+    url.searchParams.set("page", this.currentPage + 1);
+
+    //show loading animation
+    if (this.hasLoadingTarget) {
+      this.loadingTargets.at(-1).classList.remove("invisible");
+    }
 
     fetch(url.toString())
       .then((response) => response.text())
       .then((data) => {
-        if (data != "Empty")
-        {
+        // Hide loading animation
+        if (this.hasLoadingTarget) {
+          this.loadingTargets.at(-1).classList.add("hidden");
+        }
+
+        if (data != "Empty") {
           this.currentPage += 1;
-          this.contentContainerTarget.insertAdjacentHTML('beforeend', data);
+          this.contentContainerTarget.insertAdjacentHTML("beforeend", data);
+        } else {
+          window.removeEventListener("scroll", this.boundScrollTimer);
         }
       })
       .catch((error) => {
-        console.error('Error loading more content:', error);
+        console.error("Error loading more content:", error);
+
+        // Hide loading animation
+        if (this.hasLoadingTarget) {
+          this.loadingTargets.at(-1).classList.add("hidden");
+        }
       });
+
+    this.loading = false;
   }
 
   isElementVisible(element) {
     var computedStyle = window.getComputedStyle(element);
-    return computedStyle.display !== 'none';
+    return computedStyle.display !== "none";
   }
 
   //IMAGE WINDOW FUNCTIONS

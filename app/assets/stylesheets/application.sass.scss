@@ -20,6 +20,11 @@ body {
   font-family: "Sniglet", sans-serif;
 }
 
+.invisible {
+  opacity: 0;
+  visibility: hidden;
+}
+
 // used for the background
 @media only screen and (min-width: 1921px) {
   body::before {
@@ -687,6 +692,14 @@ body::before {
     max-width: calc(250px + 25vw);
     height: auto;
     margin: 0px auto;
+  }
+
+  .loading {
+    display: flex;
+    justify-content: center;
+    img {
+      transform: rotate(90deg) scale(1.3);
+    }
   }
 }
 
