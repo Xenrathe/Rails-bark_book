@@ -39,7 +39,7 @@ export default class extends Controller {
         this.throttleTimeout = null;
 
         if (
-          window.innerHeight + window.scrollY + 10 >=
+          window.innerHeight + window.scrollY + 40 >=
             this.contentContainerTarget.offsetHeight &&
           this.isElementVisible(this.contentContainerTarget) &&
           this.nextPageContent
