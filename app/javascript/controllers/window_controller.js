@@ -6,6 +6,7 @@ export default class extends Controller {
   connect() {
     this.currentPage = 1;
     this.isLoading = false;
+    this.nextPageContent = null;
 
     if (this.hasImageContainerTarget) {
       this.imageContainerTarget.addEventListener(
@@ -20,6 +21,7 @@ export default class extends Controller {
       this.throttleTimeout = null;
       this.boundScrollTimer = this.scrollTimer.bind(this);
       window.addEventListener("scroll", this.boundScrollTimer);
+      this.preloadNextPage();
     }
   }
 
@@ -35,12 +37,14 @@ export default class extends Controller {
     if (!this.throttleTimeout) {
       this.throttleTimeout = setTimeout(() => {
         this.throttleTimeout = null;
+
         if (
           window.innerHeight + window.scrollY + 10 >=
             this.contentContainerTarget.offsetHeight &&
-          this.isElementVisible(this.contentContainerTarget)
+          this.isElementVisible(this.contentContainerTarget) &&
+          this.nextPageContent
         ) {
-          this.loadMoreContent();
+          this.insertPreloadedContent();
         }
       }, 500);
     }
@@ -50,6 +54,7 @@ export default class extends Controller {
     return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
+  /* OUTDATED FUNCTION WITH LOADING ANIMATION - now I just preload data and therefore shouldn't need loading anim
   loadMoreContent() {
     if (this.loading) return;
     this.loading = true;
@@ -88,6 +93,41 @@ export default class extends Controller {
       });
 
     this.loading = false;
+  }*/
+
+  preloadNextPage() {
+    if (this.loading) return;
+    this.loading = true;
+
+    const url = new URL(window.location.href);
+    url.searchParams.set("page", this.currentPage + 1);
+
+    fetch(url.toString())
+      .then((response) => response.text())
+      .then((data) => {
+        if (data !== "Empty") {
+          this.nextPageContent = data;
+        } else {
+          // No more pages — stop scroll listener
+          window.removeEventListener("scroll", this.boundScrollTimer);
+        }
+        this.loading = false;
+      })
+      .catch((error) => {
+        console.error("Error preloading content:", error);
+        this.loading = false;
+      });
+  }
+
+  insertPreloadedContent() {
+    this.currentPage += 1;
+    this.contentContainerTarget.insertAdjacentHTML(
+      "beforeend",
+      this.nextPageContent
+    );
+    this.nextPageContent = null;
+
+    this.preloadNextPage(); // load the next one
   }
 
   isElementVisible(element) {
